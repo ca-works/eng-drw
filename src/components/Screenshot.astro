@@ -1,0 +1,84 @@
+---
+// A real application window grab in a native-looking frame. The grabs come from
+// tools/capture/capture.py and already contain the toolbar; the macOS traffic lights
+// are drawn into the empty title-bar space the app leaves for them.
+// With `theme`, the light or dark capture follows the site theme (only the visible one loads).
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  light?: ImageMetadata;
+  dark: ImageMetadata;
+  alt: string;
+  sizes?: string;
+  eager?: boolean;
+  class?: string;
+}
+const { light, dark, alt, sizes = '(max-width: 900px) 95vw, 1200px', eager = false, class: cls = '' } = Astro.props;
+const widths = [640, 960, 1440, 1920, 2880];
+const formats: ('avif' | 'webp')[] = ['avif', 'webp'];
+const common = { formats, widths, sizes, alt, quality: 82 };
+---
+
+<figure class:list={['app-shot', cls]}>
+  <span class="app-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+  {
+    light ? (
+      <>
+        <Picture {...common} src={light} class="shot-light" loading={eager ? 'eager' : 'lazy'} />
+        <Picture {...common} src={dark} class="shot-dark" loading="lazy" alt="" />
+      </>
+    ) : (
+      <Picture {...common} src={dark} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} />
+    )
+  }
+</figure>
+
+<style>
+  .app-shot {
+    position: relative;
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1e1f23;
+    box-shadow:
+      0 0 0 0.5px rgb(0 0 0 / 0.28),
+      0 0 0 1px rgb(255 255 255 / 0.06) inset,
+      0 2px 6px rgb(16 24 40 / 0.06),
+      0 28px 60px -18px rgb(16 24 40 / 0.28),
+      0 70px 140px -40px rgb(10 111 214 / 0.2);
+  }
+  .app-shot :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  /* macOS window controls: 12 pt circles, 20 pt apart, 20 pt from the left edge, centred in the
+     52 pt toolbar of a 1440 × 900 pt window. Percentages keep them exact at any rendered size. */
+  .app-lights {
+    position: absolute;
+    z-index: 1;
+    left: 1.389%;
+    top: 2.222%;
+    width: 3.611%;
+    height: 1.333%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .app-lights i {
+    width: 23.08%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.2);
+  }
+  .app-lights i:nth-child(1) { background: #ff5f57; }
+  .app-lights i:nth-child(2) { background: #febc2e; }
+  .app-lights i:nth-child(3) { background: #28c840; }
+  .app-shot :global(.shot-dark) { display: none; }
+  :global(:root[data-theme='dark']) .app-shot :global(.shot-light) { display: none; }
+  :global(:root[data-theme='dark']) .app-shot :global(.shot-dark) { display: block; }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .app-shot :global(.shot-light) { display: none; }
+    :global(:root:not([data-theme='light'])) .app-shot :global(.shot-dark) { display: block; }
+  }
+</style>

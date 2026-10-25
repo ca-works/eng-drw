@@ -1,0 +1,479 @@
+---
+import HeroScene from '../components/HeroScene.astro';
+import Layout from '../layouts/Layout.astro';
+import Drawing from '../components/Drawing.astro';
+import Downloads from '../components/Downloads.astro';
+import { Image } from 'astro:assets';
+import icon from '../assets/icon.png';
+import Screenshot from '../components/Screenshot.astro';
+import mainDark from '../assets/screens/main-dark.png';
+import markLight from '../assets/screens/mark-light.png';
+import markDark from '../assets/screens/mark-dark.png';
+import toolsLight from '../assets/screens/tools-light.png';
+import toolsDark from '../assets/screens/tools-dark.png';
+import compareLight from '../assets/screens/compare-light.png';
+import compareDark from '../assets/screens/compare-dark.png';
+import queueLight from '../assets/screens/queue-light.png';
+import queueDark from '../assets/screens/queue-dark.png';
+import { url } from '../data/site';
+---
+
+<Layout>
+  <section class="hero container">
+    <div class="hero-opening">
+      <div class="hero-editorial">
+        <h1>
+          Every detail.
+          <br />
+          <span>Clearly.</span>
+        </h1>
+        <p class="hero-copy">
+          From the first detail to the final review.
+          <br class="desktop" /> View, mark up, convert and present. All on your
+          computer.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href={url('download/')}>
+            Meet your new workspace <span aria-hidden="true">↗</span>
+          </a>
+          <a class="text-link" href="#workspace">
+            Explore the details <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </div>
+      <HeroScene />
+    </div>
+    <div class="hero-product">
+      <Screenshot
+        class="hero-window"
+        dark={mainDark}
+        eager
+        sizes="(max-width: 800px) 95vw, 1200px"
+        alt="The real ENG Drawing Viewer application on macOS, showing a sample project's folder tree, a bearing flange drawing and page thumbnails"
+      />
+      <span class="product-caption mono">
+        ACTUAL APPLICATION · SAMPLE DRAWINGS
+      </span>
+    </div>
+  </section>
+  <section id="workspace" class="intro container section">
+    <div class="section-heading">
+      <h2>
+        Less friction.
+        <br />
+        <span>More flow.</span>
+      </h2>
+      <p>
+        One thoughtful workspace for the work around your drawings. Open a
+        folder, find the detail, make your point.
+      </p>
+    </div>
+    <div class="feature-grid">
+      {[
+        ['01', 'View', 'Find the drawing. See every detail.', 'viewer', '↗'],
+        ['02', 'MARK', 'Make the next review unmistakable.', 'mark', '↗'],
+        [
+          '03',
+          'Convert',
+          'The right format. Without the cloud.',
+          'convert',
+          '↗',
+        ],
+        ['04', 'Present', 'From drawing to discussion.', 'present', '↗'],
+      ].map(([n, t, d, id, a]) => (
+        <a class="feature-tile" href={`#${id}`}>
+          <span class="mono">
+            {n} <span>{a}</span>
+          </span>
+          <h3>{t}</h3>
+          <p>{d}</p>
+          <div class={`tile-art art-${id}`} aria-hidden="true">
+            {id === 'viewer' ? (
+              '⌖'
+            ) : id === 'mark' ? (
+              <span class="red-bubble">1</span>
+            ) : id === 'convert' ? (
+              <span>
+                PDF <b>→</b> DOCX
+              </span>
+            ) : (
+              <span>▱ ▱ ▱</span>
+            )}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section id="viewer" class="section viewer-section">
+    <div class="container">
+      <div class="section-heading">
+        <h2>
+          Every hairline.
+          <br />
+          <span>At every zoom.</span>
+        </h2>
+        <p>
+          Dense sheets deserve a clear view. Tile-based rendering keeps fine
+          linework crisp as you move from the whole picture to the smallest
+          detail.
+        </p>
+      </div>
+      <div class="zoom-demo">
+        <div class="demo-top">
+          <span class="mono">Turbine / blade detail</span>
+          <output id="zoom-value" for="zoom">
+            100%
+          </output>
+        </div>
+        <div class="zoom-drawing">
+          <div data-zoom-sheet>
+            <Drawing id="zoom" />
+          </div>
+        </div>
+        <div class="zoom-controls">
+          <span>−</span>
+          <input
+            id="zoom"
+            aria-label="Illustrative drawing zoom"
+            type="range"
+            min="100"
+            max="800"
+            value="100"
+          />
+          <span>+</span>
+          <span class="mono">INTERACTIVE ILLUSTRATION</span>
+        </div>
+      </div>
+      <div class="spec-strip">
+        <div>
+          <strong>
+            1.5–4800<span>%</span>
+          </strong>
+          <p>Real application zoom range</p>
+        </div>
+        <div>
+          <strong>
+            A0 <span>to</span> A5
+          </strong>
+          <p>Plus ANSI sheet recognition</p>
+        </div>
+        <div>
+          <strong>150 / 220 / 300</strong>
+          <p>DPI clipboard copies</p>
+        </div>
+      </div>
+      <p class="center subtle">
+        Nested folders. Adjustable thumbnails. Multi-page navigation. A library
+        that keeps up.
+      </p>
+    </div>
+  </section>
+  <section id="mark" class="section container">
+    <div class="section-heading">
+      <h2>
+        A clear thought.
+        <br />
+        <span class="red-text">A precise mark.</span>
+      </h2>
+      <p>
+        Pen, highlight, circle, arrow. Add numbered callouts with linked
+        comments. Undo, refine, and copy your review. The original PDF stays
+        untouched.
+      </p>
+    </div>
+    <div class="mark-playground" data-mark>
+      <div class="demo-top">
+        <span class="mono">
+          TRY MARK <span class="subtle">/ SIMPLIFIED WEB DEMO</span>
+        </span>
+        <span class="original-safe">Original protected ✓</span>
+      </div>
+      <div
+        class="mark-toolbar"
+        role="toolbar"
+        aria-label="Demo annotation tools"
+      >
+        {[
+          ['select', '↖', 'Select (V)'],
+          ['pen', '〰', 'Pen (P)'],
+          ['highlighter', '▰', 'Highlighter (H)'],
+          ['arrow', '↗', 'Arrow (A)'],
+          ['circle', '○', 'Circle (O)'],
+          ['text', 'T', 'Text (T)'],
+          ['bubble', '①', 'Callout (B)'],
+          ['eraser', '⌫', 'Eraser (E)'],
+        ].map(([t, s, l]) => (
+          <button
+            data-tool={t}
+            aria-label={l}
+            aria-pressed={t === 'bubble'}
+            title={l}
+          >
+            {s}
+          </button>
+        ))}
+        <span class="toolbar-divider"></span>
+        <label class="color-label">
+          Colour{' '}
+          <input type="color" value="#1e5adc" aria-label="Annotation colour" />
+        </label>
+        <label class="size-label">
+          Size{' '}
+          <input
+            type="range"
+            min="2"
+            max="40"
+            value="14"
+            aria-label="Annotation size"
+          />
+        </label>
+        <button data-undo aria-label="Undo annotation" title="Undo">
+          ↶
+        </button>
+        <button data-redo aria-label="Redo annotation" title="Redo">
+          ↷
+        </button>
+        <button data-clear>Clear</button>
+      </div>
+      <div class="mark-stage">
+        <div
+          class="mark-sheet"
+          tabindex="0"
+          role="group"
+          aria-label="Sample drawing. Click to annotate, or press Enter to add a callout in the centre."
+        >
+          <Drawing id="playground" interactive />
+        </div>
+        <aside class="mark-comments">
+          <span class="mono">REVIEW NOTES</span>
+          <p data-empty>
+            Choose a tool. Click the drawing.
+            <br />
+            Make the detail speak.
+          </p>
+          <ol data-comments></ol>
+          <p class="demo-hint">
+            Callouts and comments are linked. Your demo stays in this tab.
+          </p>
+        </aside>
+      </div>
+      <p class="sr-only" aria-live="polite" data-mark-status></p>
+    </div>
+    <div class="mark-foot">
+      <p>
+        <span class="red-bubble small-bubble">1</span> A number on the sheet. A
+        thought beside it.
+      </p>
+      <span class="mono"></span>
+    </div>
+    <details class="screenshot-detail">
+      <summary>
+        See MARK in the desktop application <span>↗</span>
+      </summary>
+      <Screenshot
+        light={markLight}
+        dark={markDark}
+        alt="The real MARK window: a sample drawing with a circle, an arrow, a highlight and four numbered callouts linked to review comments"
+      />
+    </details>
+  </section>
+  <section id="convert" class="section convert-section">
+    <div class="container">
+      <div class="section-heading">
+        <h2>
+          New format.
+          <br />
+          <span>Same computer.</span>
+        </h2>
+        <p>
+          Move between drawings, documents and images without sending your work
+          away. A complete PDF Tools workspace, with 32 tools in seven groups.
+        </p>
+      </div>
+      <div class="converter" data-converter>
+        <div>
+          <span class="mono">START WITH</span>
+          <div class="file-tile">
+            PDF<span>.pdf</span>
+          </div>
+        </div>
+        <div class="conversion-path" aria-hidden="true">
+          <span></span>→<span></span>
+        </div>
+        <div>
+          <span class="mono">MAKE IT</span>
+          <div
+            class="format-options"
+            role="group"
+            aria-label="Preview PDF conversion formats"
+          >
+            {['DOCX', 'XLSX', 'PPTX', 'PNG', 'TXT'].map((f, i) => (
+              <button data-format={f} aria-pressed={i === 0}>
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
+        <p data-format-description aria-live="polite">
+          Editable text or page pictures in a Word document.
+        </p>
+      </div>
+      <div class="tool-teaser">
+        <div>
+          <h3>
+            Your PDF toolbox.
+            <br />
+            Thoughtfully in one place.
+          </h3>
+          <p>Organize · Convert · Optimize · Edit · Protect · Review</p>
+          <a class="text-link" href={url('features/#pdf-tools')}>
+            Explore all 32 tools ↗
+          </a>
+          <p class="fine-print">
+            Office → PDF requires a local LibreOffice installation. Conversion
+            fidelity depends on the document.
+          </p>
+        </div>
+        <Screenshot
+          light={toolsLight}
+          dark={toolsDark}
+          sizes="(max-width: 900px) 95vw, 640px"
+          alt="The real PDF Tools workspace with tools grouped into Organize, Convert, Optimize and more"
+        />
+      </div>
+      <div class="tool-teaser tool-teaser--flip">
+        <Screenshot
+          light={compareLight}
+          dark={compareDark}
+          sizes="(max-width: 900px) 95vw, 640px"
+          alt="The real Compare Drawings tool overlaying revision B and C of a sample flange: removed lines in red, added in blue, changed areas boxed, text changes listed"
+        />
+        <div>
+          <h3>
+            Rev B or Rev C?
+            <br />
+            See exactly what changed.
+          </h3>
+          <p>
+            Compare Drawings overlays two revisions. Removed lines turn red,
+            added lines blue, changed areas are boxed and text changes are
+            listed beside the sheet.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="present" class="section container">
+    <div class="section-heading">
+      <h2>
+        From markup
+        <br />
+        <span>to meeting.</span>
+      </h2>
+      <p>
+        Queue your pages. Arrange your story. Export to PowerPoint with your
+        drawing on the right and editable numbered comments on the left.
+      </p>
+    </div>
+    <div class="slide-composition">
+      <div class="slide-queue" aria-hidden="true">
+        <div>01 / ROTOR</div>
+        <div>02 / HOUSING</div>
+        <div>03 / ASSEMBLY</div>
+        <span>→</span>
+      </div>
+      <div class="presentation-slide">
+        <div class="slide-title">
+          Turbine blade <span>Design review / Rev B</span>
+        </div>
+        <div class="slide-body">
+          <div>
+            <p>
+              <b>1</b> Review the midspan section.
+            </p>
+            <p>
+              <b>2</b> Review the blade root fit.
+            </p>
+            <p>
+              <b>3</b> Check the airfoil surface.
+            </p>
+          </div>
+          <Drawing id="slide" />
+        </div>
+        <span class="mono slide-label">ILLUSTRATION OF EXPORT LAYOUT</span>
+      </div>
+    </div>
+    <div class="spec-strip">
+      <div>
+        <strong>No Office needed</strong>
+        <p>Write .pptx files locally</p>
+      </div>
+      <div>
+        <strong>Editable comments</strong>
+        <p>Your notes stay useful</p>
+      </div>
+      <div>
+        <strong>Your workflow</strong>
+        <p>New deck or existing presentation</p>
+      </div>
+    </div>
+    <div class="queue-shot">
+      <Screenshot
+        light={queueLight}
+        dark={queueDark}
+        alt="The real PowerPoint queue in ENG Drawing Viewer, holding a MARKed flange drawing with four comments, a drive shaft and a mounting bracket"
+      />
+      <p class="product-caption mono">The PowerPoint queue in the app · Sample drawings</p>
+    </div>
+  </section>
+  <section class="privacy-section section">
+    <div class="container privacy-content">
+      <div>
+        <h2>
+          Your drawings.
+          <br />
+          <span>Your computer.</span>
+        </h2>
+        <p>
+          Engineering work deserves a private workspace. Drawing processing
+          happens locally, without accounts, cloud uploads or telemetry.
+        </p>
+        <a class="text-link" href={url('privacy/')}>
+          A little more about privacy ↗
+        </a>
+      </div>
+      <div class="offline-diagram" aria-hidden="true">
+        <div class="orbit"></div>
+        <div class="computer">
+          <Image densities={[1, 2]} src={icon} width={72} height={72} alt="" />
+          <span class="mono">LOCAL WORKSPACE</span>
+          <div class="local-files">PDF · MARK · PPTX</div>
+        </div>
+        <span class="offline-note mono"></span>
+      </div>
+    </div>
+  </section>
+  <section class="section container final-download">
+    <Image
+      densities={[1, 2]}
+      src={icon}
+      width={86}
+      height={86}
+      alt="ENG Drawing Viewer blue application icon"
+    />
+    <h2>
+      Make room
+      <br />
+      <span>for better work.</span>
+    </h2>
+    <p>A free engineering workspace. The first public release is on its way.</p>
+    <Downloads />
+    <a class="text-link" href={url('download/')}>
+      Release details and installation ↗
+    </a>
+  </section>
+</Layout>
+<script>
+  import '../scripts/home';
+  import '../scripts/mark';
+</script>

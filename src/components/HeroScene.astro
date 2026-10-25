@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import Drawing from './Drawing.astro';
+import poster from '../assets/assembly-poster.png';
+---
+
+<figure
+  class="assembly"
+  aria-label="Turbine blade transforming into an engineering drawing"
+>
+  <div class="assembly-stage" data-assembly>
+    <div class="assembly-fallback">
+      <Image
+        src={poster}
+        widths={[400, 800]}
+        sizes="(max-width: 800px) 90vw, 600px"
+        alt="Original turbine study with a complete ring of blades"
+        loading="eager"
+      />
+    </div>
+    <div class="blade-sheet" data-blade-sheet aria-hidden="true">
+      <Drawing id="hero-blade" />
+    </div>
+  </div>
+  <figcaption class="assembly-caption">
+    <button
+      type="button"
+      class="assembly-replay"
+      data-assembly-replay
+      hidden
+      aria-label="Replay animation"
+    >
+      ↻ <span>Replay</span>
+    </button>
+  </figcaption>
+</figure>
+<script>
+  const stage = document.querySelector<HTMLElement>('[data-assembly]');
+  if (stage) {
+    const button = stage.parentElement?.querySelector<HTMLButtonElement>(
+      '[data-assembly-replay]',
+    );
+    const manual = matchMedia(
+      '(pointer: coarse), (prefers-reduced-motion: reduce)',
+    ).matches;
+    const load = () => {
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Loading 3D…';
+      }
+      import('../scripts/assembly')
+        .then(({ mountAssembly }) => mountAssembly(stage))
+        .then(() => {
+          if (button) {
+            button.disabled = false;
+            button.innerHTML = '↻ <span>Replay</span>';
+            button.setAttribute('aria-label', 'Replay animation');
+          }
+        })
+        .catch(() => {
+          stage.dataset.state = 'fallback';
+          if (button) button.hidden = true;
+        });
+    };
+    if (manual && button) {
+      button.hidden = false;
+      button.textContent = 'Explore in 3D';
+      button.setAttribute('aria-label', 'Explore in 3D');
+      button.addEventListener('click', load, { once: true });
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          observer.disconnect();
+          load();
+        },
+        { rootMargin: '100px' },
+      );
+      observer.observe(stage);
+    }
+  }
+</script>

@@ -1,0 +1,156 @@
+---
+import '../styles/global.css';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import { Image } from 'astro:assets';
+import icon from '../assets/icon.png';
+import { site, url } from '../data/site';
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Engineering drawings. Beautifully simple.',
+  description = 'A precise, offline workspace for viewing, marking up, converting and presenting engineering drawings. ENG Drawing Viewer for macOS. Windows coming soon.',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const nav = [
+  ['Features', 'features/'],
+  ['Download', 'download/'],
+  ['Changelog', 'changelog/'],
+  ['Support', 'support/'],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{title} — ENG Drawing Viewer</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} — ENG Drawing Viewer`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${site.url}social.png`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href={url('favicon.png')} />
+    <link rel="sitemap" href={url('sitemap-index.xml')} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="ENG Drawing Viewer updates"
+      href={url('rss.xml')}
+    />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('eng-theme') || 'auto';
+        document.documentElement.dataset.theme = t;
+        document.documentElement.style.colorScheme =
+          t === 'auto' ? 'light dark' : t;
+      } catch {}
+    </script>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: site.name,
+        applicationCategory: 'DesignApplication',
+        operatingSystem: 'macOS',
+        description,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        license: 'https://www.gnu.org/licenses/agpl-3.0.html',
+      })}
+    />
+  </head>
+  <body>
+    <a class="skip" href="#main">
+      Skip to content
+    </a>
+    <header class="nav-wrap">
+      <nav class="nav container" aria-label="Main navigation">
+        <a class="brand" href={url()} aria-label="ENG Drawing Viewer home">
+          <Image densities={[1, 2]} src={icon} width={35} height={35} alt="" />
+          <span>
+            ENG<span class="brand-rest"> Drawing Viewer</span>
+          </span>
+        </a>
+        <div class="nav-links">
+          {nav.map(([text, path]) => (
+            <a
+              href={url(path)}
+              aria-current={
+                Astro.url.pathname === url(path) ? 'page' : undefined
+              }
+            >
+              {text}
+            </a>
+          ))}
+        </div>
+        <div class="nav-actions">
+          <button
+            class="theme-button"
+            aria-label="Theme: automatic"
+            title="Switch colour theme"
+            data-theme-toggle
+          >
+            ◐
+          </button>
+          <a class="button small" href={url('download/')}>
+            Get the app <span aria-hidden="true">↗</span>
+          </a>
+          <button
+            class="menu-button"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-label="Open navigation"
+          >
+            ☰
+          </button>
+        </div>
+      </nav>
+    </header>
+    <dialog id="mobile-menu">
+      <div class="menu-top">
+        <span>ENG Drawing Viewer</span>
+        <button data-close-menu aria-label="Close navigation">
+          ✕
+        </button>
+      </div>
+      {nav.map(([text, path], i) => (
+        <a href={url(path)}>
+          <span>0{i + 1}</span>
+          {text} ↗
+        </a>
+      ))}
+    </dialog>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="container">
+      <div class="footer-top">
+        <a class="brand" href={url()}>
+          <Image densities={[1, 2]} src={icon} width={32} height={32} alt="" />
+          ENG Drawing Viewer
+        </a>
+        <p>Precision, without complication.</p>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 ca-works</span>
+        <div>
+          <a href={url('privacy/')}>Privacy</a>
+          <a href={url('about/')}>About & legal</a>
+          <a href={site.repo}>GitHub ↗</a>
+        </div>
+        <span class="mono">DESIGNED FOR FOCUS.</span>
+      </div>
+    </footer>
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>

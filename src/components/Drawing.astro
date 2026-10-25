@@ -1,0 +1,268 @@
+---
+import {
+  bladeSpec as s,
+  rootProfile,
+  frontOutline,
+  sideOutline,
+  midSection,
+  polygonPath,
+  sectionLoop,
+  sectionHatching,
+} from '../geometry/turbine';
+interface Props {
+  id?: string;
+  interactive?: boolean;
+}
+const { id = 'blade', interactive = false } = Astro.props;
+const front = { x: 210, y: 340, k: 2.5 },
+  side = { x: 440, y: 340, k: 2.5 };
+const top = front.y - s.span * front.k,
+  bottom = front.y + s.rootHeight * front.k;
+const sectionY = front.y - s.sectionHeight * front.k;
+const dimension = (x: number, y1: number, y2: number) => `M${x} ${y1}V${y2}`;
+// Isometric wireframe uses the same sections and root, not a hand-drawn icon.
+const iso = (p: number[]) => [
+  (p[2] - p[0]) * 0.7071,
+  -p[1] + (p[0] + p[2]) * 0.35355,
+];
+const isoPaths = [0, 1].map((t) => polygonPath(sectionLoop(t).map(iso)));
+for (const u of [0, 1])
+  isoPaths.push(
+    polygonPath(
+      Array.from({ length: 33 }, (_, i) =>
+        iso(sectionLoop(i / 32)[u === 0 ? 0 : 48]),
+      ),
+      false,
+    ),
+  );
+const platformCorners = [
+  [-s.platformWidth / 2, 0, -s.platformDepth / 2],
+  [s.platformWidth / 2, 0, -s.platformDepth / 2],
+  [s.platformWidth / 2, 0, s.platformDepth / 2],
+  [-s.platformWidth / 2, 0, s.platformDepth / 2],
+];
+isoPaths.push(polygonPath(platformCorners.map(iso)));
+isoPaths.push(
+  polygonPath(
+    platformCorners
+      .slice(1)
+      .map((p) => iso([p[0], -s.platformThickness, p[2]])),
+    false,
+  ),
+);
+for (const p of platformCorners.slice(1))
+  isoPaths.push(
+    polygonPath([iso(p), iso([p[0], -s.platformThickness, p[2]])], false),
+  );
+isoPaths.push(
+  polygonPath(rootProfile.map(([x, y]) => iso([x, y, s.rootDepth / 2]))),
+);
+isoPaths.push(
+  polygonPath(
+    rootProfile
+      .filter(([x]) => x > 0)
+      .map(([x, y]) => iso([x, y, -s.rootDepth / 2])),
+    false,
+  ),
+);
+for (const [x, y] of rootProfile.filter(([x]) => x > 0))
+  isoPaths.push(
+    polygonPath(
+      [iso([x, y, -s.rootDepth / 2]), iso([x, y, s.rootDepth / 2])],
+      false,
+    ),
+  );
+---
+
+<svg
+  class="drawing"
+  viewBox="0 0 820 540"
+  role="img"
+  aria-label="Blade drawing with aligned front and right views, dimensioned span and root, and a hatched section A–A through the midspan"
+  data-drawing={id}
+>
+  <defs>
+    <marker
+      id={`${id}-dim`}
+      markerWidth="7"
+      markerHeight="5"
+      refX="7"
+      refY="2.5"
+      orient="auto-start-reverse"
+      markerUnits="userSpaceOnUse"
+    >
+      <path d="M7 2.5L0 0V5Z" fill="currentColor" />
+    </marker>
+    <pattern
+      id={`${id}-hatch`}
+      width="5"
+      height="5"
+      patternUnits="userSpaceOnUse"
+      patternTransform="rotate(45)"
+    >
+      <path d="M0 0V5" stroke="currentColor" stroke-width=".45" />
+    </pattern>
+  </defs>
+  <g
+    fill="none"
+    stroke="currentColor"
+    stroke-linejoin="round"
+    class="drawing-lines"
+  >
+    <path
+      d="M20 20H800V520H20Z M20 450H800 M490 450V520 M690 450V520 M490 485H800 M740 485V520"
+      stroke-width=".8"
+    />
+    <g
+      transform={`translate(${front.x} ${front.y}) scale(${front.k})`}
+      stroke-width=".55"
+    >
+      <path d={frontOutline} />
+      <path
+        d={`M${-s.platformDepth / 2} 0H${s.platformDepth / 2}V${s.platformThickness}H${-s.platformDepth / 2}Z`}
+      />
+      <path
+        d={`M${-s.rootDepth / 2} ${s.platformThickness}V${s.rootHeight}H${s.rootDepth / 2}V${s.platformThickness}`}
+      />
+      <path
+        d={`M${-s.rootDepth / 2} 12H${s.rootDepth / 2} M${-s.rootDepth / 2} 24H${s.rootDepth / 2}`}
+        stroke-width=".25"
+      />
+    </g>
+    <g
+      transform={`translate(${side.x} ${side.y}) scale(${side.k})`}
+      stroke-width=".55"
+    >
+      <path d={sideOutline} />
+      <path
+        d={`M${-s.platformWidth / 2} 0H${s.platformWidth / 2}V${s.platformThickness}H${-s.platformWidth / 2}Z`}
+      />
+      <path d={polygonPath(rootProfile.map(([x, y]) => [x, -y]))} />
+    </g>
+    <g stroke-width=".5" stroke-dasharray="12 3 2 3">
+      <path d={`M${front.x} 100V425 M${side.x} 100V425`} />
+    </g>
+    <g stroke-width=".6">
+      <path
+        d={`M${front.x - Math.max(...sectionLoop(1).map((p) => p[2])) * front.k - 3} ${top}H62 M143 ${front.y}H100 M155 ${bottom}H62 M70 ${top}V${bottom}`}
+      />
+      <path
+        d={dimension(110, top, front.y)}
+        marker-start={`url(#${id}-dim)`}
+        marker-end={`url(#${id}-dim)`}
+      />
+      <path
+        d={dimension(70, top, bottom)}
+        marker-start={`url(#${id}-dim)`}
+        marker-end={`url(#${id}-dim)`}
+      />
+      <path d={`M147.5 345V439 M272.5 345V439 M147.5 430H272.5`} />
+      <path
+        d="M147.5 430H272.5"
+        marker-start={`url(#${id}-dim)`}
+        marker-end={`url(#${id}-dim)`}
+      />
+      <path d="M412.5 401V439 M467.5 401V439 M412.5 430H467.5" />
+      <path
+        d="M412.5 430H467.5"
+        marker-start={`url(#${id}-dim)`}
+        marker-end={`url(#${id}-dim)`}
+      />
+    </g>
+    <g stroke-width="1.1">
+      <path d={`M140 ${sectionY}H280`} stroke-dasharray="14 4 3 4" />
+      <path
+        d={`M140 ${sectionY - 18}V${sectionY}`}
+        marker-end={`url(#${id}-dim)`}
+      />
+      <path
+        d={`M280 ${sectionY - 18}V${sectionY}`}
+        marker-end={`url(#${id}-dim)`}
+      />
+    </g>
+    <g transform="translate(652 150) scale(2.5)" stroke-width=".45">
+      <path d={midSection} />
+      <path d={sectionHatching()} stroke-width=".18" />
+    </g>
+    <g transform="translate(650 320) scale(1.35)" stroke-width=".6">
+      {isoPaths.map((d) => (
+        <path d={d} />
+      ))}
+      <path
+        d={polygonPath(
+          [
+            [-12.5, 0, -25],
+            [12.5, 0, -25],
+            [12.5, 0, 25],
+            [-12.5, 0, 25],
+          ].map(iso),
+        )}
+      />
+    </g>
+  </g>
+  <g fill="currentColor" font-family="Arial, sans-serif" font-size="11">
+    <text
+      x="102"
+      y={(top + front.y) / 2}
+      transform={`rotate(-90 102 ${(top + front.y) / 2})`}
+      text-anchor="middle"
+    >
+      {s.span}
+    </text>
+    <text
+      x="61"
+      y={(top + bottom) / 2}
+      transform={`rotate(-90 61 ${(top + bottom) / 2})`}
+      text-anchor="middle"
+    >
+      {s.span + s.rootHeight}
+    </text>
+    <text x="210" y="445" text-anchor="middle">
+      {s.platformDepth}
+    </text>
+    <text x="440" y="445" text-anchor="middle">
+      {s.rootWidth}
+    </text>
+    <text x="210" y="82" text-anchor="middle">
+      FRONT
+    </text>
+    <text x="440" y="82" text-anchor="middle">
+      RIGHT
+    </text>
+    <text x="134" y={sectionY - 24}>
+      A
+    </text>
+    <text x="274" y={sectionY - 24}>
+      A
+    </text>
+    <text x="652" y="192" text-anchor="middle">
+      SECTION A–A
+    </text>
+    <text x="650" y="397" text-anchor="middle">
+      ISOMETRIC
+    </text>
+    <text x="34" y="472">
+      Dimensions in mm · Third-angle arrangement
+    </text>
+    <text x="34" y="491">
+      Solid uncooled blade · Original demonstration model
+    </text>
+    <text x="34" y="509">
+      Concept geometry — not a production definition
+    </text>
+    <text x="502" y="473" font-size="14">
+      ROTOR BLADE
+    </text>
+    <text x="702" y="473">
+      REV B
+    </text>
+    <text x="502" y="507">
+      ENG–003
+    </text>
+
+    <text x="751" y="507">
+      1 / 1
+    </text>
+  </g>
+  {interactive && <g data-annotations></g>}
+</svg>

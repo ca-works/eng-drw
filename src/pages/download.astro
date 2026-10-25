@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Downloads from '../components/Downloads.astro';
+import { site, url } from '../data/site';
+---
+
+<Layout
+  title="A better workspace is on its way"
+  description="Find release availability, installation instructions and complete source information for ENG Drawing Viewer."
+>
+  <div class="container">
+    <header class="page-hero">
+      <div class="section-tag">GET ENG DRAWING VIEWER</div>
+      <h1>
+        A better workspace.
+        <br />
+        <span>Yours, for free.</span>
+      </h1>
+      <p>
+        The first public release is being prepared. Choose your platform below
+        for the current status. No account, subscription or cloud workspace
+        required.
+      </p>
+    </header>
+    <div class="page-content">
+      <Downloads />
+      <div class="prose">
+        <h2>Ready when it’s ready.</h2>
+        <p>
+          The Mac application and complete corresponding source will become
+          downloadable together after the release review. Windows is being
+          rebuilt for ordinary PCs. No application packages are publicly
+          available yet.
+        </p>
+        <p>
+          <a href={`${site.repo}/issues`}>
+            Follow development or ask a question on GitHub ↗
+          </a>
+        </p>
+        <h2>Installing on a Mac</h2>
+        <ol>
+          <li>
+            When the release is available, download the Apple silicon DMG.
+          </li>
+          <li>
+            Open the disk image and drag ENG Drawing Viewer into Applications.
+          </li>
+          <li>
+            Open the application. Public requirements and checksums will be
+            listed with the release.
+          </li>
+        </ol>
+        <p>
+          The first release is expected to use ad-hoc signing without Apple
+          notarization. If macOS blocks it, confirm the source and checksum
+          before using System Settings → Privacy & Security → Open Anyway. Do
+          not disable Gatekeeper globally.
+        </p>
+        <h2>Verify a download</h2>
+        <p>
+          Every published asset will have a SHA-256 checksum. On macOS, run{' '}
+          <code>shasum -a 256 "downloaded-file.dmg"</code>. On Windows, use{' '}
+          <code>Get-FileHash "downloaded-file.zip" -Algorithm SHA256</code>.
+          Compare the entire result with the release checksum.
+        </p>
+        <h2>Visiting from your phone?</h2>
+        <p>
+          This is a desktop application. Send this page to your computer when
+          you’re ready.
+        </p>
+        <button class="button" data-share>
+          Share this page ↗
+        </button>
+        <p data-share-status aria-live="polite"></p>
+        <h2>Build it yourself</h2>
+        <p>
+          Complete source and build instructions will accompany the approved
+          release under AGPL-3.0-or-later. The source download will be enabled
+          above when that release is public.
+        </p>
+        <a href={url('support/')} class="text-link">
+          Installation questions? Visit support ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

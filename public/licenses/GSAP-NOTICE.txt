@@ -1,0 +1,12 @@
+GSAP 3.15
+Copyright (c) 2008-2026, GreenSock. All rights reserved.
+
+GreenSock's Standard No Charge licence applies:
+https://gsap.com/standard-license
+Source: https://github.com/greensock/GSAP
+
+The installed npm package carries the licence reference in its package.json,
+README and source-file headers. Those headers are preserved in the build.
+The licence URL currently redirects to the vendor's forum outage page. Obtain
+and archive the full authoritative licence terms when that page returns.
+This notice is not a substitute or alteration of the vendor's licence.

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+playwright-report/
+test-results/
+.DS_Store
+design/drawings/.capture-*
+design/drawings/**/.capture-*
+docs/screenshots/
+design/drawings/.parts-svg/

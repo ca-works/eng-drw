@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
+---
+
+<Layout
+  title="Precision, without complication"
+  description="About ENG Drawing Viewer, the free offline drawing workspace by ca-works, and its licensing."
+>
+  <div class="container">
+    <header class="page-hero">
+      <div class="section-tag">ABOUT & LEGAL</div>
+      <h1>
+        Precision, without
+        <br />
+        <span>complication.</span>
+      </h1>
+      <p>
+        ENG Drawing Viewer is an independent engineering drawing application by
+        ca-works, designed to make reviewing and sharing technical information
+        feel simple.
+      </p>
+    </header>
+    <article class="page-content prose">
+      <h2>Built around the drawing</h2>
+      <p>
+        Browse a project, see the smallest detail, add a clear review and take
+        it into your next presentation. The application brings those everyday
+        tasks together in a local desktop workspace.
+      </p>
+      <h2>Free software</h2>
+      <p>
+        The planned public application release uses the{' '}
+        <a href="https://www.gnu.org/licenses/agpl-3.0.html">
+          GNU Affero General Public License, version 3 or later
+        </a>
+        . Complete corresponding source and build instructions will accompany
+        published application binaries. The first public release is still in
+        preparation.
+      </p>
+      <p>
+        Free software is provided without warranty, to the extent permitted by
+        applicable law. Verify drawing dimensions and export results before
+        relying on them for engineering or manufacturing decisions.
+      </p>
+      <h2>Third-party components</h2>
+      <p>
+        The desktop application uses PySide6/Qt, PyMuPDF/MuPDF, Python, Pillow,
+        python-pptx, python-docx and XlsxWriter, among other components.
+        Complete third-party licence texts and source obligations are being
+        assembled for the release.
+      </p>
+      <p>
+        This website uses Astro and Tailwind CSS (MIT), GSAP (its Standard No
+        Charge licence), Inter and JetBrains Mono (SIL Open Font License). Font
+        files are self-hosted. Third-party notices and font licences are
+        included with the website source.
+      </p>
+      <h2>Names and marks</h2>
+      <p>
+        ENG Drawing Viewer’s name and original blue application icon belong to
+        its independent creator. Apple, macOS, iPhone, Microsoft, Windows,
+        PowerPoint and LibreOffice are names or marks of their respective
+        owners. This project is not affiliated with those organizations.
+      </p>
+      <h2>Publisher</h2>
+      <p>
+        © 2026 ca-works.{' '}
+        <a href={site.repo}>Project website source on GitHub ↗</a>
+      </p>
+      <p>
+        For product questions, use the project’s{' '}
+        <a href={`${site.repo}/issues`}>support issues</a>. Do not include
+        confidential documents or personal information.
+      </p>
+    </article>
+  </div>
+</Layout>

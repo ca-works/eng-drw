@@ -1,0 +1,226 @@
+[
+  {
+    "id": "organize",
+    "title": "Organize Pages",
+    "category": "organize",
+    "icon": "pages",
+    "description": "Reorder, rotate, delete, duplicate and insert pages from several PDFs and images, then save one PDF."
+  },
+  {
+    "id": "merge",
+    "title": "Merge",
+    "category": "organize",
+    "icon": "merge",
+    "description": "Combine PDFs and images into one PDF, in the order you choose."
+  },
+  {
+    "id": "split",
+    "title": "Split",
+    "category": "organize",
+    "icon": "split",
+    "description": "Split a PDF into single pages, every N pages or custom ranges."
+  },
+  {
+    "id": "extract",
+    "title": "Extract Pages",
+    "category": "organize",
+    "icon": "extract",
+    "description": "Save chosen pages as a new PDF."
+  },
+  {
+    "id": "remove",
+    "title": "Remove Pages",
+    "category": "organize",
+    "icon": "remove-pages",
+    "description": "Save a copy without the pages you choose."
+  },
+  {
+    "id": "rotate",
+    "title": "Rotate",
+    "category": "organize",
+    "icon": "rotate-page",
+    "description": "Turn pages by 90\u00b0, 180\u00b0 or 270\u00b0."
+  },
+  {
+    "id": "images_to_pdf",
+    "title": "Images to PDF",
+    "category": "to_pdf",
+    "icon": "image",
+    "description": "Turn photos, screenshots and scans into a PDF."
+  },
+  {
+    "id": "scan",
+    "title": "Scan with iPhone",
+    "category": "to_pdf",
+    "icon": "iphone",
+    "description": "Use your iPhone\u2019s camera to scan paper drawings straight into a PDF (Continuity Camera)."
+  },
+  {
+    "id": "office_to_pdf",
+    "title": "Office to PDF",
+    "category": "to_pdf",
+    "icon": "office",
+    "description": "Convert Word, Excel, PowerPoint and OpenDocument files to PDF."
+  },
+  {
+    "id": "to_images",
+    "title": "PDF to Images",
+    "category": "from_pdf",
+    "icon": "to-image",
+    "description": "Save pages as PNG, JPEG or TIFF images."
+  },
+  {
+    "id": "to_word",
+    "title": "PDF to Word",
+    "category": "from_pdf",
+    "icon": "word",
+    "description": "Create an editable Word document (.docx)."
+  },
+  {
+    "id": "to_excel",
+    "title": "PDF to Excel",
+    "category": "from_pdf",
+    "icon": "excel",
+    "description": "Pull tables \u2014 BOMs, title blocks, schedules \u2014 into Excel (.xlsx)."
+  },
+  {
+    "id": "to_powerpoint",
+    "title": "PDF to PowerPoint",
+    "category": "from_pdf",
+    "icon": "presentation",
+    "description": "One slide per page, with the filename as an editable title."
+  },
+  {
+    "id": "to_text",
+    "title": "PDF to Text",
+    "category": "from_pdf",
+    "icon": "text-file",
+    "description": "Extract all text as plain text or Markdown."
+  },
+  {
+    "id": "extract_images",
+    "title": "Extract Images",
+    "category": "from_pdf",
+    "icon": "extract-images",
+    "description": "Save the pictures embedded in a PDF."
+  },
+  {
+    "id": "compress",
+    "title": "Compress",
+    "category": "optimize",
+    "icon": "compress",
+    "description": "Make PDFs smaller for email. Drawings stay sharp."
+  },
+  {
+    "id": "ocr",
+    "title": "Make Searchable (OCR)",
+    "category": "optimize",
+    "icon": "ocr",
+    "description": "Recognise text in scans so you can search and copy it."
+  },
+  {
+    "id": "repair",
+    "title": "Repair",
+    "category": "optimize",
+    "icon": "repair",
+    "description": "Rebuild damaged PDFs that will not open properly."
+  },
+  {
+    "id": "flatten",
+    "title": "Flatten",
+    "category": "optimize",
+    "icon": "flatten",
+    "description": "Burn comments, markups and form fields into the page."
+  },
+  {
+    "id": "page_numbers",
+    "title": "Page Numbers",
+    "category": "edit",
+    "icon": "page-number",
+    "description": "Number pages in a corner of your choice."
+  },
+  {
+    "id": "watermark",
+    "title": "Watermark & Stamp",
+    "category": "edit",
+    "icon": "stamp",
+    "description": "Add DRAFT, APPROVED, SUPERSEDED\u2026 or your own text or logo."
+  },
+  {
+    "id": "crop",
+    "title": "Crop",
+    "category": "edit",
+    "icon": "crop",
+    "description": "Trim white margins automatically, or cut fixed margins."
+  },
+  {
+    "id": "resize",
+    "title": "Resize to Sheet",
+    "category": "edit",
+    "icon": "resize",
+    "description": "Scale pages onto a standard sheet such as A3 or Letter. Lines stay vector."
+  },
+  {
+    "id": "tile",
+    "title": "Tile for Printing",
+    "category": "edit",
+    "icon": "tile",
+    "description": "Print a large sheet on A4/A3 paper as overlapping tiles with cut marks."
+  },
+  {
+    "id": "nup",
+    "title": "Pages per Sheet",
+    "category": "edit",
+    "icon": "nup",
+    "description": "Put 2, 4, 6, 9 or 16 pages on one sheet for overviews."
+  },
+  {
+    "id": "overlay",
+    "title": "Overlay PDF",
+    "category": "edit",
+    "icon": "overlay",
+    "description": "Stamp another PDF \u2014 e.g. a title block or approval stamp \u2014 onto every page."
+  },
+  {
+    "id": "metadata",
+    "title": "Edit Metadata",
+    "category": "edit",
+    "icon": "tag",
+    "description": "Change document metadata, or remove defined auxiliary data. Page content still needs review."
+  },
+  {
+    "id": "markup",
+    "title": "Mark Up",
+    "category": "edit",
+    "icon": "markup",
+    "description": "Draw, highlight, add callouts and text with MARK, then save as PDF."
+  },
+  {
+    "id": "protect",
+    "title": "Protect",
+    "category": "security",
+    "icon": "lock",
+    "description": "Encrypt with a password (AES-256) and limit printing, copying or editing."
+  },
+  {
+    "id": "unlock",
+    "title": "Unlock",
+    "category": "security",
+    "icon": "unlock",
+    "description": "Remove the password from a PDF you are allowed to open."
+  },
+  {
+    "id": "redact",
+    "title": "Redact",
+    "category": "security",
+    "icon": "redact",
+    "description": "Remove matching searchable page text. Review images, metadata, annotations and attachments separately."
+  },
+  {
+    "id": "compare",
+    "title": "Compare Drawings",
+    "category": "compare",
+    "icon": "compare",
+    "description": "Overlay two revisions: removed lines in red, added in blue, changed areas boxed, plus text changes."
+  }
+]

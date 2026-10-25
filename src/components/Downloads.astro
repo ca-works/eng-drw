@@ -1,0 +1,70 @@
+---
+import release from '../data/release.json';
+interface Asset {
+  name: string;
+  url: string;
+  size: number;
+  sha256: string;
+  platform: string;
+}
+const assets = release.assets as Asset[];
+const platforms = [
+  {
+    id: 'macos',
+    symbol: '⌘',
+    name: 'macOS',
+    sub: 'Made for your Mac.',
+    detail: 'Apple silicon · requirements verified at release',
+    note: 'The first public Mac release is being prepared.',
+  },
+  {
+    id: 'windows',
+    symbol: '⊞',
+    name: 'Windows',
+    sub: 'The same precision. On PC.',
+    detail: 'Standalone portable application · in development',
+    note: 'A fresh Windows build is in development. Full feature parity is the goal.',
+  },
+  {
+    id: 'source',
+    symbol: '〈/〉',
+    name: 'Source code',
+    sub: 'Free to inspect. Free to build.',
+    detail: 'AGPL-3.0-or-later · complete build instructions',
+    note: 'Complete corresponding source will accompany the approved release.',
+  },
+];
+---
+
+<div class="download-grid">
+  {platforms.map((p) => {
+    const a = assets.find((a) => a.platform === p.id);
+    return (
+      <article class="download-card" data-platform={p.id}>
+        <span class="platform-symbol" aria-hidden="true">
+          {p.symbol}
+        </span>
+        <h3>{p.name}</h3>
+        <p>{p.sub}</p>
+        <span class="mono requirements">{p.detail}</span>
+        {a ? (
+          <>
+            <a class="button" href={a.url}>
+              Download {release.version}
+            </a>
+            <p>{(a.size / 1048576).toFixed(1)} MB</p>
+            <details>
+              <summary>SHA-256 checksum</summary>
+              <code class="checksum">{a.sha256}</code>
+            </details>
+          </>
+        ) : (
+          <>
+            <span class="status">Coming soon</span>
+            <p class="download-note">{p.note}</p>
+          </>
+        )}
+      </article>
+    );
+  })}
+</div>

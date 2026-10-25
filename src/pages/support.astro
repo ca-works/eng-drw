@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site, url } from '../data/site';
+const faqs = [
+  [
+    'Where can I download the application?',
+    'The first public Mac release is being prepared. Windows is being rebuilt. Approved downloads and source will appear on the Download page together with their exact requirements and checksums.',
+  ],
+  [
+    'Do I need an account or internet connection?',
+    'No account is needed. Drawing processing takes place locally. The application does not use a cloud document service.',
+  ],
+  [
+    'Does MARK change my original PDF?',
+    'No. MARK adds temporary annotations over the page. Copying or exporting creates an image, presentation or new PDF. Save the review before closing if you want to keep it.',
+  ],
+  [
+    'Do I need Microsoft PowerPoint?',
+    'No. Creating a .pptx file happens locally. Open that file in a compatible presentation application. Some advanced Windows integration requires a running copy of PowerPoint and will be documented when Windows ships.',
+  ],
+  [
+    'Why does Office to PDF ask for LibreOffice?',
+    'This conversion delegates to a locally installed LibreOffice. Install LibreOffice from its official source. Other conversions and drawing viewing do not require it.',
+  ],
+  [
+    'How does OCR work?',
+    'On macOS, the current application uses Apple Vision for local text recognition. Windows OCR availability will be documented with the rebuilt release.',
+  ],
+  [
+    'Can I use scanned PDFs and photographs?',
+    'Yes. PDFs and PNG, JPEG, TIFF, BMP, GIF and WebP images are supported. HEIC/HEIF decoding is available on macOS. Scan with iPhone requires Apple Continuity Camera and compatible signed-in devices.',
+  ],
+  [
+    'Which Mac or Windows versions are supported?',
+    'The first Mac package targets Apple silicon. Its minimum macOS version is still being verified against the bundled libraries. Windows requirements will be confirmed with its rebuilt release.',
+  ],
+  [
+    'How do I uninstall it?',
+    'Remove the application. On Mac, local settings, cache and diagnostic logs remain under your user Library, in Application Support/ENG Drawing Viewer, Caches/ENG Drawing Viewer and Logs/ENG Drawing Viewer. Delete those folders if you also want to remove local preferences. Your drawings and saved scans remain where you saved them.',
+  ],
+  [
+    'Can I report a bug with a confidential drawing?',
+    'Please do not post private drawings to public GitHub Issues. Create a small fictional reproduction, remove identifying information, and review logs and screenshots before sharing.',
+  ],
+];
+---
+
+<Layout
+  title="A little help, right here"
+  description="Installation help, offline workflows, keyboard shortcuts and troubleshooting for ENG Drawing Viewer."
+>
+  <div class="container">
+    <header class="page-hero">
+      <div class="section-tag">SUPPORT</div>
+      <h1>
+        A little help.
+        <br />
+        <span>Right here.</span>
+      </h1>
+      <p>
+        Answers for the everyday details, from your first drawing to your next
+        presentation.
+      </p>
+    </header>
+    <article class="page-content prose">
+      <div class="faq">
+        {faqs.map(([q, a]) => (
+          <details>
+            <summary>{q}</summary>
+            <p>{a}</p>
+          </details>
+        ))}
+      </div>
+      <h2>MARK keyboard shortcuts</h2>
+      <p>
+        Tool shortcuts are the same on Mac and Windows. Use ⌘ on Mac and Ctrl on
+        Windows for standard editing commands.
+      </p>
+      <table class="shortcut-table">
+        <thead>
+          <tr>
+            <th scope="col">Tool</th>
+            <th scope="col">Shortcut</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            ['Select', 'V'],
+            ['Pen', 'P'],
+            ['Highlighter', 'H'],
+            ['Text', 'T'],
+            ['Arrow', 'A'],
+            ['Outline circle', 'O'],
+            ['Numbered callout', 'B'],
+            ['Eraser', 'E'],
+            ['Undo', '⌘ / Ctrl + Z'],
+            ['Save marked PDF', '⌘ / Ctrl + S'],
+          ].map(([n, k]) => (
+            <tr>
+              <td>{n}</td>
+              <td>
+                <kbd>{k}</kbd>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2>Still need a hand?</h2>
+      <p>
+        Include the app version, operating system, what you expected and the
+        steps to reproduce the problem.
+      </p>
+      <a class="button" href={`${site.repo}/issues/new/choose`}>
+        Report an issue ↗
+      </a>
+      <p style="margin-top:24px">
+        <a href={url('download/')}>Release and installation information</a>
+      </p>
+    </article>
+  </div>
+</Layout>

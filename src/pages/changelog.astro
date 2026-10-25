@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { url } from '../data/site';
+---
+
+<Layout
+  title="Thoughtful improvements"
+  description="Release status and development highlights for ENG Drawing Viewer."
+>
+  <div class="container">
+    <header class="page-hero">
+      <div class="section-tag">CHANGELOG</div>
+      <h1>
+        Better, with
+        <br />
+        <span>every detail.</span>
+      </h1>
+      <p>A record of the work going into a clearer engineering workspace.</p>
+    </header>
+    <article class="page-content prose">
+      <div class="callout">
+        <strong>First public release · In preparation</strong>
+        <br />
+        There are no public application releases yet. The release version, date,
+        downloads and checksums will appear together after review.
+      </div>
+      <h2>The workspace so far</h2>
+      <p>
+        The current development application brings together sharp PDF viewing,
+        temporary MARK annotations, a drawing queue, local PowerPoint generation
+        and 32 offline PDF tools.
+      </p>
+      <h3>More ways to work</h3>
+      <ul>
+        <li>Images open alongside PDFs as one-page documents.</li>
+        <li>
+          A dedicated PDF Tools workspace organizes conversion, editing and
+          review tasks.
+        </li>
+        <li>MARK can save a marked page as a new PDF.</li>
+        <li>The drawing queue can also export a combined PDF.</li>
+        <li>Scan with iPhone integrates with Continuity Camera on Mac.</li>
+      </ul>
+      <h3>Preparing the public release</h3>
+      <p>
+        Work is underway on distribution, complete source, licensing and
+        platform verification. The Windows application is being rebuilt. These
+        notes describe development progress, not a published release.
+      </p>
+      <a class="text-link" href={url('download/')}>
+        Check availability ↗
+      </a>
+      <p>
+        <a href={url('rss.xml')}>Subscribe to the update feed ↗</a>
+      </p>
+    </article>
+  </div>
+</Layout>
