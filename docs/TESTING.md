@@ -12,7 +12,7 @@ Latest local run: 25 October 2026, production build served by `astro preview` un
 
 - Chromium, WebKit and mobile Chromium: 47 passed, 4 intentional skips (desktop-only or mobile-only cases).
 - Covered: every page renders without console errors and with valid links; download cards stay honest before a release; the MARK demo (callout, linked comment, undo, redo); theme persistence; mobile menu focus trap and Escape; no serious or critical axe findings; light, dark and reduced-motion layouts at 360, 390, 768, 1280 and 1440 px; 3D loading failure keeps the poster; the full turbine → blade → drawing sequence and Replay (run 9 times in a row).
-- Firefox: the local Playwright Firefox build doesn't start on this Mac ("Could not find profile folder"). Firefox runs in the `Check website` workflow on GitHub's Ubuntu runners.
+- Firefox (and Chromium and WebKit again) run in the `Check website` workflow on GitHub's Ubuntu runners: 61 passed. The local Playwright Firefox build does not start on this Mac ("Could not find profile folder"). The timed WebGL animation test is skipped on CI because the runners have no GPU.
 
 ## Lighthouse 13 (home page)
 
