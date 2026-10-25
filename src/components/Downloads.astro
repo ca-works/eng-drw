@@ -8,13 +8,17 @@ interface Asset {
   platform: string;
 }
 const assets = release.assets as Asset[];
+const released = release.status === 'available';
 const platforms = [
   {
     id: 'macos',
     symbol: '⌘',
     name: 'macOS',
     sub: 'Made for your Mac.',
-    detail: 'Apple silicon · requirements verified at release',
+    // Measured: the 2.2.0 build runs on macOS 14.8, 15.7, 26.6 and 27; Qt 6.12 needs 14.4.
+    detail: released
+      ? 'macOS 14.4 or later · Apple silicon (M1 or newer)'
+      : 'Apple silicon · requirements verified at release',
     note: 'The first public Mac release is being prepared.',
   },
   {
