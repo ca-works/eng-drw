@@ -54,9 +54,9 @@ const platforms = [
         {a ? (
           <>
             <a class="button" href={a.url}>
-              Download {release.version}
+              {p.id === 'source' ? `Download source ${release.version}` : `Download ${release.version}`}
             </a>
-            <p>{(a.size / 1048576).toFixed(1)} MB</p>
+            <p>{(a.size / 1e6).toFixed(1)} MB</p>
             <details>
               <summary>SHA-256 checksum</summary>
               <code class="checksum">{a.sha256}</code>

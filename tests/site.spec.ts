@@ -31,10 +31,20 @@ for (const route of routes)
       expect(href).toMatch(/^\/eng-drw\//);
     expect(errors).toEqual([]);
   });
-test('downloads are honest before release', async ({ page, baseURL }) => {
+test('download buttons match the verified release data', async ({ page, baseURL }) => {
+  const release = (await import('../src/data/release.json', { with: { type: 'json' } })).default;
   await page.goto(new URL('download/', baseURL).href);
-  await expect(page.locator('.download-card .status')).toHaveCount(3);
-  await expect(page.locator('a[href*="releases/download/"]')).toHaveCount(0);
+  const links = page.locator('a[href*="releases/download/"]');
+  if (release.status !== 'available') {
+    await expect(page.locator('.download-card .status')).toHaveCount(3);
+    await expect(links).toHaveCount(0);
+    return;
+  }
+  // Mac and source link to exactly the verified assets; Windows stays "Coming soon".
+  const hrefs = await links.evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+  expect(hrefs.sort()).toEqual(release.assets.map((a) => a.url).sort());
+  await expect(page.locator('[data-platform="windows"] .status')).toHaveText('Coming soon');
+  for (const a of release.assets) await expect(page.getByText(a.sha256)).toHaveCount(1);
 });
 test('MARK callout, comment, undo and redo', async ({ page }) => {
   await page.goto('./');

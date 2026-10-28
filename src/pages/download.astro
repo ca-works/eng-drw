@@ -2,10 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import Downloads from '../components/Downloads.astro';
 import { site, url } from '../data/site';
+import release from '../data/release.json';
+const released = release.status === 'available';
+const v = release.version;
 ---
 
 <Layout
-  title="A better workspace is on its way"
+  title={released ? `Download ENG Drawing Viewer ${v}` : "A better workspace is on its way"}
   description="Find release availability, installation instructions and complete source information for ENG Drawing Viewer."
 >
   <div class="container">
@@ -17,51 +20,43 @@ import { site, url } from '../data/site';
         <span>Yours, for free.</span>
       </h1>
       <p>
-        The first public release is being prepared. Choose your platform below
-        for the current status. No account, subscription or cloud workspace
-        required.
+        {released
+          ? `Version ${v} for Mac is here, free and open source. No account, subscription or cloud workspace required. Windows is being rebuilt and will follow.`
+          : 'The first public release is being prepared. Choose your platform below for the current status. No account, subscription or cloud workspace required.'}
       </p>
     </header>
     <div class="page-content">
       <Downloads />
       <div class="prose">
-        <h2>Ready when it’s ready.</h2>
-        <p>
-          The Mac application and complete corresponding source will become
-          downloadable together after the release review. Windows is being
-          rebuilt for ordinary PCs. No application packages are publicly
-          available yet.
-        </p>
-        <p>
-          <a href={`${site.repo}/issues`}>
-            Follow development or ask a question on GitHub ↗
-          </a>
-        </p>
         <h2>Installing on a Mac</h2>
+        <p>Needs a Mac with Apple silicon (M1 or newer) and macOS 14.4 or later.</p>
         <ol>
+          <li>Download the disk image (DMG) above and open it.</li>
+          <li>Drag ENG Drawing Viewer onto Applications.</li>
           <li>
-            When the release is available, download the Apple silicon DMG.
-          </li>
-          <li>
-            Open the disk image and drag ENG Drawing Viewer into Applications.
-          </li>
-          <li>
-            Open the application. Public requirements and checksums will be
-            listed with the release.
+            Open the app. Because it's free software that isn't notarized by
+            Apple, macOS first says it could not verify it. Click
+            <strong>Done</strong>, open <strong>System Settings › Privacy &amp;
+            Security</strong>, click <strong>Open Anyway</strong> next to the
+            message about ENG Drawing Viewer, and confirm. You only do this once.
           </li>
         </ol>
         <p>
-          The first release is expected to use ad-hoc signing without Apple
-          notarization. If macOS blocks it, confirm the source and checksum
-          before using System Settings → Privacy & Security → Open Anyway. Do
-          not disable Gatekeeper globally.
+          Please don't turn off Gatekeeper for your whole Mac; Open Anyway is
+          enough. A ZIP of the app and every other release file are on the{' '}
+          <a href={`${site.appRepo}/releases`}>GitHub release page ↗</a>.
+        </p>
+        <p>
+          <a href={`${site.appRepo}/issues`}>
+            Questions or problems? Ask on GitHub ↗
+          </a>
         </p>
         <h2>Verify a download</h2>
         <p>
-          Every published asset will have a SHA-256 checksum. On macOS, run{' '}
-          <code>shasum -a 256 "downloaded-file.dmg"</code>. On Windows, use{' '}
-          <code>Get-FileHash "downloaded-file.zip" -Algorithm SHA256</code>.
-          Compare the entire result with the release checksum.
+          Every file has a SHA-256 checksum, shown on its card above and in{' '}
+          <code>SHA256SUMS.txt</code> on the release page. In Terminal, run{' '}
+          <code>shasum -a 256 ~/Downloads/ENG-Drawing-Viewer-*.dmg</code> and
+          compare the whole result.
         </p>
         <h2>Visiting from your phone?</h2>
         <p>
@@ -74,9 +69,13 @@ import { site, url } from '../data/site';
         <p data-share-status aria-live="polite"></p>
         <h2>Build it yourself</h2>
         <p>
-          Complete source and build instructions will accompany the approved
-          release under AGPL-3.0-or-later. The source download will be enabled
-          above when that release is public.
+          The complete source code is free under the GNU AGPL v3 or later: the
+          source card above, or the{' '}
+          <a href={site.appRepo}>repository on GitHub ↗</a>. Building needs an
+          Apple silicon Mac and one command; the release itself is built that
+          way, and two builds produce byte-identical apps. The unmodified
+          source of every copyleft library inside the app is attached to the
+          release too.
         </p>
         <a href={url('support/')} class="text-link">
           Installation questions? Visit support ↗
