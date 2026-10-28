@@ -19,34 +19,66 @@ import { url } from '../data/site';
     </header>
     <article class="page-content prose">
       <div class="callout">
-        <strong>First public release · In preparation</strong>
+        <strong>Version 2.2.0 · First public release · In final review</strong>
         <br />
-        There are no public application releases yet. The release version, date,
-        downloads and checksums will appear together after review.
+        The Mac app and its complete source code will be published together
+        once the release review is finished. Downloads, the date and checksums
+        will appear here and on the download page at the same time.
       </div>
-      <h2>The workspace so far</h2>
+      <h2>2.2.0</h2>
       <p>
-        The current development application brings together sharp PDF viewing,
-        temporary MARK annotations, a drawing queue, local PowerPoint generation
-        and 32 offline PDF tools.
+        The first public release. ENG Drawing Viewer becomes free software under
+        the GNU Affero General Public License v3 or later.
       </p>
-      <h3>More ways to work</h3>
+      <h3>New</h3>
       <ul>
-        <li>Images open alongside PDFs as one-page documents.</li>
         <li>
-          A dedicated PDF Tools workspace organizes conversion, editing and
-          review tasks.
+          <strong>About</strong> shows the licence and where to get the source
+          code, with the full licence and third-party notices one click away.
         </li>
-        <li>MARK can save a marked page as a new PDF.</li>
-        <li>The drawing queue can also export a combined PDF.</li>
-        <li>Scan with iPhone integrates with Continuity Camera on Mac.</li>
+        <li>
+          A new <strong>spelling dictionary</strong> of about 140,000 English
+          words, American and British.
+        </li>
+        <li>
+          <strong>PDF → Images</strong> lowers the resolution for very large
+          sheets instead of failing, and tells you.
+        </li>
       </ul>
-      <h3>Preparing the public release</h3>
+      <h3>Privacy and security</h3>
+      <ul>
+        <li>The app refuses network connections in its own code, in every process.</li>
+        <li>
+          Redact and Remove Metadata also clear bookmarks, comments,
+          attachments, links and form fields; redaction also removes linework
+          crossing the redacted text.
+        </li>
+        <li>PDF → Excel keeps text as text: no formulas or links can sneak in.</li>
+        <li>Protect generates a strong random permissions password if you leave it empty.</li>
+        <li>Tools refuse to write over an original, even through links or different capitalisation.</li>
+        <li>Extreme page and image sizes are checked before memory is used.</li>
+        <li>LibreOffice conversions run contained and stop completely on timeout.</li>
+        <li>Atomic saves, and temporary files are always cleaned up.</li>
+      </ul>
+      <h3>Under the hood</h3>
+      <ul>
+        <li>Built with Python 3.13 and hash-checked dependencies.</li>
+        <li>Runs on macOS 14.4 or later with Apple silicon, tested on macOS 14, 15, 26 and 27.</li>
+        <li>Built from the published source; two separate builds are byte-for-byte identical.</li>
+      </ul>
+      <h2>Earlier development</h2>
       <p>
-        Work is underway on distribution, complete source, licensing and
-        platform verification. The Windows application is being rebuilt. These
-        notes describe development progress, not a published release.
+        Versions 2.0 and 2.1 were private builds. They rebuilt the app around a
+        fast, sharp tiled viewer and the MARK workspace, and added:
       </p>
+      <ul>
+        <li>a PDF Tools workspace with 32 offline tools, including Organize Pages and Compare Drawings;</li>
+        <li>Scan with iPhone through Continuity Camera on Mac;</li>
+        <li>images (including iPhone photos) as one-page documents;</li>
+        <li>drag and drop onto the window, the PowerPoint queue and the tools;</li>
+        <li>saving a marked page as a PDF with vector markup, and exporting the queue as one PDF.</li>
+      </ul>
+      <p>The Windows version is being rebuilt and will be listed here when it's released.</p>
       <a class="text-link" href={url('download/')}>
         Check availability ↗
       </a>

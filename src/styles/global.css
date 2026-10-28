@@ -1222,6 +1222,27 @@ footer {
   height: auto;
   margin-top: 30px;
 }
+.feature-section .app-shot {
+  margin-top: 30px;
+}
+.feature-section .app-shot img {
+  margin-top: 0;
+  border-radius: 0;
+}
+.feature-section > ul {
+  list-style: disc;
+  max-width: 700px;
+  margin: 0 0 25px;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 10px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.feature-section > ul li::marker {
+  color: var(--blue);
+}
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2173,4 +2194,34 @@ body:has(dialog[open]) {
   max-height: 100%;
   background: #f9fafb;
   box-shadow: 0 12px 40px #00000015;
+}
+
+.privacy-points {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 30px;
+  display: grid;
+  gap: 14px;
+  max-width: 34rem;
+}
+.privacy-points li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.privacy-points li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+.privacy-points strong {
+  color: var(--ink);
+  font-weight: 600;
 }

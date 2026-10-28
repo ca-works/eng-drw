@@ -326,6 +326,10 @@ import { url } from '../data/site';
             Thoughtfully in one place.
           </h3>
           <p>Organize · Convert · Optimize · Edit · Protect · Review</p>
+          <p>
+            Drag files straight onto a tool. On paper? Scan the drawing with
+            your iPhone (Mac) and it opens as a PDF, ready to mark up.
+          </p>
           <a class="text-link" href={url('features/#pdf-tools')}>
             Explore all 32 tools ↗
           </a>
@@ -438,6 +442,20 @@ import { url } from '../data/site';
           Engineering work deserves a private workspace. Drawing processing
           happens locally, without accounts, cloud uploads or telemetry.
         </p>
+        <ul class="privacy-points">
+          <li>
+            <strong>Offline by design.</strong> The app refuses network
+            connections in its own code, and its tests check it.
+          </li>
+          <li>
+            <strong>Originals stay untouched.</strong> Drawings open
+            read-only; every tool writes a new file.
+          </li>
+          <li>
+            <strong>Share with care.</strong> Redact and Remove Metadata also
+            clear bookmarks, comments, attachments, links and form fields.
+          </li>
+        </ul>
         <a class="text-link" href={url('privacy/')}>
           A little more about privacy ↗
         </a>

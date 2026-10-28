@@ -41,6 +41,7 @@ const categories: Record<string, string> = {
         <a href="#mark">MARK</a>
         <a href="#pdf-tools">PDF Tools</a>
         <a href="#powerpoint">PowerPoint</a>
+        <a href="#private">Private &amp; safe</a>
         <a href="#platforms">Platforms</a>
       </nav>
       <section id="view" class="feature-section">
@@ -58,9 +59,17 @@ const categories: Record<string, string> = {
           the next drawing.
         </p>
         <p>
+          Open a folder or individual files, or simply drag PDFs, images and
+          whole folders onto the window, the PowerPoint queue or a PDF tool.
+          PNG, JPEG, TIFF, WebP, BMP, GIF and, on Mac, HEIC photos open like
+          one-page drawings, upright and at their full resolution, so you can
+          MARK a site photo just like a sheet. On Mac, <strong>Scan with
+          iPhone</strong> uses Continuity Camera to turn a paper drawing into a
+          PDF that opens straight away.
+        </p>
+        <p>
           Copy the page as a high-resolution image at 150, 220 or 300 DPI, copy
-          its filename, or save a PNG. Images open alongside PDFs as one-page
-          documents.
+          its filename, or save a PNG.
         </p>
         <Screenshot
           light={mainLight}
@@ -152,9 +161,14 @@ const categories: Record<string, string> = {
         </p>
         <p>
           Compare highlights removed and added linework and lists text changes.
-          Its saved report and queue → PDF output are rasterized. Redaction
-          targets searchable page text; it is not a complete confidential-data
-          sanitization service.
+          Its saved report and queue → PDF output are rasterized.
+        </p>
+        <p>
+          Redact removes matching searchable text and any linework crossing it,
+          then also clears the document's metadata, bookmarks, comments,
+          attachments, links and form fields; Remove Metadata does the same
+          cleanup. Text drawn as lines or inside images can't be found, so check
+          the result before you share it.
         </p>
       </section>
       <section id="powerpoint" class="feature-section">
@@ -172,8 +186,40 @@ const categories: Record<string, string> = {
           combined PDF when a deck isn’t what you need.
         </p>
       </section>
+      <section id="private" class="feature-section">
+        <div class="section-tag">05 / PRIVATE &amp; SAFE</div>
+        <h2>Careful with your work.</h2>
+        <p>
+          Everything happens on your computer. There's no account, no telemetry
+          and no cloud processing. The app refuses network connections in its
+          own code, in the main window and in every background worker, and its
+          automated tests check that this stays true.
+        </p>
+        <ul>
+          <li>Drawings open read-only, and every tool writes a new file. Tools
+            refuse to save over an original, even through a shortcut, a link or
+            a name that differs only in capitals.</li>
+          <li>Saves are atomic: a file is either completely written or left as
+            it was, and temporary files are cleaned up.</li>
+          <li>PDF → Excel stores a drawing's text as plain text, so nothing in
+            it can turn into a live spreadsheet formula or link.</li>
+          <li>Protect generates a strong random permissions password when you
+            don't set one.</li>
+          <li>Extremely large pages and images are checked before memory is
+            used, so a damaged or extreme file can't exhaust your computer;
+            PDF → Images lowers the resolution for oversized sheets and tells
+            you.</li>
+          <li>Conversions that use LibreOffice run in their own contained
+            process and are stopped completely if they take too long.</li>
+        </ul>
+        <p>
+          ENG Drawing Viewer is free software under the GNU AGPL v3 or later.
+          Help › About shows the licence, the third-party notices and where to
+          get the source code.
+        </p>
+      </section>
       <section id="platforms" class="feature-section">
-        <div class="section-tag">05 / PLATFORM DETAILS</div>
+        <div class="section-tag">06 / PLATFORM DETAILS</div>
         <h2>A shared standard of care.</h2>
         <p>
           The first Mac release is being prepared for Apple silicon. Windows is
