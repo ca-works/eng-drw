@@ -40,10 +40,14 @@ test('download buttons match the verified release data', async ({ page, baseURL 
     await expect(links).toHaveCount(0);
     return;
   }
-  // Mac and source link to exactly the verified assets; Windows stays "Coming soon".
+  // Every button links to exactly the verified assets; Windows is "Coming soon" or labelled Preview.
   const hrefs = await links.evaluateAll((as) => as.map((a) => a.getAttribute('href')));
   expect(hrefs.sort()).toEqual(release.assets.map((a) => a.url).sort());
-  await expect(page.locator('[data-platform="windows"] .status')).toHaveText('Coming soon');
+  const win = release.assets.find((a) => a.platform === 'windows');
+  if (win?.preview)
+    await expect(page.locator('[data-platform="windows"] .preview-badge')).toHaveText('Preview');
+  else if (!win)
+    await expect(page.locator('[data-platform="windows"] .status')).toHaveText('Coming soon');
   for (const a of release.assets) await expect(page.getByText(a.sha256)).toHaveCount(1);
 });
 test('MARK callout, comment, undo and redo', async ({ page }) => {

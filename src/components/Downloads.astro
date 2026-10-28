@@ -57,7 +57,7 @@ const portable = find('windows-portable');
         </span>
         <h3>
           {p.name}
-          {a?.preview && <span class="preview-badge">Preview</span>}
+          {p.id === 'windows' && a?.preview && <span class="preview-badge">Preview</span>}
         </h3>
         <p>{p.sub}</p>
         <span class="mono requirements">{p.detail}</span>
@@ -86,7 +86,7 @@ const portable = find('windows-portable');
                 </details>
               </div>
             )}
-            {a.preview && (
+            {p.id === 'windows' && a.preview && (
               <p class="download-note">
                 Preview: built and tested automatically on Windows Server 2022 and 2025, not
                 yet on an everyday Windows 10 or 11 PC. Feedback is very welcome.
