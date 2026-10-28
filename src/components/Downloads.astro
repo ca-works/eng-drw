@@ -6,9 +6,12 @@ interface Asset {
   size: number;
   sha256: string;
   platform: string;
+  version?: string;
+  preview?: boolean;
 }
 const assets = release.assets as Asset[];
-const released = release.status === 'available';
+const find = (id: string) => assets.find((a) => a.platform === id);
+const windows = find('windows');
 const platforms = [
   {
     id: 'macos',
@@ -16,7 +19,7 @@ const platforms = [
     name: 'macOS',
     sub: 'Made for your Mac.',
     // Measured: the 2.2.0 build runs on macOS 14.8, 15.7, 26.6 and 27; Qt 6.12 needs 14.4.
-    detail: released
+    detail: find('macos')
       ? 'macOS 14.4 or later · Apple silicon (M1 or newer)'
       : 'Apple silicon · requirements verified at release',
     note: 'The first public Mac release is being prepared.',
@@ -26,41 +29,69 @@ const platforms = [
     symbol: '⊞',
     name: 'Windows',
     sub: 'The same precision. On PC.',
-    detail: 'Standalone portable application · in development',
+    detail: windows
+      ? 'Windows 10 or 11 · 64-bit (x64) · installs without admin rights'
+      : 'Standalone application · in development',
     note: 'A fresh Windows build is in development. Full feature parity is the goal.',
   },
   {
     id: 'source',
-    symbol: '〈/〉',
+    symbol: '〈/〉',
     name: 'Source code',
     sub: 'Free to inspect. Free to build.',
     detail: 'AGPL-3.0-or-later · complete build instructions',
     note: 'Complete corresponding source will accompany the approved release.',
   },
 ];
+const mb = (a: Asset) => `${(a.size / 1e6).toFixed(1)} MB`;
+const portable = find('windows-portable');
 ---
 
 <div class="download-grid">
   {platforms.map((p) => {
-    const a = assets.find((a) => a.platform === p.id);
+    const a = find(p.id);
     return (
       <article class="download-card" data-platform={p.id}>
         <span class="platform-symbol" aria-hidden="true">
           {p.symbol}
         </span>
-        <h3>{p.name}</h3>
+        <h3>
+          {p.name}
+          {a?.preview && <span class="preview-badge">Preview</span>}
+        </h3>
         <p>{p.sub}</p>
         <span class="mono requirements">{p.detail}</span>
         {a ? (
           <>
             <a class="button" href={a.url}>
-              {p.id === 'source' ? `Download source ${release.version}` : `Download ${release.version}`}
+              {p.id === 'source'
+                ? `Download source ${a.version}`
+                : p.id === 'windows'
+                  ? `Download installer ${a.version}`
+                  : `Download ${a.version}`}
             </a>
-            <p>{(a.size / 1e6).toFixed(1)} MB</p>
+            <p>{mb(a)}</p>
             <details>
               <summary>SHA-256 checksum</summary>
               <code class="checksum">{a.sha256}</code>
             </details>
+            {p.id === 'windows' && portable && (
+              <div class="download-alt">
+                <p>
+                  Prefer no installer? <a href={portable.url}>Portable ZIP</a> ({mb(portable)})
+                </p>
+                <details>
+                  <summary>Portable SHA-256</summary>
+                  <code class="checksum">{portable.sha256}</code>
+                </details>
+              </div>
+            )}
+            {a.preview && (
+              <p class="download-note">
+                Preview: built and tested automatically on Windows Server 2022 and 2025, not
+                yet on an everyday Windows 10 or 11 PC. Feedback is very welcome.
+              </p>
+            )}
           </>
         ) : (
           <>

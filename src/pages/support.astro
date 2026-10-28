@@ -4,7 +4,7 @@ import { site, url } from '../data/site';
 const faqs = [
   [
     'Where can I download the application?',
-    'Version 2.2.0 for Mac (Apple silicon, macOS 14.4 or later) is on the Download page, with its checksums and complete source. A new Windows version is being rebuilt and will follow.',
+    'From the Download page: version 2.2.0 for Mac and a 2.2.1 Preview for Windows, each with its checksums and complete source code.',
   ],
   [
     'Do I need an account or internet connection?',
@@ -16,7 +16,7 @@ const faqs = [
   ],
   [
     'Do I need Microsoft PowerPoint?',
-    'No. Creating a .pptx file happens locally. Open that file in a compatible presentation application. Some advanced Windows integration requires a running copy of PowerPoint and will be documented when Windows ships.',
+    'No. The .pptx file is written locally; open it in any compatible presentation app. On Windows, if PowerPoint is running with a presentation open, you can also send slides straight into it.',
   ],
   [
     'Why does Office to PDF ask for LibreOffice?',
@@ -24,19 +24,19 @@ const faqs = [
   ],
   [
     'How does OCR work?',
-    'On macOS, the current application uses Apple Vision for local text recognition. Windows OCR availability will be documented with the rebuilt release.',
+    'Locally, without any service. On Mac, Make Searchable uses Apple Vision. On Windows it uses the Tesseract engine built into the app, with seven languages included.',
   ],
   [
     'Can I use scanned PDFs and photographs?',
-    'Yes. PDFs and PNG, JPEG, TIFF, BMP, GIF and WebP images are supported. HEIC/HEIF decoding is available on macOS. Scan with iPhone requires Apple Continuity Camera and compatible signed-in devices.',
+    'Yes. PDFs and PNG, JPEG, TIFF, BMP, GIF and WebP images open like one-page drawings. iPhone HEIC photos open on Mac, and on Windows once Microsoft’s free HEIF and HEVC extensions are installed. Scan with iPhone is Mac-only and uses Apple Continuity Camera.',
   ],
   [
     'Which Mac or Windows versions are supported?',
-    'The first Mac package targets Apple silicon. Its minimum macOS version is still being verified against the bundled libraries. Windows requirements will be confirmed with its rebuilt release.',
+    'Mac: Apple silicon (M1 or newer) with macOS 14.4 or later, tested on macOS 14, 15, 26 and 27. Windows: Windows 10 or 11, 64-bit; the Windows Preview has been tested automatically on Windows Server 2022 and 2025 but not yet on an everyday PC.',
   ],
   [
     'How do I uninstall it?',
-    'Remove the application. On Mac, local settings, cache and diagnostic logs remain under your user Library, in Application Support/ENG Drawing Viewer, Caches/ENG Drawing Viewer and Logs/ENG Drawing Viewer. Delete those folders if you also want to remove local preferences. Your drawings and saved scans remain where you saved them.',
+    'On Mac, drag the app to the Bin; settings, cache and logs stay in your Library under Application Support, Caches and Logs (each in an ENG Drawing Viewer folder) until you delete them. On Windows, uninstall from Settings › Apps (or delete the portable folder); settings are in %APPDATA%\\ENG Drawing Viewer and the cache and logs in %LOCALAPPDATA%\\ENG Drawing Viewer. Your drawings and saved scans stay where you saved them.',
   ],
   [
     'Can I report a bug with a confidential drawing?',

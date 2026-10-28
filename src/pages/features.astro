@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Screenshot from '../components/Screenshot.astro';
+import release from '../data/release.json';
+const win = (release.assets as { platform: string; version?: string }[]).find((a) => a.platform === 'windows');
 import mainLight from '../assets/screens/main-light.png';
 import mainDark from '../assets/screens/main-dark.png';
 import markLight from '../assets/screens/mark-light.png';
@@ -223,9 +225,10 @@ const categories: Record<string, string> = {
         <h2>A shared standard of care.</h2>
         <p>
           Version 2.2.0 is available for Macs with Apple silicon and macOS 14.4
-          or later. Windows is being rebuilt for ordinary PCs, with the same
-          viewer, MARK, conversion and export workflow as its goal, and will
-          follow.
+          or later.{' '}
+          {win
+            ? `Windows ${win.version} is a Preview for Windows 10 and 11 (64-bit) with the same viewer, MARK, PDF tools and PowerPoint export; it has been tested automatically on Windows Server, not yet on everyday PCs.`
+            : 'Windows is being rebuilt for ordinary PCs, with the same viewer, MARK, conversion and export workflow as its goal, and will follow.'}
         </p>
         <table class="shortcut-table">
           <thead>
@@ -240,17 +243,17 @@ const categories: Record<string, string> = {
               [
                 'Viewing, MARK, PDF tools',
                 'Available',
-                'Planned parity',
+                win ? 'Preview' : 'Planned parity',
               ],
               [
                 'Local PowerPoint export',
                 'Available',
-                'Planned parity',
+                win ? 'Preview, plus sending to an open presentation' : 'Planned parity',
               ],
               ['Scan with iPhone', 'Continuity Camera', 'Mac only'],
-              ['OCR', 'Apple Vision', 'To be verified'],
-              ['HEIC photos', 'ImageIO', 'To be verified'],
-              ['Downloads', 'Version 2.2.0', 'Coming soon'],
+              ['OCR', 'Apple Vision', win ? 'Built-in Tesseract (7 languages)' : 'To be verified'],
+              ['HEIC photos', 'Built in', win ? "With Microsoft's free HEIF/HEVC extensions" : 'To be verified'],
+              ['Downloads', 'Version 2.2.0', win ? `Version ${win.version} Preview` : 'Coming soon'],
             ].map(([a, b, c]) => (
               <tr>
                 <td>{a}</td>

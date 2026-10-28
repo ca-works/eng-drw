@@ -5,6 +5,7 @@ import { site, url } from '../data/site';
 import release from '../data/release.json';
 const released = release.status === 'available';
 const v = release.version;
+const win = (release.assets as { platform: string; version?: string }[]).find((a) => a.platform === 'windows');
 ---
 
 <Layout
@@ -21,7 +22,7 @@ const v = release.version;
       </h1>
       <p>
         {released
-          ? `Version ${v} for Mac is here, free and open source. No account, subscription or cloud workspace required. Windows is being rebuilt and will follow.`
+          ? `Version ${v} for Mac is here, free and open source${win ? `, with a ${win.version} Preview for Windows` : ''}. No account, subscription or cloud workspace required.${win ? '' : ' Windows is being rebuilt and will follow.'}`
           : 'The first public release is being prepared. Choose your platform below for the current status. No account, subscription or cloud workspace required.'}
       </p>
     </header>
@@ -51,12 +52,44 @@ const v = release.version;
             Questions or problems? Ask on GitHub ↗
           </a>
         </p>
+        {win && (
+          <>
+            <h2>Installing on Windows (Preview)</h2>
+            <p>Needs Windows 10 or 11, 64-bit. No administrator rights are needed.</p>
+            <ol>
+              <li>
+                Download the installer above and run it. It installs for your
+                user account only and adds a Start menu shortcut.
+              </li>
+              <li>
+                Because the app isn't code-signed, Windows SmartScreen may say
+                it protected your PC. Click <strong>More info</strong>, check
+                that the file is ENG Drawing Viewer, then click
+                <strong>Run anyway</strong>.
+              </li>
+              <li>
+                Prefer not to install? Unzip the portable ZIP first (don't run
+                it from inside the ZIP) and open <code>ENG Drawing Viewer.exe</code>.
+              </li>
+            </ol>
+            <p>
+              This is a Preview: it has been built and tested automatically on
+              Windows Server 2022 and 2025, but not yet on an everyday PC. Please
+              report anything that doesn't look or work right.
+            </p>
+          </>
+        )}
         <h2>Verify a download</h2>
         <p>
           Every file has a SHA-256 checksum, shown on its card above and in{' '}
           <code>SHA256SUMS.txt</code> on the release page. In Terminal, run{' '}
           <code>shasum -a 256 ~/Downloads/ENG-Drawing-Viewer-*.dmg</code> and
-          compare the whole result.
+          compare the whole result.{win && (
+            <>
+              {' '}On Windows, use PowerShell:{' '}
+              <code>Get-FileHash $HOME\Downloads\ENG-Drawing-Viewer-*-Windows-x64-Setup.exe</code>.
+            </>
+          )}
         </p>
         <h2>Visiting from your phone?</h2>
         <p>

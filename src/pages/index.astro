@@ -16,6 +16,8 @@ import compareDark from '../assets/screens/compare-dark.png';
 import queueLight from '../assets/screens/queue-light.png';
 import queueDark from '../assets/screens/queue-dark.png';
 import { url } from '../data/site';
+import releaseData from '../data/release.json';
+const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => a.platform === 'windows');
 ---
 
 <Layout>
@@ -484,7 +486,9 @@ import { url } from '../data/site';
       <br />
       <span>for better work.</span>
     </h2>
-    <p>A free, open-source engineering workspace. Version 2.2.0 for Mac is here; Windows is on its way.</p>
+    <p>
+      A free, open-source engineering workspace for Mac{windowsAsset ? ', with a Windows Preview' : '; Windows is on its way'}.
+    </p>
     <Downloads />
     <a class="text-link" href={url('download/')}>
       Release details and installation ↗

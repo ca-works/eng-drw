@@ -36,48 +36,79 @@ test('API errors fail without replacing last verified snapshot', () => {
   assert.notEqual(r.status, 0);
   assert.equal(r.output, 'original');
 });
-function fixture(digest) {
-  const hash = 'a'.repeat(64),
-    version = '2.2.0';
-  const assets = [
-    `ENG-Drawing-Viewer-${version}-macOS-AppleSilicon.dmg`,
-    `eng-drawing-viewer-${version}-source.zip`,
-  ].map((name) => ({
-    name,
-    size: 100,
-    digest,
-    browser_download_url: `https://github.com/ca-works/eng-drawing-viewer/releases/download/v${version}/${name}`,
-  }));
-  return [
-    {
-      status: 200,
-      body: {
-        tag_name: `v${version}`,
-        assets: [
-          ...assets,
-          {
-            name: 'SHA256SUMS.txt',
-            browser_download_url:
-              'https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.2.0/SHA256SUMS.txt',
-          },
-        ],
-      },
-    },
-    { status: 200, text: assets.map((a) => `${hash}  ${a.name}`).join('\n') },
-  ];
+const base = 'https://github.com/ca-works/eng-drawing-viewer/releases/download';
+const H = 'a'.repeat(64);
+// A release with the given files; every listed file's digest matches unless `digest` overrides it.
+function rel(version, names, { prerelease = false, published, digest } = {}) {
+  return {
+    tag_name: `v${version}`,
+    draft: false,
+    prerelease,
+    published_at: published,
+    html_url: `https://github.com/ca-works/eng-drawing-viewer/releases/tag/v${version}`,
+    body: `notes ${version}`,
+    assets: [
+      ...names.map((name) => ({
+        name,
+        size: 100,
+        digest: digest ?? `sha256:${H}`,
+        browser_download_url: `${base}/v${version}/${name}`,
+      })),
+      { name: 'SHA256SUMS.txt', browser_download_url: `${base}/v${version}/SHA256SUMS.txt` },
+    ],
+  };
 }
-test('matching checksums enable Mac and source together, never Windows', () => {
-  const r = run(fixture('sha256:' + 'a'.repeat(64)));
+const sums = (names) => ({ status: 200, text: names.map((n) => `${H}  ${n}`).join('\n') });
+const mac220 = ['ENG-Drawing-Viewer-2.2.0-macOS-AppleSilicon.dmg', 'eng-drawing-viewer-2.2.0-source.zip'];
+const win221 = [
+  'ENG-Drawing-Viewer-2.2.1-Windows-x64-Setup.exe',
+  'ENG-Drawing-Viewer-2.2.1-Windows-x64-Portable.zip',
+  'eng-drawing-viewer-2.2.1-source.zip',
+];
+
+test('a stable Mac release enables Mac and source, never Windows', () => {
+  const r = run([
+    { status: 200, body: [rel('2.2.0', mac220, { published: '2026-10-28T03:00:00Z' })] },
+    sums(mac220),
+  ]);
   assert.equal(r.status, 0, r.stderr);
   const out = JSON.parse(r.output);
   assert.equal(out.status, 'available');
-  assert.deepEqual(
-    out.assets.map((a) => a.platform),
-    ['macos', 'source'],
-  );
+  assert.deepEqual(out.assets.map((a) => a.platform), ['macos', 'source']);
+});
+test('a Windows pre-release adds Windows as Preview and keeps the stable Mac build', () => {
+  const r = run([
+    {
+      status: 200,
+      body: [
+        rel('2.2.0', mac220, { published: '2026-10-28T03:00:00Z' }),
+        rel('2.2.1', win221, { prerelease: true, published: '2026-10-28T13:00:00Z' }),
+      ],
+    },
+    sums(mac220),
+    sums(win221),
+  ]);
+  assert.equal(r.status, 0, r.stderr);
+  const out = JSON.parse(r.output);
+  const by = Object.fromEntries(out.assets.map((a) => [a.platform, a]));
+  assert.equal(by.macos.version, '2.2.0');
+  assert.equal(by.macos.preview, false);
+  assert.equal(by.windows.version, '2.2.1');
+  assert.equal(by.windows.preview, true);
+  assert.equal(by['windows-portable'].version, '2.2.1');
+  assert.equal(by.source.version, '2.2.1');
+  assert.equal(out.version, '2.2.0');
 });
 test('mismatched digest blocks download publication', () => {
-  const r = run(fixture('sha256:' + 'b'.repeat(64)));
+  const r = run([
+    { status: 200, body: [rel('2.2.0', mac220, { published: '2026-10-28T03:00:00Z', digest: 'sha256:' + 'b'.repeat(64) })] },
+    sums(mac220),
+  ]);
   assert.notEqual(r.status, 0);
   assert.equal(r.output, 'original');
+});
+test('an empty release list is honestly unreleased', () => {
+  const r = run([{ status: 200, body: [] }]);
+  assert.equal(r.status, 0, r.stderr);
+  assert.equal(JSON.parse(r.output).status, 'unreleased');
 });
