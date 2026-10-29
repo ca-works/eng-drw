@@ -10,19 +10,23 @@ After a permitted push to main, set repository Settings → Pages → Source to 
 
 ## Approved application release
 
-The planned separate application repository is `ca-works/eng-drawing-viewer`; create it only after owner approval of the clean export. The website sync script reads that repository. If no public stable release exists it writes an unreleased state. Any other API failure aborts deployment rather than presenting stale download information.
+Downloads come only from published releases of the public app repository `ca-works/eng-drawing-viewer`. `scripts/sync-release.mjs` (run by every deployment and once a day) reads them and writes `src/data/release.json`. Nothing else may supply a download link, size or checksum.
 
-The first public version is planned as 2.2.0, but must not be advertised as released in advance. Expected assets:
+The site lists exactly four editions, in this order. Each comes from the newest published release that contains its file; a pre-release is shown as *Preview*; an edition no release contains says *Coming soon*.
 
-- `ENG-Drawing-Viewer-2.2.0-macOS-AppleSilicon.dmg`
-- `ENG-Drawing-Viewer-2.2.0-macOS-AppleSilicon.zip`
-- `eng-drawing-viewer-2.2.0-source.zip`
-- `SHA256SUMS.txt`
-- Required dependency source/licence artifacts from the release audit.
+| Edition | 2.3.0 and later | 2.2.x |
+|---|---|---|
+| macOS Universal | `ENG-Drawing-Viewer-macOS-Universal.dmg` | — |
+| macOS Apple Silicon | `ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg` | `ENG-Drawing-Viewer-<v>-macOS-AppleSilicon.dmg` |
+| Windows x64 | `ENG-Drawing-Viewer-Windows-x64.zip` | `ENG-Drawing-Viewer-<v>-Windows-x64-Setup.exe` + `…-Portable.zip` |
+| Linux x86-64 | `ENG-Drawing-Viewer-Linux-x86_64.AppImage` | — |
+| Source | `eng-drawing-viewer-<v>-source.zip` | same |
 
-`sync-release.mjs` requires both DMG and source ZIP, checks GitHub's digest against SHA256SUMS and enables those cards together. Windows remains Coming soon; support for its approved future asset must be added deliberately. Never infer approval from CI success or the existence of a local file.
+Versionless names count only in releases tagged 2.3.0 or later, and versioned names only before, so an old file can never appear as a new version. Every file must be listed in its release's `SHA256SUMS.txt` with the same hash GitHub reports as its digest, and be served from the repository's own release URLs; otherwise the sync fails and the deployment stops, keeping the last verified site. `npm run test:release` covers these rules.
 
-After publishing an approved release, dispatch the website workflow and verify live download sizes and SHA-256 checksums. Public application requirements must be updated only after measured compatibility checks. No large binaries belong in this website repository.
+Requirements, architecture text and install notes per edition live in `src/data/editions.ts`; change them only with measured evidence (the app repository's `docs/COMPATIBILITY.md` and test results).
+
+After the owner publishes an approved release, dispatch the deploy workflow (or wait for the daily run) and check the download page: each card's version, size and SHA-256 against the release's `SHA256SUMS.txt`. Never infer approval from CI success or the existence of a local file. No large binaries belong in this website repository.
 
 ## Free hosting limits (checked 24 October 2026)
 
