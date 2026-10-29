@@ -7,6 +7,7 @@ import { Image } from 'astro:assets';
 import icon from '../assets/icon.png';
 import Screenshot from '../components/Screenshot.astro';
 import mainDark from '../assets/screens/main-dark.png';
+import mainLight from '../assets/screens/main-light.png';
 import markLight from '../assets/screens/mark-light.png';
 import markDark from '../assets/screens/mark-dark.png';
 import toolsLight from '../assets/screens/tools-light.png';
@@ -15,9 +16,27 @@ import compareLight from '../assets/screens/compare-light.png';
 import compareDark from '../assets/screens/compare-dark.png';
 import queueLight from '../assets/screens/queue-light.png';
 import queueDark from '../assets/screens/queue-dark.png';
+import pdfeditLight from '../assets/screens/pdfedit-light.png';
+import pdfeditDark from '../assets/screens/pdfedit-dark.png';
+import imageLight from '../assets/screens/image-light.png';
+import imageDark from '../assets/screens/image-dark.png';
+import vectorLight from '../assets/screens/vector-light.png';
+import vectorDark from '../assets/screens/vector-dark.png';
 import { url } from '../data/site';
-import releaseData from '../data/release.json';
-const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => a.platform === 'windows');
+import { edition, allEditorsReleased } from '../data/editions';
+import demo from '../data/demo.json';
+const win = edition('windows-x64');
+const linux = edition('linux-x86_64');
+const platforms = linux.available ? 'Mac, Windows and Linux' : win.available ? 'Mac and Windows, with Linux on the way' : 'Mac, with Windows and Linux on the way';
+const kb = (n: number) => `${Math.round(n / 1000)} KB`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const demoFile = (f: string) => `${base}/demo/${f}`;
+// The traced outline's editable points, for the vector animation (from the app's own SVG export).
+const nodes = demo.trace.paths
+  .join(' ')
+  .match(/[ML]\s*[-\d.]+\s+[-\d.]+/g)!
+  .map((m) => m.slice(1).trim().split(/\s+/).map(Number));
+const editorsNote = allEditorsReleased ? '' : 'New in version 2.3.0';
 ---
 
 <Layout>
@@ -30,15 +49,14 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
           <span>Clearly.</span>
         </h1>
         <p class="hero-copy">
-          From the first detail to the final review.
-          <br class="desktop" /> View, mark up, convert and present. All on your
-          computer.
+          View, annotate, edit, convert and present engineering drawings with
+          precision. <br class="desktop" />A powerful offline workspace for {platforms}.
         </p>
         <div class="hero-actions">
           <a class="button" href={url('download/')}>
-            Meet your new workspace <span aria-hidden="true">↗</span>
+            Download for free <span aria-hidden="true">↗</span>
           </a>
-          <a class="text-link" href="#workspace">
+          <a class="text-link" href="#viewer">
             Explore the details <span aria-hidden="true">↓</span>
           </a>
         </div>
@@ -67,25 +85,19 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
       </h2>
       <p>
         One thoughtful workspace for the work around your drawings. Open a
-        folder, find the detail, make your point.
+        folder, find the detail, make your point, and send it on.
       </p>
     </div>
     <div class="feature-grid">
       {[
-        ['01', 'View', 'Find the drawing. See every detail.', 'viewer', '↗'],
-        ['02', 'MARK', 'Make the next review unmistakable.', 'mark', '↗'],
-        [
-          '03',
-          'Convert',
-          'The right format. Without the cloud.',
-          'convert',
-          '↗',
-        ],
-        ['04', 'Present', 'From drawing to discussion.', 'present', '↗'],
-      ].map(([n, t, d, id, a]) => (
+        ['01', 'View', 'Find the drawing. See every detail.', 'viewer'],
+        ['02', 'MARK', 'Make the next review unmistakable.', 'mark'],
+        ['03', 'Present', 'From drawing to discussion.', 'present'],
+        ['04', 'Edit', 'PDFs, images and vectors. Still local.', 'edit-pdf'],
+      ].map(([n, t, d, id]) => (
         <a class="feature-tile" href={`#${id}`}>
           <span class="mono">
-            {n} <span>{a}</span>
+            {n} <span>↗</span>
           </span>
           <h3>{t}</h3>
           <p>{d}</p>
@@ -94,12 +106,12 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
               '⌖'
             ) : id === 'mark' ? (
               <span class="red-bubble">1</span>
-            ) : id === 'convert' ? (
-              <span>
-                PDF <b>→</b> DOCX
-              </span>
-            ) : (
+            ) : id === 'present' ? (
               <span>▱ ▱ ▱</span>
+            ) : (
+              <span>
+                PDF <b>·</b> IMG <b>·</b> SVG
+              </span>
             )}
           </div>
         </a>
@@ -165,8 +177,8 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
         </div>
       </div>
       <p class="center subtle">
-        Nested folders. Adjustable thumbnails. Multi-page navigation. A library
-        that keeps up.
+        Nested folders. Multiple PDFs. Adjustable thumbnails. Multi-page
+        navigation, panning and drag and drop. A library that keeps up.
       </p>
     </div>
   </section>
@@ -268,105 +280,13 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
       </p>
       <span class="mono"></span>
     </div>
-    <details class="screenshot-detail">
-      <summary>
-        See MARK in the desktop application <span>↗</span>
-      </summary>
+    <div class="mark-shot">
       <Screenshot
         light={markLight}
         dark={markDark}
         alt="The real MARK window: a sample drawing with a circle, an arrow, a highlight and four numbered callouts linked to review comments"
       />
-    </details>
-  </section>
-  <section id="convert" class="section convert-section">
-    <div class="container">
-      <div class="section-heading">
-        <h2>
-          New format.
-          <br />
-          <span>Same computer.</span>
-        </h2>
-        <p>
-          Move between drawings, documents and images without sending your work
-          away. A complete PDF Tools workspace, with 32 tools in seven groups.
-        </p>
-      </div>
-      <div class="converter" data-converter>
-        <div>
-          <span class="mono">START WITH</span>
-          <div class="file-tile">
-            PDF<span>.pdf</span>
-          </div>
-        </div>
-        <div class="conversion-path" aria-hidden="true">
-          <span></span>→<span></span>
-        </div>
-        <div>
-          <span class="mono">MAKE IT</span>
-          <div
-            class="format-options"
-            role="group"
-            aria-label="Preview PDF conversion formats"
-          >
-            {['DOCX', 'XLSX', 'PPTX', 'PNG', 'TXT'].map((f, i) => (
-              <button data-format={f} aria-pressed={i === 0}>
-                {f}
-              </button>
-            ))}
-          </div>
-        </div>
-        <p data-format-description aria-live="polite">
-          Editable text or page pictures in a Word document.
-        </p>
-      </div>
-      <div class="tool-teaser">
-        <div>
-          <h3>
-            Your PDF toolbox.
-            <br />
-            Thoughtfully in one place.
-          </h3>
-          <p>Organize · Convert · Optimize · Edit · Protect · Review</p>
-          <p>
-            Drag files straight onto a tool. On paper? Scan the drawing with
-            your iPhone (Mac) and it opens as a PDF, ready to mark up.
-          </p>
-          <a class="text-link" href={url('features/#pdf-tools')}>
-            Explore all 32 tools ↗
-          </a>
-          <p class="fine-print">
-            Office → PDF requires a local LibreOffice installation. Conversion
-            fidelity depends on the document.
-          </p>
-        </div>
-        <Screenshot
-          light={toolsLight}
-          dark={toolsDark}
-          sizes="(max-width: 900px) 95vw, 640px"
-          alt="The real PDF Tools workspace with tools grouped into Organize, Convert, Optimize and more"
-        />
-      </div>
-      <div class="tool-teaser tool-teaser--flip">
-        <Screenshot
-          light={compareLight}
-          dark={compareDark}
-          sizes="(max-width: 900px) 95vw, 640px"
-          alt="The real Compare Drawings tool overlaying revision B and C of a sample flange: removed lines in red, added in blue, changed areas boxed, text changes listed"
-        />
-        <div>
-          <h3>
-            Rev B or Rev C?
-            <br />
-            See exactly what changed.
-          </h3>
-          <p>
-            Compare Drawings overlays two revisions. Removed lines turn red,
-            added lines blue, changed areas are boxed and text changes are
-            listed beside the sheet.
-          </p>
-        </div>
-      </div>
+      <p class="product-caption mono">MARK in the app · live size previews · select, restyle, delete · copy at 300 DPI</p>
     </div>
   </section>
   <section id="present" class="section container">
@@ -381,6 +301,14 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
         drawing on the right and editable numbered comments on the left.
       </p>
     </div>
+    <ol class="workflow-steps" aria-label="From drawing to presentation">
+      {['Open PDFs', 'Mark up', 'Add callouts', 'Write comments', 'Queue pages', 'Export .pptx'].map((s, i) => (
+        <li style={`--i:${i}`}>
+          <span class="mono">0{i + 1}</span>
+          {s}
+        </li>
+      ))}
+    </ol>
     <div class="slide-composition">
       <div class="slide-queue" aria-hidden="true">
         <div>01 / ROTOR</div>
@@ -432,17 +360,454 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
       <p class="product-caption mono">The PowerPoint queue in the app · Sample drawings</p>
     </div>
   </section>
+
+  <div class="workspaces-intro container" id="editors">
+    {editorsNote && <span class="new-pill">{editorsNote}</span>}
+    <h2>
+      Three new workspaces.
+      <br />
+      <span>One familiar app.</span>
+    </h2>
+    <p>
+      Edit PDF, Image and Vector sit on their own tabs beside the Viewer and PDF
+      Tools. They work on your computer, like everything else.
+    </p>
+  </div>
+
+  <section id="edit-pdf" class="section editor-section">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-tag">EDIT PDF</span>
+        <h2>
+          When a markup
+          <br />
+          <span>isn’t enough.</span>
+        </h2>
+        <p>
+          MARK adds a temporary review layer and never touches the original.
+          Edit PDF changes the document itself and saves a new PDF, with undo
+          for the whole session.
+        </p>
+      </div>
+      <div class="compare-modes">
+        <div>
+          <span class="mono">MARK</span>
+          <h3>Review</h3>
+          <p>Pens, highlights, numbered callouts and comments over the page. Copy, queue or save a marked copy.</p>
+        </div>
+        <div class="vs" aria-hidden="true">≠</div>
+        <div>
+          <span class="mono">EDIT PDF</span>
+          <h3>Change</h3>
+          <p>Real PDF content: searchable text, shapes, images, notes, redaction, rotation and crop. Saved with Save As.</p>
+        </div>
+      </div>
+      <div class="editor-shot">
+        <Screenshot
+          light={pdfeditLight}
+          dark={pdfeditDark}
+          alt="The real Edit PDF workspace: a sample bearing flange drawing with a red box and a revision note added as PDF content, the toolbar for selecting content, replacing text and rotating pages, and a list of the page's text spans"
+        />
+        <p class="product-caption mono">Edit PDF in the app · a box and a revision note added as real PDF content</p>
+      </div>
+      <ul class="capability-list">
+        <li><strong>Add</strong> searchable text, rectangles, ellipses, lines, images and PDF notes; move and resize them numerically.</li>
+        <li><strong>Replace</strong> an isolated line of original text in a standard PDF font, keeping the drawing underneath.</li>
+        <li><strong>Redact</strong> a region for real: its text, image pixels and touching linework are removed, not covered.</li>
+        <li><strong>Pages</strong>: rotate and crop without flattening. Merge, split, reorder and more live in PDF Tools.</li>
+      </ul>
+      <p class="fine-print center">
+        Original PDFs don’t carry an editable design structure: original
+        vector linework, images and form fields can be inspected but not
+        reshaped, and replacement text uses standard Latin-1 PDF fonts.
+      </p>
+    </div>
+  </section>
+
+  <section id="image" class="section editor-section">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-tag">IMAGE EDITOR</span>
+        <h2>
+          More than drawings.
+          <br />
+          <span>Edit every detail.</span>
+        </h2>
+        <p>
+          Site photos, product shots, scans. A layered image editor with
+          selections, masks, healing and exports sized to fit, without leaving
+          your drawings.
+        </p>
+      </div>
+      <div class="cutout-demo" data-cutout style="--split:50%">
+        <img
+          class="cutout-before"
+          src={demoFile(demo.sample.file)}
+          width={demo.sample.width}
+          height={demo.sample.height}
+          alt="Sample image: a rendered turbine rotor on a green cutting mat"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="cutout-after">
+          <img
+            src={demoFile(demo.background_removal.file)}
+            width={demo.sample.width}
+            height={demo.sample.height}
+            alt="The same image after the app's automatic background removal: the rotor on transparency"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <svg
+          class="selection-ants"
+          viewBox={`0 0 ${demo.sample.width} ${demo.sample.height}`}
+          aria-hidden="true"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <path d={demo.quick_selection.outline} />
+        </svg>
+        <div class="cutout-handle" aria-hidden="true"><span>⟷</span></div>
+        <input
+          class="cutout-range"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          aria-label="Compare the original with the background removed"
+        />
+        <span class="cutout-label left mono">ORIGINAL</span>
+        <span class="cutout-label right mono">BACKGROUND REMOVED</span>
+      </div>
+      <div class="demo-switch" role="group" aria-label="Image demonstration">
+        <button aria-pressed="true" data-cutout-mode="remove">Remove background</button>
+        <button aria-pressed="false" data-cutout-mode="select">Quick Selection</button>
+      </div>
+      <p class="demo-caption" data-cutout-caption>
+        Real output of the app’s one-click <em>Remove background automatically</em>
+        on a sample image. It is a conventional algorithm, not an AI model: it
+        suits objects on a plain or distinct backdrop.
+      </p>
+      <div class="tool-cloud" aria-label="Image Editor tools">
+        {[
+          'Layers & masks', 'Rectangle & ellipse selection', 'Lasso & polygonal lasso', 'Magic Wand',
+          'Quick Selection', 'Magic Eraser', 'Background Eraser', 'Spot Healing', 'Clone Stamp',
+          'Object removal', 'Crop, resize, rotate, flip', 'Rulers, guides & grid', 'Brush & highlighter',
+          'Text, shapes & numbered comments', 'Blend modes', 'Native clipboard formats',
+        ].map((t) => (
+          <span>{t}</span>
+        ))}
+      </div>
+      <div class="compress-demo" data-compress>
+        <div class="compress-view">
+          {demo.exports.map((e, i) => (
+            <img
+              src={demoFile(e.file)}
+              width={e.width}
+              height={e.height}
+              alt={`JPEG exported by the app: ${e.width} × ${e.height} pixels, quality ${e.quality}, ${kb(e.bytes)}`}
+              loading="lazy"
+              decoding="async"
+              data-export={i}
+              hidden={i !== 0}
+            />
+          ))}
+        </div>
+        <div class="compress-panel">
+          <span class="mono">EXPORT TO A FILE SIZE</span>
+          <h3>Small enough to send.</h3>
+          <p>
+            Set a target and the app searches the quality, and optionally the
+            dimensions, measuring the real encoded file every time.
+          </p>
+          <div class="compress-options" role="radiogroup" aria-label="Target file size">
+            {demo.exports
+              .filter((e, i) => i !== 1 || e.bytes !== demo.exports[0].bytes)
+              .map((e) => {
+                const i = demo.exports.indexOf(e);
+                return (
+                  <button role="radio" aria-checked={i === 0} data-target={i}>
+                    {e.target_bytes ? `Under ${kb(e.target_bytes)}` : 'Best quality'}
+                  </button>
+                );
+              })}
+          </div>
+          <div class="compress-stats">
+            {demo.exports.map((e, i) => (
+              <dl data-stats={i} hidden={i !== 0}>
+                <div><dt>File size</dt><dd>{kb(e.bytes)}</dd></div>
+                <div><dt>Pixels</dt><dd>{e.width} × {e.height}</dd></div>
+                <div><dt>JPEG quality</dt><dd>{e.quality}</dd></div>
+              </dl>
+            ))}
+          </div>
+          <p class="fine-print">
+            Each picture is the unchanged file the app exported. Exports:
+            JPEG, PNG, TIFF, WebP, BMP, GIF, AVIF and HEIF.
+          </p>
+        </div>
+      </div>
+      <div class="editor-shot">
+        <Screenshot
+          light={imageLight}
+          dark={imageDark}
+          alt="The real Image Editor: the sample rotor with its background removed through a layer mask, the tool column, the Quick Selection settings and the Layers panel"
+        />
+        <p class="product-caption mono">The Image Editor in the app · background hidden by a layer mask, fully reversible</p>
+      </div>
+      <p class="fine-print center">
+        Opens PNG, JPEG, TIFF, BMP, WebP, GIF, HEIC and AVIF. AI <em>Select
+        Subject</em> works with an optional model pack you install yourself and
+        that runs offline; none is bundled. Up to 80 megapixels and 64 layers
+        per image; saved as an editable <code>.engimg</code> project.
+      </p>
+    </div>
+  </section>
+
+  <section id="vector" class="section editor-section vector-section">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-tag">VECTOR EDITOR</span>
+        <h2>
+          From pixels
+          <br />
+          <span>to precision.</span>
+        </h2>
+        <p>
+          Draw and edit real geometry in millimetres. Trace a raster outline
+          into editable paths, then export SVG or DXF for your cutter, CAD or
+          illustration tool.
+        </p>
+      </div>
+      <div class="trace-demo" data-trace>
+        <div class="trace-stage">
+          <img
+            class="trace-source"
+            src={demoFile('trace-source.png')}
+            width={demo.trace.source.width}
+            height={demo.trace.source.height}
+            alt="The traced picture: the rotor's silhouette"
+            loading="lazy"
+            decoding="async"
+          />
+          <svg viewBox={demo.trace.viewBox} role="img" aria-label={`The traced outline: ${demo.trace.contours} closed contours with ${demo.trace.nodes} editable points`}>
+            {demo.trace.paths.map((d) => (
+              <path class="trace-path" d={d} fill-rule="evenodd" pathLength="1" />
+            ))}
+            <g class="trace-nodes">
+              {nodes.map(([x, y], i) => (
+                <circle cx={x} cy={y} r="0.9" style={`--d:${(i / nodes.length).toFixed(3)}`} />
+              ))}
+            </g>
+          </svg>
+          <div class="trace-steps mono" aria-hidden="true">
+            <span data-step="0">RASTER</span>
+            <span data-step="1">TRACE</span>
+            <span data-step="2">NODES</span>
+            <span data-step="3">EXPORT</span>
+          </div>
+        </div>
+        <div class="trace-panel">
+          <dl class="trace-facts">
+            <div><dt>Closed contours</dt><dd>{demo.trace.contours}</dd></div>
+            <div><dt>Editable points</dt><dd>{demo.trace.nodes}</dd></div>
+            <div><dt>Size</dt><dd>{demo.trace.width_mm} × {demo.trace.height_mm} mm</dd></div>
+          </dl>
+          <div class="export-chips" aria-label="Vector export formats">
+            <span>SVG · {(demo.trace.svg_bytes / 1000).toFixed(1)} KB</span>
+            <span>DXF · {(demo.trace.dxf_bytes / 1000).toFixed(1)} KB</span>
+            <span>PDF</span>
+            <span>PNG</span>
+          </div>
+          <button class="text-link" data-trace-replay>Replay the trace ↻</button>
+          <p class="fine-print">
+            The outline above is the app’s real trace of this silhouette,
+            shown from its own SVG export.
+          </p>
+        </div>
+      </div>
+      <div class="editor-shot">
+        <Screenshot
+          light={vectorLight}
+          dark={vectorDark}
+          alt="The real Vector Editor: the traced rotor outline selected with the node tool, its points shown, with millimetre rulers and the geometry panel"
+        />
+        <p class="product-caption mono">The Vector Editor in the app · millimetre geometry, node editing, layers</p>
+      </div>
+      <ul class="capability-list">
+        <li><strong>Draw</strong> lines, Bézier paths, rectangles, ellipses and text; edit nodes and handles.</li>
+        <li><strong>Combine</strong> with union, difference, intersection and exclusion; group, align, layer, lock.</li>
+        <li><strong>Measure</strong> in mm, cm or inches with rulers, guides, grid snapping and calibration to a known width.</li>
+        <li><strong>Trace</strong> with presets for laser cutting, engraving, vinyl, CAD import and illustration, side by side with the original.</li>
+      </ul>
+      <p class="fine-print center">
+        A trace is a starting point, not a finished cutting file. Cutting checks
+        warn about open, duplicate and crossing paths, but you still check
+        scale, kerf and your machine. Photographs can trace poorly. No G-code;
+        DWG is not supported.
+      </p>
+    </div>
+  </section>
+
+  <section id="convert" class="section convert-section">
+    <div class="container">
+      <div class="section-heading">
+        <h2>
+          New format.
+          <br />
+          <span>Same computer.</span>
+        </h2>
+        <p>
+          Move between drawings, documents and images without sending your work
+          away. A complete PDF Tools workspace, with 32 tools in seven groups.
+        </p>
+      </div>
+      <div class="converter" data-converter>
+        <div>
+          <span class="mono">START WITH</span>
+          <div class="file-tile">
+            PDF<span>.pdf</span>
+          </div>
+        </div>
+        <div class="conversion-path" aria-hidden="true">
+          <span></span>→<span></span>
+        </div>
+        <div>
+          <span class="mono">MAKE IT</span>
+          <div
+            class="format-options"
+            role="group"
+            aria-label="Preview PDF conversion formats"
+          >
+            {['DOCX', 'XLSX', 'PPTX', 'PNG', 'TXT'].map((f, i) => (
+              <button data-format={f} aria-pressed={i === 0}>
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
+        <p data-format-description aria-live="polite">
+          Editable text or page pictures in a Word document.
+        </p>
+      </div>
+      <div class="tool-teaser">
+        <div>
+          <h3>
+            Your PDF toolbox.
+            <br />
+            Thoughtfully in one place.
+          </h3>
+          <p>Organize · Convert · Optimize · Edit · Protect · Review</p>
+          <p>
+            Merge, split, compress, make searchable, convert images to PDF and
+            back. Drag files straight onto a tool. On paper? Scan the drawing
+            with your iPhone (Mac) and it opens as a PDF, ready to mark up.
+          </p>
+          <a class="text-link" href={url('features/#conversion')}>
+            Explore all 32 tools ↗
+          </a>
+          <p class="fine-print">
+            Office → PDF requires a local LibreOffice installation. Conversion
+            fidelity depends on the document.
+          </p>
+        </div>
+        <Screenshot
+          light={toolsLight}
+          dark={toolsDark}
+          sizes="(max-width: 900px) 95vw, 640px"
+          alt="The real PDF Tools workspace with tools grouped into Organize, Convert, Optimize and more"
+        />
+      </div>
+      <div class="tool-teaser tool-teaser--flip">
+        <Screenshot
+          light={compareLight}
+          dark={compareDark}
+          sizes="(max-width: 900px) 95vw, 640px"
+          alt="The real Compare Drawings tool overlaying revision B and C of a sample flange: removed lines in red, added in blue, changed areas boxed, text changes listed"
+        />
+        <div>
+          <h3>
+            Rev B or Rev C?
+            <br />
+            See exactly what changed.
+          </h3>
+          <p>
+            Compare Drawings overlays two revisions. Removed lines turn red,
+            added lines blue, changed areas are boxed and text changes are
+            listed beside the sheet.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="platforms" class="section container platforms-section">
+    <div class="section-heading">
+      <h2>
+        One workspace.
+        <br />
+        <span>Every desk.</span>
+      </h2>
+      <p>
+        The same Viewer, MARK, PowerPoint export, PDF Tools and editors on every
+        edition, built from one source, each fitting in with its system.
+      </p>
+    </div>
+    <div class="platform-tabs" role="tablist" aria-label="Platforms">
+      {['macOS', 'Windows', 'Linux'].map((p, i) => (
+        <button role="tab" id={`tab-${p}`} aria-controls={`panel-${p}`} aria-selected={i === 0} tabindex={i === 0 ? 0 : -1} data-platform-tab={p}>
+          {p}
+        </button>
+      ))}
+    </div>
+    <div class="platform-panels">
+      <div class="platform-panel" id="panel-macOS" role="tabpanel" aria-labelledby="tab-macOS">
+        <Screenshot
+          light={mainLight}
+          dark={mainDark}
+          sizes="(max-width: 900px) 95vw, 1000px"
+          alt="ENG Drawing Viewer on macOS, a real screenshot"
+        />
+        <ul class="platform-notes">
+          <li>Universal (Intel + Apple silicon) and a dedicated Apple Silicon edition</li>
+          <li>Scan with iPhone through Continuity Camera; OCR with Apple Vision</li>
+          <li>macOS spelling, native menus and trackpad gestures</li>
+        </ul>
+      </div>
+      {[
+        ['Windows', '⊞', ['Portable: unzip and run, no administrator rights', 'Send slides into a presentation open in PowerPoint', 'Windows spelling; OCR with bundled Tesseract data (7 languages)', 'Title bars follow light and dark mode']],
+        ['Linux', '◆', ['One AppImage for x86-64 with glibc 2.34 or later', 'Native Wayland or X11; desktop-portal file dialogs', 'Help › Add to Applications Menu', 'HEIC through bundled libheif; OCR with bundled Tesseract data']],
+      ].map(([p, sym, notes]) => (
+        <div class="platform-panel" id={`panel-${p}`} role="tabpanel" aria-labelledby={`tab-${p}`} hidden>
+          <div class="platform-placeholder" aria-hidden="true">
+            <span class="platform-glyph">{sym}</span>
+            <span class="mono">{p === 'Windows' ? 'WINDOWS 10 · 11 · x64' : 'UBUNTU · DEBIAN · FEDORA · RHEL'}</span>
+          </div>
+          <ul class="platform-notes">
+            {(notes as string[]).map((n) => <li>{n}</li>)}
+          </ul>
+          <p class="fine-print">
+            Screenshots of the {p} edition will appear here once they are taken
+            on a real {p} desktop. Until then, we only show what we have
+            verified.
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+
   <section class="privacy-section section">
     <div class="container privacy-content">
       <div>
         <h2>
-          Your drawings.
+          Your files.
           <br />
           <span>Your computer.</span>
         </h2>
         <p>
-          Engineering work deserves a private workspace. Drawing processing
-          happens locally, without accounts, cloud uploads or telemetry.
+          Engineering work deserves a private workspace. PDFs, images, vectors
+          and presentations are processed on your computer, without accounts,
+          cloud uploads or telemetry.
         </p>
         <ul class="privacy-points">
           <li>
@@ -450,8 +815,12 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
             connections in its own code, and its tests check it.
           </li>
           <li>
+            <strong>Offline AI, if you want it.</strong> Optional model packs
+            run on your computer. Nothing is downloaded automatically.
+          </li>
+          <li>
             <strong>Originals stay untouched.</strong> Drawings open
-            read-only; every tool writes a new file.
+            read-only; tools and editors write new files.
           </li>
           <li>
             <strong>Share with care.</strong> Redact and Remove Metadata also
@@ -467,7 +836,7 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
         <div class="computer">
           <Image densities={[1, 2]} src={icon} width={72} height={72} alt="" />
           <span class="mono">LOCAL WORKSPACE</span>
-          <div class="local-files">PDF · MARK · PPTX</div>
+          <div class="local-files">PDF · MARK · PPTX · IMG · SVG</div>
         </div>
         <span class="offline-note mono"></span>
       </div>
@@ -487,15 +856,17 @@ const windowsAsset = (releaseData.assets as { platform: string }[]).some((a) => 
       <span>for better work.</span>
     </h2>
     <p>
-      A free, open-source engineering workspace for Mac{windowsAsset ? ', with a Windows Preview' : '; Windows is on its way'}.
+      Free and open source. Four editions: Mac Universal, Mac Apple Silicon,
+      Windows and Linux.
     </p>
-    <Downloads />
+    <Downloads compact />
     <a class="text-link" href={url('download/')}>
-      Release details and installation ↗
+      Checksums, release details and installation ↗
     </a>
   </section>
 </Layout>
 <script>
   import '../scripts/home';
   import '../scripts/mark';
+  import '../scripts/editors';
 </script>

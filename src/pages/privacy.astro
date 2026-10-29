@@ -45,10 +45,11 @@ import Layout from '../layouts/Layout.astro';
       </p>
       <h2>The desktop application</h2>
       <p>
-        Viewing, markup, conversion and PowerPoint generation run locally. The
-        application has no user account, telemetry or cloud processing workflow.
-        Original drawing files are opened without modifying them. Exports are
-        saved as new files you choose.
+        Viewing, markup, PDF editing, image editing, vector tracing, conversion
+        and PowerPoint generation run locally. The application has no user
+        account, telemetry or cloud processing workflow, and it refuses network
+        connections in its own code. Original drawing files are opened without
+        modifying them. Exports are saved as new files you choose.
       </p>
       <p>
         Local settings include your theme, recent folders and export
@@ -62,7 +63,18 @@ import Layout from '../layouts/Layout.astro';
         user Library. Scans default to{' '}
         <code>~/Documents/ENG Drawing Viewer Scans</code>. The thumbnail cache
         can be cleared in Settings; removing the app alone does not delete these
-        folders.
+        folders. On Windows they are under <code>%APPDATA%</code> and
+        <code>%LOCALAPPDATA%</code>, on Linux under <code>~/.config</code> and
+        <code>~/.cache</code>, each in an <code>ENG Drawing Viewer</code>
+        folder.
+      </p>
+      <h2>Optional offline AI</h2>
+      <p>
+        The Image Editor's <em>Select Subject</em> can use an AI model pack that
+        you choose and install yourself. The app checks the pack's hash, runs it
+        on your computer and never downloads a model by itself. Without a pack,
+        nothing AI-related runs; one-click background removal is a conventional
+        algorithm.
       </p>
       <h2>Optional local tools</h2>
       <p>

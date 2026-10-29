@@ -33,18 +33,6 @@ dialog?.addEventListener('close', () => {
   menuButton?.setAttribute('aria-expanded', 'false');
   menuButton?.focus();
 });
-const platform = /Windows/i.test(navigator.userAgent)
-  ? 'windows'
-  : /Macintosh|Mac OS X/.test(navigator.userAgent) && !navigator.maxTouchPoints
-    ? 'macos'
-    : null;
-if (platform)
-  document.querySelectorAll<HTMLElement>('.download-grid').forEach((grid) => {
-    const card = grid.querySelector<HTMLElement>(
-      `[data-platform="${platform}"]`,
-    );
-    if (card) card.style.order = '-1';
-  });
 document.querySelector('[data-share]')?.addEventListener('click', async () => {
   const status = document.querySelector('[data-share-status]');
   try {

@@ -15,7 +15,7 @@ mm.add('(prefers-reduced-motion: no-preference)', () => {
   });
   gsap.utils
     .toArray<HTMLElement>(
-      '.section-heading,.feature-grid,.converter,.slide-composition,.privacy-content',
+      '.section-heading,.feature-grid,.converter,.slide-composition,.privacy-content,.workspaces-intro,.compare-modes,.cutout-demo,.compress-demo,.trace-demo,.capability-list,.tool-cloud',
     )
     .forEach((el) =>
       gsap.from(el, {

@@ -156,6 +156,51 @@ def main():
     wait(10)
     save(w, 'compare')
 
+    # Edit PDF (2.3.0): the flange with a box and a revision note added as real PDF content.
+    import pymupdf
+    page_w, page_h = pymupdf.open(str(flange))[0].rect[2:]
+    w.set_mode('pdf_edit')
+    wait(2)
+    pdf = w.pdf_editor
+    pdf.open_file(str(flange))
+    wait(4)
+    red = [.84, .11, .16]
+    pdf._add({'kind': 'rectangle', 'page': 0, 'rect': [page_w * .60, page_h * .10, page_w * .80, page_h * .32],
+              'color': red, 'width': 2.0, 'fill': None, 'text': '', 'font': 'helv', 'size': 12})
+    wait(5)
+    pdf._add({'kind': 'text', 'page': 0, 'rect': [page_w * .60, page_h * .33, page_w * .90, page_h * .38],
+              'text': 'REV C: hub chamfer 1.5 x 45 deg', 'font': 'helv', 'size': 14, 'color': red})
+    wait(5)
+    pdf.fit_page()
+    wait(2)
+    save(w, 'pdfedit')
+
+    # Image Editor (2.3.0): the site's sample photo after "Remove background automatically".
+    demo = site / 'public' / 'demo'
+    w.set_mode('image')
+    wait(2)
+    img = w.image_editor
+    img.open_file(str(demo / 'sample.jpg'))
+    wait(4)
+    img.remove_background()
+    wait(6)
+    img.set_tool('quick')
+    wait(1)
+    save(w, 'image')
+
+    # Vector Editor (2.3.0): the rotor outline the app traced (tools/demo/make_demo_assets.py),
+    # selected with the node tool so its editable points show.
+    w.set_mode('vector')
+    wait(2)
+    vec = w.vector_editor
+    vec.open_file(str(demo / 'trace.svg'))
+    wait(3)
+    for item in vec.items.values():
+        item.setSelected(True)
+    vec.set_tool('nodes')
+    wait(2)
+    save(w, 'vector')
+
     render.shutdown()
     print('Captured native windows into', out)
     os._exit(0)

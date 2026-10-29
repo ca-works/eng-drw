@@ -34,21 +34,33 @@ for (const route of routes)
 test('download buttons match the verified release data', async ({ page, baseURL }) => {
   const release = (await import('../src/data/release.json', { with: { type: 'json' } })).default;
   await page.goto(new URL('download/', baseURL).href);
-  const links = page.locator('a[href*="releases/download/"]');
-  if (release.status !== 'available') {
-    await expect(page.locator('.download-card .status')).toHaveCount(3);
-    await expect(links).toHaveCount(0);
-    return;
+  // Exactly four editions, in order, each either a verified download or "Coming soon".
+  const cards = page.locator('.edition-picker:not(.compact) .download-card');
+  await expect(cards).toHaveCount(4);
+  expect(await cards.evaluateAll((c) => c.map((x) => (x as HTMLElement).dataset.edition))).toEqual([
+    'macos-universal',
+    'macos-apple-silicon',
+    'windows-x64',
+    'linux-x86_64',
+  ]);
+  const verified = [
+    ...release.editions.flatMap((e) => (e.available ? [e.url!, ...(e.extras ?? []).map((x) => x.url)] : [])),
+    ...(release.source ? [release.source.url] : []),
+  ];
+  const hrefs = await page
+    .locator('a[href*="releases/download/"]')
+    .evaluateAll((as) => as.map((a) => a.getAttribute('href')!));
+  expect([...new Set(hrefs)].sort()).toEqual(verified.sort());
+  for (const e of release.editions) {
+    const card = page.locator(`.edition-picker:not(.compact) [data-edition="${e.id}"]`);
+    if (!e.available) {
+      await expect(card.locator('.status')).toHaveText('Coming soon');
+      await expect(card.locator('a[href*="releases/download/"]')).toHaveCount(0);
+      continue;
+    }
+    await expect(card.getByText(e.sha256!)).toHaveCount(1);
+    await expect(card.locator('.preview-badge')).toHaveCount(e.preview ? 1 : 0);
   }
-  // Every button links to exactly the verified assets; Windows is "Coming soon" or labelled Preview.
-  const hrefs = await links.evaluateAll((as) => as.map((a) => a.getAttribute('href')));
-  expect(hrefs.sort()).toEqual(release.assets.map((a) => a.url).sort());
-  const win = release.assets.find((a) => a.platform === 'windows');
-  if (win?.preview)
-    await expect(page.locator('[data-platform="windows"] .preview-badge')).toHaveText('Preview');
-  else if (!win)
-    await expect(page.locator('[data-platform="windows"] .status')).toHaveText('Coming soon');
-  for (const a of release.assets) await expect(page.getByText(a.sha256)).toHaveCount(1);
 });
 test('MARK callout, comment, undo and redo', async ({ page }) => {
   await page.goto('./');

@@ -1,62 +1,77 @@
 {
   "status": "available",
   "version": "2.2.0",
-  "assets": [
+  "editions": [
     {
-      "platform": "macos",
+      "id": "macos-universal",
+      "available": false
+    },
+    {
+      "id": "macos-apple-silicon",
+      "available": true,
       "name": "ENG-Drawing-Viewer-2.2.0-macOS-AppleSilicon.dmg",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.2.0/ENG-Drawing-Viewer-2.2.0-macOS-AppleSilicon.dmg",
       "size": 74828149,
       "sha256": "3181a0ef9a25c777e2c8a355a7c9c4f8dd7e6fba20d24fc2bbf6daa0e458d48a",
       "version": "2.2.0",
       "preview": false,
-      "published": "2026-10-28T03:12:26Z"
+      "published": "2026-10-28T03:12:26Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.0",
+      "extras": []
     },
     {
-      "platform": "windows",
+      "id": "windows-x64",
+      "available": true,
       "name": "ENG-Drawing-Viewer-2.2.1-Windows-x64-Setup.exe",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.2.1/ENG-Drawing-Viewer-2.2.1-Windows-x64-Setup.exe",
       "size": 59004664,
       "sha256": "2679172e2b9b5d9794de246441624bd388100aa415b3a6c5cd424cf14c908b5e",
       "version": "2.2.1",
       "preview": true,
-      "published": "2026-10-28T12:58:28Z"
+      "published": "2026-10-28T12:58:28Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.1",
+      "extras": [
+        {
+          "name": "ENG-Drawing-Viewer-2.2.1-Windows-x64-Portable.zip",
+          "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.2.1/ENG-Drawing-Viewer-2.2.1-Windows-x64-Portable.zip",
+          "size": 80805922,
+          "sha256": "4189bcda774ec412a8d06cbc7d40fb4ff62c941fcea8a416f64341a3ce1c6294",
+          "version": "2.2.1",
+          "preview": true,
+          "published": "2026-10-28T12:58:28Z",
+          "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.1"
+        }
+      ]
     },
     {
-      "platform": "windows-portable",
-      "name": "ENG-Drawing-Viewer-2.2.1-Windows-x64-Portable.zip",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.2.1/ENG-Drawing-Viewer-2.2.1-Windows-x64-Portable.zip",
-      "size": 80805922,
-      "sha256": "4189bcda774ec412a8d06cbc7d40fb4ff62c941fcea8a416f64341a3ce1c6294",
-      "version": "2.2.1",
-      "preview": true,
-      "published": "2026-10-28T12:58:28Z"
-    },
-    {
-      "platform": "source",
-      "name": "eng-drawing-viewer-2.2.1-source.zip",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.2.1/eng-drawing-viewer-2.2.1-source.zip",
-      "size": 7449605,
-      "sha256": "0e41b4686733b9be74860ccb51cbeb012a3257204c4d283d11e975d9e5dd9ccc",
-      "version": "2.2.1",
-      "preview": true,
-      "published": "2026-10-28T12:58:28Z"
+      "id": "linux-x86_64",
+      "available": false
     }
   ],
+  "source": {
+    "name": "eng-drawing-viewer-2.2.1-source.zip",
+    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.2.1/eng-drawing-viewer-2.2.1-source.zip",
+    "size": 7449605,
+    "sha256": "0e41b4686733b9be74860ccb51cbeb012a3257204c4d283d11e975d9e5dd9ccc",
+    "version": "2.2.1",
+    "preview": true,
+    "published": "2026-10-28T12:58:28Z",
+    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.1"
+  },
   "notes": "**ENG Drawing Viewer 2.2.1 for Windows — Preview.** The rebuilt Windows version of the free, offline workspace for engineering drawings: view folders of PDF drawings and images, mark them up with numbered review comments, use 32 offline PDF tools and export PowerPoint slides, on your own PC.\n\nThis is a **Preview**: it has been built and tested automatically on Windows Server 2022 and 2025, but not yet on everyday Windows 10/11 PCs. Please report anything that doesn't look or work right in [Issues](https://github.com/ca-works/eng-drw/issues).\n\n**Mac users:** the current Mac version is [2.2.0](https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.0).\n\n## Download\n\n| File | For |\n|---|---|\n| `ENG-Drawing-Viewer-2.2.1-Windows-x64-Setup.exe` | **Windows 10 or 11, 64-bit.** Installs for your user account only (no administrator rights), with a Start menu shortcut and an uninstaller. |\n| `ENG-Drawing-Viewer-2.2.1-Windows-x64-Portable.zip` | The same app with no installer: unzip it first, then open `ENG Drawing Viewer.exe`. |\n| `eng-drawing-viewer-2.2.1-source.zip` | The complete source code of this version, with build instructions. |\n| `ENG-Drawing-Viewer-2.2.1-Windows-x64.cdx.json` | Software bill of materials. |\n| `THIRD_PARTY_SOURCES.txt` and the two `libiconv` archives | Where to get the unmodified source of the copyleft libraries inside the app. |\n| `SHA256SUMS.txt` | Checksums of every file. |\n\n**First launch:** the app isn't code-signed, so Windows SmartScreen may say it protected your PC. Click **More info**, check that it's ENG Drawing Viewer, then **Run anyway**.\n\n**Check your download** in PowerShell: `Get-FileHash .\\ENG-Drawing-Viewer-2.2.1-Windows-x64-Setup.exe` and compare with `SHA256SUMS.txt`.\n\n## What's in it\n\n- Everything from the Mac app: sharp viewing of PDFs and images, MARK with numbered callouts and linked comments, 32 offline PDF tools, PowerPoint export and queue → PDF.\n- Make Searchable (OCR) works out of the box with seven languages.\n- Spelling uses Windows' own spell checker, and words you add are remembered.\n- Send slides straight into a presentation open in PowerPoint.\n- iPhone HEIC photos open once Microsoft's free HEIF and HEVC extensions are installed.\n- Windows 11 styling with title bars that follow your light or dark theme; keyboard shortcuts that work with every keyboard layout.\n- Open drawings aren't locked, and opening a file while the app runs brings it to the existing window.\n- Offline: no account, no telemetry, no network connections.\n\n## Built and checked\n\n- Built from the published source archive; two builds are byte-for-byte identical.\n- On Windows Server 2022 and 2025: 137 tests pass; the packaged app runs with no Python installed and outbound traffic blocked, opens no network connections, and loads only its own DLLs and Windows' own; the installer installs and uninstalls cleanly.\n\nENG Drawing Viewer is free software under the GNU Affero General Public License v3 or later. Help › About lists every bundled component and its licence.\n",
   "published": "2026-10-28T12:58:28Z",
   "releases": [
-    {
-      "version": "2.2.0",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.0",
-      "published": "2026-10-28T03:12:26Z",
-      "preview": false
-    },
     {
       "version": "2.2.1",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.1",
       "published": "2026-10-28T12:58:28Z",
       "preview": true
+    },
+    {
+      "version": "2.2.0",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.0",
+      "published": "2026-10-28T03:12:26Z",
+      "preview": false
     }
   ]
 }

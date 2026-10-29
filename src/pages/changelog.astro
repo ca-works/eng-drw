@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
+import release from '../data/release.json';
+const r230 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.0');
+const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
 
 <Layout
@@ -19,12 +22,55 @@ import { url } from '../data/site';
     </header>
     <article class="page-content prose">
       <div class="callout">
-        <strong>Version 2.2.0 · First public release · 28 October 2026</strong>
-        <br />
-        The Mac app and its complete source code are on the{' '}
-        <a href={url('download/')}>download page</a> and the{' '}
-        <a href="https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.0">GitHub release</a>.
+        {r230 ? (
+          <>
+            <strong>Version 2.3.0 · {date(r230.published)}</strong>
+            <br />
+            Mac, Windows and Linux, with the source code, on the{' '}
+            <a href={url('download/')}>download page</a> and the <a href={r230.url}>GitHub release</a>.
+          </>
+        ) : (
+          <>
+            <strong>Version 2.2.0 · First public release · 28 October 2026</strong>
+            <br />
+            The Mac app and its complete source code are on the{' '}
+            <a href={url('download/')}>download page</a> and the{' '}
+            <a href="https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.0">GitHub release</a>.
+            Windows 2.2.1 is available as a Preview.
+          </>
+        )}
       </div>
+      <h2>2.3.0 · {r230 ? date(r230.published) : 'in preparation'}</h2>
+      <p>
+        {r230 ? (
+          <>One version for every platform, built from the same source: <a href={r230.url}>GitHub release</a>.</>
+        ) : (
+          'One version for every platform, built from the same source. It is being tested and audited and will be listed on the download page once it is released.'
+        )}
+      </p>
+      <h3>New</h3>
+      <ul>
+        <li>
+          <strong>Three new workspaces</strong>, each on its own tab beside the
+          Viewer and PDF Tools: <strong>Edit PDF</strong> (text boxes, shapes,
+          images, notes, real redaction, page crop and rotate, Save As),
+          <strong>Image</strong> (layers, masks, selections, Magic Eraser,
+          automatic background removal, healing, clone, exports to a target
+          file size) and <strong>Vector</strong> (millimetre geometry, Bézier
+          and node editing, booleans, SVG and DXF, raster tracing).
+        </li>
+        <li>
+          <strong>Four editions</strong>: macOS Universal (Intel and Apple
+          silicon), macOS Apple Silicon, Windows x64 and, new, Linux x86-64 as
+          an AppImage.
+        </li>
+        <li>Optional offline AI model packs for subject selection, installed by you; none is bundled.</li>
+        <li>The Windows improvements of 2.2.1 reach every platform.</li>
+      </ul>
+      <h3>Faster</h3>
+      <ul>
+        <li>The interface stays responsive while pages render on busy machines.</li>
+      </ul>
       <h2>2.2.1 for Windows (Preview)</h2>
       <p>
         The rebuilt Windows version, for Windows 10 and 11 (64-bit). It has the
@@ -97,7 +143,6 @@ import { url } from '../data/site';
         <li>drag and drop onto the window, the PowerPoint queue and the tools;</li>
         <li>saving a marked page as a PDF with vector markup, and exporting the queue as one PDF.</li>
       </ul>
-      <p>The Windows version is being rebuilt and will be listed here when it's released.</p>
       <a class="text-link" href={url('download/')}>
         Check availability ↗
       </a>

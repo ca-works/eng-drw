@@ -66,7 +66,17 @@ const win221 = [
   'eng-drawing-viewer-2.2.1-source.zip',
 ];
 
-test('a stable Mac release enables Mac and source, never Windows', () => {
+const ids = ['macos-universal', 'macos-apple-silicon', 'windows-x64', 'linux-x86_64'];
+const byId = (out) => Object.fromEntries(out.editions.map((e) => [e.id, e]));
+const four230 = [
+  'ENG-Drawing-Viewer-macOS-Universal.dmg',
+  'ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg',
+  'ENG-Drawing-Viewer-Windows-x64.zip',
+  'ENG-Drawing-Viewer-Linux-x86_64.AppImage',
+  'eng-drawing-viewer-2.3.0-source.zip',
+];
+
+test('a stable 2.2.0 Mac release enables Apple Silicon and source only', () => {
   const r = run([
     { status: 200, body: [rel('2.2.0', mac220, { published: '2026-10-28T03:00:00Z' })] },
     sums(mac220),
@@ -74,9 +84,12 @@ test('a stable Mac release enables Mac and source, never Windows', () => {
   assert.equal(r.status, 0, r.stderr);
   const out = JSON.parse(r.output);
   assert.equal(out.status, 'available');
-  assert.deepEqual(out.assets.map((a) => a.platform), ['macos', 'source']);
+  assert.deepEqual(out.editions.map((e) => e.id), ids);
+  assert.deepEqual(out.editions.filter((e) => e.available).map((e) => e.id), ['macos-apple-silicon']);
+  assert.equal(out.source.version, '2.2.0');
+  assert.equal(out.version, '2.2.0');
 });
-test('a Windows pre-release adds Windows as Preview and keeps the stable Mac build', () => {
+test('the 2.2.1 Windows pre-release is a Preview next to the stable 2.2.0 Mac build', () => {
   const r = run([
     {
       status: 200,
@@ -89,15 +102,71 @@ test('a Windows pre-release adds Windows as Preview and keeps the stable Mac bui
     sums(win221),
   ]);
   assert.equal(r.status, 0, r.stderr);
-  const out = JSON.parse(r.output);
-  const by = Object.fromEntries(out.assets.map((a) => [a.platform, a]));
-  assert.equal(by.macos.version, '2.2.0');
-  assert.equal(by.macos.preview, false);
-  assert.equal(by.windows.version, '2.2.1');
-  assert.equal(by.windows.preview, true);
-  assert.equal(by['windows-portable'].version, '2.2.1');
-  assert.equal(by.source.version, '2.2.1');
-  assert.equal(out.version, '2.2.0');
+  const out = byId(JSON.parse(r.output));
+  assert.equal(out['macos-apple-silicon'].version, '2.2.0');
+  assert.equal(out['macos-apple-silicon'].preview, false);
+  assert.equal(out['windows-x64'].version, '2.2.1');
+  assert.equal(out['windows-x64'].preview, true);
+  assert.equal(out['windows-x64'].name, 'ENG-Drawing-Viewer-2.2.1-Windows-x64-Setup.exe');
+  assert.equal(out['windows-x64'].extras[0].name, 'ENG-Drawing-Viewer-2.2.1-Windows-x64-Portable.zip');
+  assert.equal(out['macos-universal'].available, false);
+  assert.equal(out['linux-x86_64'].available, false);
+  assert.equal(JSON.parse(r.output).version, '2.2.0');
+});
+test('a 2.3.0 release with versionless names supplies all four editions', () => {
+  const r = run([
+    {
+      status: 200,
+      body: [
+        rel('2.2.0', mac220, { published: '2026-10-28T03:00:00Z' }),
+        rel('2.2.1', win221, { prerelease: true, published: '2026-10-28T13:00:00Z' }),
+        rel('2.3.0', four230, { published: '2026-11-02T10:00:00Z' }),
+      ],
+    },
+    sums(four230),
+  ]);
+  assert.equal(r.status, 0, r.stderr);
+  const parsed = JSON.parse(r.output);
+  const out = byId(parsed);
+  for (const id of ids) {
+    assert.equal(out[id].available, true, id);
+    assert.equal(out[id].version, '2.3.0', id);
+    assert.equal(out[id].preview, false, id);
+  }
+  assert.equal(out['windows-x64'].name, 'ENG-Drawing-Viewer-Windows-x64.zip');
+  assert.deepEqual(out['windows-x64'].extras, []);
+  assert.equal(parsed.version, '2.3.0');
+  assert.equal(parsed.source.version, '2.3.0');
+});
+test('a versionless name in a 2.2.x release is never taken for that edition', () => {
+  const odd = ['ENG-Drawing-Viewer-macOS-Universal.dmg', 'ENG-Drawing-Viewer-Linux-x86_64.AppImage'];
+  const r = run([
+    { status: 200, body: [rel('2.2.0', [...mac220, ...odd], { published: '2026-10-28T03:00:00Z' })] },
+    sums([...mac220, ...odd]),
+  ]);
+  assert.equal(r.status, 0, r.stderr);
+  const out = byId(JSON.parse(r.output));
+  assert.equal(out['macos-universal'].available, false);
+  assert.equal(out['linux-x86_64'].available, false);
+});
+test('a 2.3.0 release without an edition keeps the older one for it', () => {
+  const partial = ['ENG-Drawing-Viewer-Linux-x86_64.AppImage', 'eng-drawing-viewer-2.3.0-source.zip'];
+  const r = run([
+    {
+      status: 200,
+      body: [
+        rel('2.2.0', mac220, { published: '2026-10-28T03:00:00Z' }),
+        rel('2.3.0', partial, { published: '2026-11-02T10:00:00Z' }),
+      ],
+    },
+    sums(mac220),
+    sums(partial),
+  ]);
+  assert.equal(r.status, 0, r.stderr);
+  const out = byId(JSON.parse(r.output));
+  assert.equal(out['macos-apple-silicon'].version, '2.2.0');
+  assert.equal(out['linux-x86_64'].version, '2.3.0');
+  assert.equal(out['macos-universal'].available, false);
 });
 test('mismatched digest blocks download publication', () => {
   const r = run([

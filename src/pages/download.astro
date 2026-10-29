@@ -3,14 +3,19 @@ import Layout from '../layouts/Layout.astro';
 import Downloads from '../components/Downloads.astro';
 import { site, url } from '../data/site';
 import release from '../data/release.json';
+import { edition, compare } from '../data/editions';
 const released = release.status === 'available';
-const v = release.version;
-const win = (release.assets as { platform: string; version?: string }[]).find((a) => a.platform === 'windows');
+const mac = edition('macos-apple-silicon');
+const universal = edition('macos-universal');
+const win = edition('windows-x64');
+const linux = edition('linux-x86_64');
+const winZip = win.available && compare(win.version, '2.3.0') >= 0;
+const all230 = [mac, universal, win, linux].every((e) => e.available && compare(e.version, '2.3.0') >= 0);
 ---
 
 <Layout
-  title={released ? `Download ENG Drawing Viewer ${v}` : "A better workspace is on its way"}
-  description="Find release availability, installation instructions and complete source information for ENG Drawing Viewer."
+  title={all230 ? 'Download ENG Drawing Viewer 2.3.0' : released ? 'Download ENG Drawing Viewer' : 'A better workspace is on its way'}
+  description="Download ENG Drawing Viewer for Mac (Universal or Apple Silicon), Windows or Linux: versions, requirements, checksums and installation instructions."
 >
   <div class="container">
     <header class="page-hero">
@@ -21,16 +26,27 @@ const win = (release.assets as { platform: string; version?: string }[]).find((a
         <span>Yours, for free.</span>
       </h1>
       <p>
-        {released
-          ? `Version ${v} for Mac is here, free and open source${win ? `, with a ${win.version} Preview for Windows` : ''}. No account, subscription or cloud workspace required.${win ? '' : ' Windows is being rebuilt and will follow.'}`
-          : 'The first public release is being prepared. Choose your platform below for the current status. No account, subscription or cloud workspace required.'}
+        {all230
+          ? 'Version 2.3.0 for Mac, Windows and Linux: free and open source, with the new Image, Vector and Edit PDF workspaces. No account, subscription or cloud workspace required.'
+          : released
+            ? `Four editions, one app. Version ${mac.available ? mac.version : ''} for Mac is here${win.available ? `, with Windows ${win.version}${win.preview ? ' as a Preview' : ''}` : ''}. Version 2.3.0, with the new editors, a Universal Mac edition and Linux, is being prepared. No account, subscription or cloud workspace required.`
+            : 'The first public release is being prepared. Choose your platform below for the current status. No account, subscription or cloud workspace required.'}
       </p>
     </header>
     <div class="page-content">
       <Downloads />
       <div class="prose">
+        <h2 id="which-mac">Which Mac edition?</h2>
+        <p>
+          Both Mac editions have the same features and need macOS 14.4 or
+          later. <strong>Apple Silicon</strong> is a smaller, native build for
+          Macs with an M1 chip or newer. <strong>Universal</strong> contains
+          both Intel and Apple silicon code and runs on any supported Mac. To
+          check, choose Apple menu › About This Mac: “Chip: Apple M…” means
+          Apple silicon, “Processor: … Intel” means Intel.
+        </p>
+
         <h2>Installing on a Mac</h2>
-        <p>Needs a Mac with Apple silicon (M1 or newer) and macOS 14.4 or later.</p>
         <ol>
           <li>Download the disk image (DMG) above and open it.</li>
           <li>Drag ENG Drawing Viewer onto Applications.</li>
@@ -44,53 +60,95 @@ const win = (release.assets as { platform: string; version?: string }[]).find((a
         </ol>
         <p>
           Please don't turn off Gatekeeper for your whole Mac; Open Anyway is
-          enough. A ZIP of the app and every other release file are on the{' '}
-          <a href={`${site.appRepo}/releases`}>GitHub release page ↗</a>.
+          enough. Signing: the app has an ad-hoc signature only; it is not
+          signed with an Apple Developer ID and not notarized.
         </p>
-        <p>
-          <a href={`${site.appRepo}/issues`}>
-            Questions or problems? Ask on GitHub ↗
-          </a>
-        </p>
-        {win && (
-          <>
-            <h2>Installing on Windows (Preview)</h2>
-            <p>Needs Windows 10 or 11, 64-bit. No administrator rights are needed.</p>
-            <ol>
-              <li>
-                Download the installer above and run it. It installs for your
-                user account only and adds a Start menu shortcut.
-              </li>
-              <li>
-                Because the app isn't code-signed, Windows SmartScreen may say
-                it protected your PC. Click <strong>More info</strong>, check
-                that the file is ENG Drawing Viewer, then click
-                <strong>Run anyway</strong>.
-              </li>
-              <li>
-                Prefer not to install? Unzip the portable ZIP first (don't run
-                it from inside the ZIP) and open <code>ENG Drawing Viewer.exe</code>.
-              </li>
-            </ol>
-            <p>
-              This is a Preview: it has been built and tested automatically on
-              Windows Server 2022 and 2025, but not yet on an everyday PC. Please
-              report anything that doesn't look or work right.
-            </p>
-          </>
+
+        <h2>Installing on Windows{win.available && win.preview ? ' (Preview)' : ''}</h2>
+        <p>Needs Windows 10 (version 1809 or later) or Windows 11, 64-bit. No administrator rights are needed.</p>
+        {winZip || !win.available ? (
+          <ol>
+            <li>
+              Extract the ZIP anywhere: Desktop, Documents or a USB stick.
+              Don't run the app from inside the ZIP.
+            </li>
+            <li>
+              Start <code>ENG Drawing Viewer.exe</code> in the extracted
+              folder. Keep the <code>app</code> and <code>legal</code> folders
+              next to it.
+            </li>
+            <li>
+              The app isn't code-signed, so Windows SmartScreen may say it
+              protected your PC. Click <strong>More info</strong>, check that
+              it's ENG Drawing Viewer, then <strong>Run anyway</strong>.
+            </li>
+          </ol>
+        ) : (
+          <ol>
+            <li>
+              Download the installer above and run it. It installs for your
+              user account only and adds a Start menu shortcut.
+            </li>
+            <li>
+              Because the app isn't code-signed, Windows SmartScreen may say
+              it protected your PC. Click <strong>More info</strong>, check
+              that the file is ENG Drawing Viewer, then click
+              <strong>Run anyway</strong>.
+            </li>
+            <li>
+              Prefer not to install? Unzip the portable ZIP first (don't run
+              it from inside the ZIP) and open <code>ENG Drawing Viewer.exe</code>.
+            </li>
+          </ol>
         )}
+        <p>
+          HEIC photos in the Viewer need Microsoft's free <em>HEIF Image
+          Extensions</em> and <em>HEVC Video Extensions</em> from the Microsoft
+          Store; the app tells you if they are missing.
+          {win.available && win.preview && ' This is a Preview: it has been built and tested automatically on Windows Server, but not yet on an everyday PC. Please report anything that doesn’t look or work right.'}
+        </p>
+
+        <h2>Running on Linux</h2>
+        <p>
+          {linux.available ? 'The Linux edition is one AppImage file' : 'The Linux edition, coming with 2.3.0, is one AppImage file'}
+          for 64-bit (x86-64) distributions with glibc 2.34 or later: Ubuntu
+          22.04, Debian 12, Fedora 35, RHEL / Rocky / AlmaLinux 9, Linux Mint
+          21 or newer, on X11 or Wayland.
+        </p>
+        <ol>
+          <li>
+            Make it executable: <code>chmod +x ENG-Drawing-Viewer-Linux-x86_64.AppImage</code>,
+            or <em>Properties › Permissions › Allow executing file as program</em>.
+          </li>
+          <li>Double-click it, or run it from a terminal.</li>
+          <li>
+            Optional: <strong>Help › Add to Applications Menu</strong> adds it
+            to your desktop's menu. Add it again if you move the file.
+          </li>
+        </ol>
+        <p>
+          AppImages need FUSE (the <code>fuse3</code> package, which desktop
+          installations include). Without it, run the file with
+          <code>--appimage-extract-and-run</code>. AppImages are not signed;
+          check the SHA-256 checksum.
+        </p>
+
         <h2>Verify a download</h2>
         <p>
-          Every file has a SHA-256 checksum, shown on its card above and in{' '}
-          <code>SHA256SUMS.txt</code> on the release page. In Terminal, run{' '}
-          <code>shasum -a 256 ~/Downloads/ENG-Drawing-Viewer-*.dmg</code> and
-          compare the whole result.{win && (
-            <>
-              {' '}On Windows, use PowerShell:{' '}
-              <code>Get-FileHash $HOME\Downloads\ENG-Drawing-Viewer-*-Windows-x64-Setup.exe</code>.
-            </>
-          )}
+          Every file has a SHA-256 checksum, shown on its card above and in
+          <code>SHA256SUMS.txt</code> on the GitHub release page. Compare the
+          whole result:
         </p>
+        <ul>
+          <li>Mac: <code>shasum -a 256 ~/Downloads/ENG-Drawing-Viewer-*.dmg</code></li>
+          <li>Windows (PowerShell): <code>Get-FileHash $HOME\Downloads\ENG-Drawing-Viewer-*</code></li>
+          <li>Linux: <code>sha256sum ENG-Drawing-Viewer-Linux-x86_64.AppImage</code></li>
+        </ul>
+        <p>
+          All files, including previous versions, are on the{' '}
+          <a href={`${site.appRepo}/releases`}>GitHub releases page ↗</a>.
+        </p>
+
         <h2>Visiting from your phone?</h2>
         <p>
           This is a desktop application. Send this page to your computer when
@@ -100,15 +158,18 @@ const win = (release.assets as { platform: string; version?: string }[]).find((a
           Share this page ↗
         </button>
         <p data-share-status aria-live="polite"></p>
+
         <h2>Build it yourself</h2>
         <p>
           The complete source code is free under the GNU AGPL v3 or later: the
-          source card above, or the{' '}
-          <a href={site.appRepo}>repository on GitHub ↗</a>. Building needs an
-          Apple silicon Mac and one command; the release itself is built that
-          way, and two builds produce byte-identical apps. The unmodified
-          source of every copyleft library inside the app is attached to the
-          release too.
+          source link above, or the{' '}
+          <a href={site.appRepo}>repository on GitHub ↗</a>. Release builds are
+          made from that published source archive with one command per
+          platform, and the unmodified source of every copyleft library inside
+          the app is attached to each release.
+        </p>
+        <p>
+          <a href={`${site.appRepo}/issues`}>Questions or problems? Ask on GitHub ↗</a>
         </p>
         <a href={url('support/')} class="text-link">
           Installation questions? Visit support ↗

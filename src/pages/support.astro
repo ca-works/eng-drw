@@ -1,10 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { site, url } from '../data/site';
+import { editions, info } from '../data/editions';
+const availableNow = editions
+  .filter((e) => e.available)
+  .map((e) => (e.available ? `${info[e.id].name} ${e.version}${e.preview ? ' (Preview)' : ''}` : ''))
+  .join(', ');
 const faqs = [
   [
     'Where can I download the application?',
-    'From the Download page: version 2.2.0 for Mac and a 2.2.1 Preview for Windows, each with its checksums and complete source code.',
+    `From the Download page, which lists four editions: macOS Universal, macOS Apple Silicon, Windows and Linux. Available now: ${availableNow || 'none yet'}. Each download has its version, size, SHA-256 checksum and the complete source code.`,
+  ],
+  [
+    'Which Mac edition should I choose?',
+    'Both have the same features and need macOS 14.4 or later. Apple Silicon is a smaller native build for Macs with an M1 chip or newer. Universal runs on Intel and Apple silicon Macs. Apple menu › About This Mac shows which chip you have.',
+  ],
+  [
+    'Why does my Mac say it cannot verify the app?',
+    'The app is free software that is not notarized by Apple (it has an ad-hoc signature, not a Developer ID). Open it once with System Settings › Privacy & Security › Open Anyway. Please do not disable Gatekeeper for the whole Mac.',
+  ],
+  [
+    'How do I run the Linux AppImage?',
+    'Make it executable (chmod +x ENG-Drawing-Viewer-Linux-x86_64.AppImage, or Properties › Permissions › Allow executing), then double-click it. It needs FUSE (the fuse3 package); without it, run it with --appimage-extract-and-run. Help › Add to Applications Menu adds it to your desktop menu.',
+  ],
+  [
+    'What is the difference between MARK and Edit PDF?',
+    'MARK is a temporary review layer (pens, highlights, numbered callouts, comments) that never changes the PDF. Edit PDF, new in 2.3.0, changes real PDF content (text, shapes, images, redaction, page crop and rotate) and saves a new PDF with Save As.',
+  ],
+  [
+    'Does the Image Editor use AI or the cloud?',
+    'No cloud. "Remove background automatically" is a conventional algorithm that runs locally. "Select Subject" needs an optional AI model pack that you install yourself; it runs offline, and none is bundled or downloaded automatically.',
+  ],
+  [
+    'Is a traced vector file ready for laser cutting?',
+    'Treat it as a starting point. The Vector Editor warns about open, duplicate and crossing paths, but you still need to check the scale, kerf, material and machine settings. It does not produce G-code.',
   ],
   [
     'Do I need an account or internet connection?',
@@ -24,19 +53,19 @@ const faqs = [
   ],
   [
     'How does OCR work?',
-    'Locally, without any service. On Mac, Make Searchable uses Apple Vision. On Windows it uses the Tesseract engine built into the app, with seven languages included.',
+    'Locally, without any service. On Mac, Make Searchable uses Apple Vision. On Windows and Linux it uses the Tesseract engine built into the app, with seven languages included.',
   ],
   [
     'Can I use scanned PDFs and photographs?',
-    'Yes. PDFs and PNG, JPEG, TIFF, BMP, GIF and WebP images open like one-page drawings. iPhone HEIC photos open on Mac, and on Windows once Microsoft’s free HEIF and HEVC extensions are installed. Scan with iPhone is Mac-only and uses Apple Continuity Camera.',
+    'Yes. PDFs and PNG, JPEG, TIFF, BMP, GIF and WebP images open like one-page drawings. iPhone HEIC photos open on Mac and Linux, and on Windows once Microsoft’s free HEIF and HEVC extensions are installed. Scan with iPhone is Mac-only and uses Apple Continuity Camera.',
   ],
   [
-    'Which Mac or Windows versions are supported?',
-    'Mac: Apple silicon (M1 or newer) with macOS 14.4 or later, tested on macOS 14, 15, 26 and 27. Windows: Windows 10 or 11, 64-bit; the Windows Preview has been tested automatically on Windows Server 2022 and 2025 but not yet on an everyday PC.',
+    'Which systems are supported?',
+    'Mac: macOS 14.4 or later; the Apple Silicon edition needs an M1 or newer, the Universal edition also runs on Intel Macs. Windows: Windows 10 (1809 or later) or 11, 64-bit, tested automatically on Windows Server 2022 and 2025 but not yet on an everyday PC. Linux: 64-bit x86-64 with glibc 2.34 or later (Ubuntu 22.04, Debian 12, Fedora 35, RHEL 9 or newer), X11 or Wayland.',
   ],
   [
     'How do I uninstall it?',
-    'On Mac, drag the app to the Bin; settings, cache and logs stay in your Library under Application Support, Caches and Logs (each in an ENG Drawing Viewer folder) until you delete them. On Windows, uninstall from Settings › Apps (or delete the portable folder); settings are in %APPDATA%\\ENG Drawing Viewer and the cache and logs in %LOCALAPPDATA%\\ENG Drawing Viewer. Your drawings and saved scans stay where you saved them.',
+    'On Mac, drag the app to the Bin; settings, cache and logs stay in your Library under Application Support, Caches and Logs (each in an ENG Drawing Viewer folder) until you delete them. On Windows, delete the portable folder (or uninstall the 2.2.1 installer from Settings › Apps); settings are in %APPDATA%\\ENG Drawing Viewer and the cache and logs in %LOCALAPPDATA%\\ENG Drawing Viewer. On Linux, delete the AppImage (remove its menu entry first if you added one); settings are in ~/.config/ENG Drawing Viewer and the cache in ~/.cache/ENG Drawing Viewer. Your drawings and saved scans stay where you saved them.',
   ],
   [
     'Can I report a bug with a confidential drawing?',
@@ -73,7 +102,7 @@ const faqs = [
       </div>
       <h2>MARK keyboard shortcuts</h2>
       <p>
-        Tool shortcuts are the same on Mac and Windows. Use ⌘ on Mac and Ctrl on
+        Tool shortcuts are the same on every platform. Use ⌘ on Mac and Ctrl on
         Windows for standard editing commands.
       </p>
       <table class="shortcut-table">

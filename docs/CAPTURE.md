@@ -23,7 +23,7 @@ All drawings shown are original, fictional samples made for this site. Their tit
    <app repo>/.venv/bin/python tools/capture/capture.py --snapshot /path/to/snapshot --site .
    ```
 
-   A window opens for about a minute. Settings and caches go to a temporary folder, so your own settings are untouched. The script opens `design/drawings/Demo Project` by a relative path, so no personal folder names appear in the window. It writes `src/assets/screens/{main,mark,queue,tools,compare}-{light,dark}.png`.
+   A window opens for about a minute. Settings and caches go to a temporary folder, so your own settings are untouched. The script opens `design/drawings/Demo Project` by a relative path, so no personal folder names appear in the window. It writes `src/assets/screens/{main,mark,queue,tools,compare,pdfedit,image,vector}-{light,dark}.png`. The Image and Vector captures open `public/demo/sample.jpg` and `public/demo/trace.svg`, so run `tools/demo/make_demo_assets.py` first.
 
 3. Look at every image before committing: file names, paths in the status bar, and comments. Check that PNGs carry no metadata.
 

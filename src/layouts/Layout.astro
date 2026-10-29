@@ -11,7 +11,7 @@ interface Props {
 }
 const {
   title = 'Engineering drawings. Beautifully simple.',
-  description = 'A precise, offline workspace for viewing, marking up, converting and presenting engineering drawings. ENG Drawing Viewer for macOS. Windows coming soon.',
+  description = 'A precise, offline workspace for viewing, annotating, editing, converting and presenting engineering drawings. Free for Mac, Windows and Linux.',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const nav = [
@@ -60,7 +60,7 @@ const nav = [
         '@type': 'SoftwareApplication',
         name: site.name,
         applicationCategory: 'DesignApplication',
-        operatingSystem: 'macOS',
+        operatingSystem: 'macOS, Windows, Linux',
         description,
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         license: 'https://www.gnu.org/licenses/agpl-3.0.html',

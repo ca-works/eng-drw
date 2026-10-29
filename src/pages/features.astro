@@ -1,8 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Screenshot from '../components/Screenshot.astro';
-import release from '../data/release.json';
-const win = (release.assets as { platform: string; version?: string }[]).find((a) => a.platform === 'windows');
+import { edition, allEditorsReleased } from '../data/editions';
+const win = edition('windows-x64');
+const mac = edition('macos-apple-silicon');
+import pdfeditLight from '../assets/screens/pdfedit-light.png';
+import pdfeditDark from '../assets/screens/pdfedit-dark.png';
+import imageLight from '../assets/screens/image-light.png';
+import imageDark from '../assets/screens/image-dark.png';
+import vectorLight from '../assets/screens/vector-light.png';
+import vectorDark from '../assets/screens/vector-dark.png';
+import queueLight from '../assets/screens/queue-light.png';
+import queueDark from '../assets/screens/queue-dark.png';
+const newIn = allEditorsReleased ? '' : ' · NEW IN 2.3.0';
 import mainLight from '../assets/screens/main-light.png';
 import mainDark from '../assets/screens/main-dark.png';
 import markLight from '../assets/screens/mark-light.png';
@@ -22,7 +32,7 @@ const categories: Record<string, string> = {
 
 <Layout
   title="Every detail. One workspace."
-  description="Explore sharp PDF viewing, MARK annotations, 32 offline PDF tools and PowerPoint export in ENG Drawing Viewer."
+  description="Explore sharp PDF viewing, MARK annotations, PowerPoint export, PDF editing, the Image and Vector editors and 32 offline PDF tools in ENG Drawing Viewer."
 >
   <div class="container">
     <header class="page-hero">
@@ -39,15 +49,18 @@ const categories: Record<string, string> = {
     </header>
     <div class="page-content">
       <nav class="feature-subnav" aria-label="Feature sections">
-        <a href="#view">Viewing</a>
+        <a href="#view">PDF Viewer</a>
         <a href="#mark">MARK</a>
-        <a href="#pdf-tools">PDF Tools</a>
         <a href="#powerpoint">PowerPoint</a>
-        <a href="#private">Private &amp; safe</a>
+        <a href="#edit-pdf">Edit PDF</a>
+        <a href="#image">Image</a>
+        <a href="#vector">Vector</a>
+        <a href="#conversion">Conversion</a>
+        <a href="#private">Offline</a>
         <a href="#platforms">Platforms</a>
       </nav>
       <section id="view" class="feature-section">
-        <div class="section-tag">01 / VIEW</div>
+        <div class="section-tag">01 / PDF VIEWER</div>
         <h2>Big sheets. Fine details.</h2>
         <p>
           Browse nested folders in a tree or a flat list. Natural sorting keeps
@@ -63,8 +76,8 @@ const categories: Record<string, string> = {
         <p>
           Open a folder or individual files, or simply drag PDFs, images and
           whole folders onto the window, the PowerPoint queue or a PDF tool.
-          PNG, JPEG, TIFF, WebP, BMP, GIF and, on Mac, HEIC photos open like
-          one-page drawings, upright and at their full resolution, so you can
+          PNG, JPEG, TIFF, WebP, BMP, GIF and HEIC photos (on Windows with
+          Microsoft's free HEIF extensions) open like one-page drawings, upright and at their full resolution, so you can
           MARK a site photo just like a sheet. On Mac, <strong>Scan with
           iPhone</strong> uses Continuity Camera to turn a paper drawing into a
           PDF that opens straight away.
@@ -133,8 +146,131 @@ const categories: Record<string, string> = {
           alt="The real MARK window with numbered callouts and linked review comments on a sample drawing"
         />
       </section>
-      <section id="pdf-tools" class="feature-section">
-        <div class="section-tag">03 / PDF TOOLS</div>
+      <section id="powerpoint" class="feature-section">
+        <div class="section-tag">03 / POWERPOINT</div>
+        <h2>Ready for the conversation.</h2>
+        <p>
+          Queue the current page, selected drawings or marked pages. Reorder
+          them and create a new PowerPoint deck, or insert slides into an
+          existing deck. PowerPoint itself is not required to generate a .pptx.
+        </p>
+        <p>
+          On marked slides, your drawing sits on the right and editable numbered
+          comments sit on the left. Choose 16:9 or 4:3. Add a filename as an
+          editable title or subtitle, or leave it off. Export the queue as a
+          combined PDF when a deck isn’t what you need.
+        </p>
+        <Screenshot
+          light={queueLight}
+          dark={queueDark}
+          sizes="(max-width: 900px) 95vw, 760px"
+          alt="The real PowerPoint queue holding a marked drawing with its comments and two more sheets"
+        />
+      </section>
+      <section id="edit-pdf" class="feature-section">
+        <div class="section-tag">04 / EDIT PDF{newIn}</div>
+        <h2>Change the document itself.</h2>
+        <p>
+          MARK is a temporary review layer; Edit PDF changes real PDF content
+          and saves a new file with Save As. Add searchable text, rectangles,
+          ellipses, lines, images and PDF notes, then move or resize them
+          numerically. Replace or delete an isolated line of original text in a
+          standard PDF font, with the drawing underneath preserved.
+        </p>
+        <p>
+          Redaction removes the text, image pixels and touching vector linework
+          in a region, rather than covering them. Rotate and crop pages without
+          flattening. The whole session has undo and redo; the original stays
+          untouched until you save a new PDF.
+        </p>
+        <div class="callout">
+          Limits: original vector drawings, images and form fields can be
+          inspected but not reshaped; overlapping or rotated original text is
+          refused rather than guessed; replacement text uses standard Latin-1
+          PDF fonts; PDFs with signature fields aren't edited. Merging,
+          splitting and reordering pages are in PDF Tools.
+        </div>
+        <Screenshot
+          light={pdfeditLight}
+          dark={pdfeditDark}
+          sizes="(max-width: 900px) 95vw, 760px"
+          alt="The real Edit PDF workspace with a box and a revision note added to a sample drawing"
+        />
+      </section>
+      <section id="image" class="feature-section">
+        <div class="section-tag">05 / IMAGE EDITOR{newIn}</div>
+        <h2>A layered image editor, built in.</h2>
+        <p>
+          Layers with masks, offsets, opacity and blend modes (normal,
+          multiply, screen, overlay). Rectangle, ellipse, lasso and polygonal
+          lasso selections, Magic Wand and Quick Selection, with feathering and
+          refinement. Brush, highlighter, mask eraser, Magic Eraser, Background
+          Eraser, Spot Healing, Clone Stamp and object removal. Crop, resize,
+          rotate, flip and canvas size, with rulers, guides and a grid.
+        </p>
+        <p>
+          <strong>Remove background automatically</strong> separates an object
+          from a plain or distinct backdrop in one click, using a conventional
+          algorithm rather than an AI model. <strong>Select Subject</strong>
+          uses an optional, hash-verified ONNX model pack that you install
+          yourself; it runs offline and none is bundled.
+        </p>
+        <p>
+          Open PNG, JPEG, TIFF, BMP, WebP, GIF, HEIC and AVIF. Export JPEG,
+          PNG, TIFF, WebP, BMP, GIF, AVIF or HEIF, optionally to a target file
+          size: the app measures the real encoded bytes. Copy to the clipboard
+          as PNG, JPEG, TIFF or BMP with your choice of resolution and
+          transparency. Save editable <code>.engimg</code> projects, add
+          numbered comments, and send images to the PowerPoint queue.
+        </p>
+        <div class="callout">
+          Up to 80 megapixels and 64 layers per image. Not a Photoshop
+          replacement: no RAW development, liquify or advanced typography, and
+          colour management is not a complete colour-managed pipeline.
+        </div>
+        <Screenshot
+          light={imageLight}
+          dark={imageDark}
+          sizes="(max-width: 900px) 95vw, 760px"
+          alt="The real Image Editor with a background removed through a layer mask"
+        />
+      </section>
+      <section id="vector" class="feature-section">
+        <div class="section-tag">06 / VECTOR EDITOR{newIn}</div>
+        <h2>Real geometry, in millimetres.</h2>
+        <p>
+          Lines, quadratic and cubic Bézier paths, rectangles, ellipses and
+          text, with node and handle editing, a pen tool, move, rotate, scale,
+          duplicate, group and order. Visible and locked layers, fill, stroke
+          and opacity. Boolean union, difference, intersection and exclusion;
+          text to outlines; path simplification. Rulers in mm, cm or inches,
+          draggable guides, grid snapping and calibration to a known width.
+        </p>
+        <p>
+          <strong>Trace</strong> turns an image into editable paths, side by
+          side with the original, with threshold, colour and edge modes,
+          background removal, noise removal, smoothing and simplification, and
+          presets for laser cutting, laser engraving, vinyl cutting, CAD import
+          and illustration. Import and export SVG and DXF; export PDF and PNG;
+          save <code>.engvec</code> projects.
+        </p>
+        <div class="callout">
+          A trace is a starting point. Cutting checks report open, duplicate,
+          degenerate and crossing contours, but nothing certifies a file for
+          production: check scale, kerf, material and machine. SVG support is a
+          bounded subset (unsupported effects are reported); DXF curves are
+          exported as fine line segments; DWG and G-code are not supported.
+        </div>
+        <Screenshot
+          light={vectorLight}
+          dark={vectorDark}
+          sizes="(max-width: 900px) 95vw, 760px"
+          alt="The real Vector Editor showing a traced outline with its editable points"
+        />
+      </section>
+      <section id="conversion" class="feature-section">
+        <span id="pdf-tools"></span>
+        <div class="section-tag">07 / CONVERSION &amp; OPTIMIZATION</div>
         <h2>32 tools. All local.</h2>
         <p>
           Organize pages, change formats, prepare a print and compare revisions.
@@ -157,9 +293,12 @@ const categories: Record<string, string> = {
         </div>
         <p style="margin-top:25px">
           PDF → images supports PNG, JPEG and TIFF at 100–600 DPI. Image → PDF
-          supports PNG, JPEG, TIFF, BMP, GIF, WebP and HEIC on Mac. PDF → DOCX,
-          XLSX, PPTX, TXT and Markdown are available in the development
-          application.
+          supports PNG, JPEG, TIFF, BMP, GIF, WebP and HEIC (on Windows with
+          Microsoft's free HEIF extensions). PDF → DOCX, XLSX,
+          PPTX, TXT and Markdown extract what the PDF contains. Compress
+          shrinks drawings for e-mail; the Image Editor exports JPEG, PNG,
+          TIFF, WebP, BMP, GIF, AVIF and HEIF, optionally to a target file
+          size.
         </p>
         <p>
           Compare highlights removed and added linework and lists text changes.
@@ -173,27 +312,14 @@ const categories: Record<string, string> = {
           the result before you share it.
         </p>
       </section>
-      <section id="powerpoint" class="feature-section">
-        <div class="section-tag">04 / PRESENT</div>
-        <h2>Ready for the conversation.</h2>
-        <p>
-          Queue the current page, selected drawings or marked pages. Reorder
-          them and create a new PowerPoint deck, or insert slides into an
-          existing deck. PowerPoint itself is not required to generate a .pptx.
-        </p>
-        <p>
-          On marked slides, your drawing sits on the right and editable numbered
-          comments sit on the left. Choose 16:9 or 4:3. Add a filename as an
-          editable title or subtitle, or leave it off. Export the queue as a
-          combined PDF when a deck isn’t what you need.
-        </p>
-      </section>
       <section id="private" class="feature-section">
-        <div class="section-tag">05 / PRIVATE &amp; SAFE</div>
+        <div class="section-tag">08 / OFFLINE &amp; SAFE</div>
         <h2>Careful with your work.</h2>
         <p>
-          Everything happens on your computer. There's no account, no telemetry
-          and no cloud processing. The app refuses network connections in its
+          Everything happens on your computer: PDF processing, image editing,
+          tracing, conversion and PowerPoint generation. There's no account, no
+          telemetry and no cloud processing. Optional AI model packs for the
+          Image Editor run offline and are never downloaded automatically. The app refuses network connections in its
           own code, in the main window and in every background worker, and its
           automated tests check that this stays true.
         </p>
@@ -221,50 +347,51 @@ const categories: Record<string, string> = {
         </p>
       </section>
       <section id="platforms" class="feature-section">
-        <div class="section-tag">06 / PLATFORM DETAILS</div>
-        <h2>A shared standard of care.</h2>
+        <div class="section-tag">PLATFORMS</div>
+        <h2>Four editions. One app.</h2>
         <p>
-          Version 2.2.0 is available for Macs with Apple silicon and macOS 14.4
-          or later.{' '}
-          {win
-            ? `Windows ${win.version} is a Preview for Windows 10 and 11 (64-bit) with the same viewer, MARK, PDF tools and PowerPoint export; it has been tested automatically on Windows Server, not yet on everyday PCs.`
-            : 'Windows is being rebuilt for ordinary PCs, with the same viewer, MARK, conversion and export workflow as its goal, and will follow.'}
+          The same workspaces on every edition, built from one source. What
+          differs is how each fits in with its system.
         </p>
         <table class="shortcut-table">
           <thead>
             <tr>
               <th scope="col">Capability</th>
               <th scope="col">Mac</th>
-              <th scope="col">Windows rebuild</th>
+              <th scope="col">Windows</th>
+              <th scope="col">Linux</th>
             </tr>
           </thead>
           <tbody>
             {[
-              [
-                'Viewing, MARK, PDF tools',
-                'Available',
-                win ? 'Preview' : 'Planned parity',
-              ],
-              [
-                'Local PowerPoint export',
-                'Available',
-                win ? 'Preview, plus sending to an open presentation' : 'Planned parity',
-              ],
-              ['Scan with iPhone', 'Continuity Camera', 'Mac only'],
-              ['OCR', 'Apple Vision', win ? 'Built-in Tesseract (7 languages)' : 'To be verified'],
-              ['HEIC photos', 'Built in', win ? "With Microsoft's free HEIF/HEVC extensions" : 'To be verified'],
-              ['Downloads', 'Version 2.2.0', win ? `Version ${win.version} Preview` : 'Coming soon'],
-            ].map(([a, b, c]) => (
+              ['Editions', 'Universal (Intel + Apple silicon), Apple Silicon', 'x64', 'x86-64 AppImage'],
+              ['Requires', 'macOS 14.4+', 'Windows 10 (1809+) or 11', 'glibc 2.34+'],
+              ['Viewer, MARK, PDF Tools, PowerPoint, editors', 'Yes', 'Yes', 'Yes'],
+              ['Scan with iPhone', 'Continuity Camera', '—', '—'],
+              ['Send slides to an open PowerPoint', '—', 'Yes', '—'],
+              ['OCR (Make Searchable)', 'Apple Vision', 'Bundled Tesseract (7 languages)', 'Bundled Tesseract (7 languages)'],
+              ['HEIC photos in the Viewer', 'Built in', "Microsoft's free HEIF/HEVC extensions", 'Bundled libheif'],
+              ['Spelling in comments', 'macOS spelling', 'Windows spelling', 'Built-in English'],
+              ['Signing', 'Ad hoc, not notarized', 'Not code-signed', 'SHA-256 checksums'],
+            ].map(([a, b, c, d]) => (
               <tr>
                 <td>{a}</td>
                 <td>{b}</td>
                 <td>{c}</td>
+                <td>{d}</td>
               </tr>
             ))}
           </tbody>
         </table>
+        <p style="margin-top:25px">
+          {mac.available ? `Available now: Mac Apple Silicon ${mac.version}` : 'Nothing is released yet'}
+          {win.available ? `, Windows ${win.version}${win.preview ? ' Preview' : ''}` : ''}.
+          {allEditorsReleased ? '' : ' Version 2.3.0 brings the editors, the Universal Mac edition and Linux.'}
+          Windows and Linux are tested automatically; hands-on testing on
+          everyday PCs and Linux desktops is ongoing.
+        </p>
         <a class="text-link" href={url('download/')} style="margin-top:25px">
-          Check release availability ↗
+          Choose your edition ↗
         </a>
       </section>
     </div>
