@@ -36,7 +36,7 @@ const nodes = demo.trace.paths
   .join(' ')
   .match(/[ML]\s*[-\d.]+\s+[-\d.]+/g)!
   .map((m) => m.slice(1).trim().split(/\s+/).map(Number));
-const editorsNote = allEditorsReleased ? '' : 'New in version 2.3.0';
+const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : 'Coming in version 2.3.0';
 ---
 
 <Layout>
