@@ -3341,9 +3341,6 @@ button.text-link {
   :root {
     --nav-h: 60px;
   }
-  .nav-wrap {
-    background: color-mix(in srgb, var(--bg) 94%, transparent);
-  }
   .section {
     padding-block: 64px;
   }
@@ -3397,7 +3394,8 @@ button.text-link {
     grid-column: 1 / -1;
   }
 }
-@media (max-width: 700px) {
+/* Touch screens and narrow windows: nothing shows through the header. */
+@media (max-width: 1000px), (hover: none) {
   .nav-wrap {
     background: var(--bg);
     backdrop-filter: none;
