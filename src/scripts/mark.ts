@@ -92,7 +92,9 @@ if (host) {
             cx: a.x,
             cy: a.y,
             r: Math.max(13, a.size),
-            fill: '#e81a1e',
+            fill: '#fff',
+            stroke: '#e81a1e',
+            'stroke-width': Math.max(13, a.size) * 0.15,
           }),
         );
         const text = node('text', {
@@ -100,8 +102,9 @@ if (host) {
           y: a.y + 1,
           'text-anchor': 'middle',
           'dominant-baseline': 'middle',
-          fill: 'white',
+          fill: '#000',
           'font-size': Math.max(13, a.size),
+          'font-weight': 700,
           'font-family': 'sans-serif',
         });
         text.textContent = String(a.number);

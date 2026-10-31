@@ -3,6 +3,7 @@ import HeroScene from '../components/HeroScene.astro';
 import Layout from '../layouts/Layout.astro';
 import Drawing from '../components/Drawing.astro';
 import Downloads from '../components/Downloads.astro';
+import ReviewStory from '../components/ReviewStory.astro';
 import { Image } from 'astro:assets';
 import icon from '../assets/icon.png';
 import Screenshot from '../components/Screenshot.astro';
@@ -36,6 +37,8 @@ const nodes = demo.trace.paths
   .join(' ')
   .match(/[ML]\s*[-\d.]+\s+[-\d.]+/g)!
   .map((m) => m.slice(1).trim().split(/\s+/).map(Number));
+const [bx0, by0, bx1, by1] = demo.trace.bbox_mm;
+const traceSteps = ['Raster', 'Edges', 'Trace', 'Nodes', 'Refine', 'Vector', 'Export'];
 const universal = edition('macos-universal');
 const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsReleased ? 'New in version 2.3.0 · On Mac now' : 'Coming in version 2.3.0';
 ---
@@ -302,42 +305,7 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsRele
         drawing on the right and editable numbered comments on the left.
       </p>
     </div>
-    <ol class="workflow-steps" aria-label="From drawing to presentation">
-      {['Open PDFs', 'Mark up', 'Add callouts', 'Write comments', 'Queue pages', 'Export .pptx'].map((s, i) => (
-        <li style={`--i:${i}`}>
-          <span class="mono">0{i + 1}</span>
-          {s}
-        </li>
-      ))}
-    </ol>
-    <div class="slide-composition">
-      <div class="slide-queue" aria-hidden="true">
-        <div>01 / ROTOR</div>
-        <div>02 / HOUSING</div>
-        <div>03 / ASSEMBLY</div>
-        <span>→</span>
-      </div>
-      <div class="presentation-slide">
-        <div class="slide-title">
-          Turbine blade <span>Design review / Rev B</span>
-        </div>
-        <div class="slide-body">
-          <div>
-            <p>
-              <b>1</b> Review the midspan section.
-            </p>
-            <p>
-              <b>2</b> Review the blade root fit.
-            </p>
-            <p>
-              <b>3</b> Check the airfoil surface.
-            </p>
-          </div>
-          <Drawing id="slide" />
-        </div>
-        <span class="mono slide-label">ILLUSTRATION OF EXPORT LAYOUT</span>
-      </div>
-    </div>
+    <ReviewStory />
     <div class="spec-strip">
       <div>
         <strong>No Office needed</strong>
@@ -447,7 +415,7 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsRele
           src={demoFile(demo.sample.file)}
           width={demo.sample.width}
           height={demo.sample.height}
-          alt="Sample image: a rendered turbine rotor on a green cutting mat"
+          alt="Sample image: a rendered CNC-machined aluminium bearing bracket on a blue studio backdrop"
           loading="lazy"
           decoding="async"
         />
@@ -456,7 +424,7 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsRele
             src={demoFile(demo.background_removal.file)}
             width={demo.sample.width}
             height={demo.sample.height}
-            alt="The same image after the app's automatic background removal: the rotor on transparency"
+            alt="The same image after the app's automatic background removal: the bracket on transparency"
             loading="lazy"
             decoding="async"
           />
@@ -486,9 +454,10 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsRele
         <button aria-pressed="false" data-cutout-mode="select">Quick Selection</button>
       </div>
       <p class="demo-caption" data-cutout-caption>
-        Real output of the app’s one-click <em>Remove background automatically</em>
-        on a sample image. It is a conventional algorithm, not an AI model: it
-        suits objects on a plain or distinct backdrop.
+        Real output of the app’s one-click <em>Remove background automatically</em>,
+        with a 1 px feather from <em>Select › Feather / grow / smooth</em>. It is a
+        conventional algorithm, not an AI model: it suits objects on a plain or
+        distinct backdrop.
       </p>
       <div class="tool-cloud" aria-label="Image Editor tools">
         {[
@@ -553,12 +522,13 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsRele
         <Screenshot
           light={imageLight}
           dark={imageDark}
-          alt="The real Image Editor: the sample rotor with its background removed through a layer mask, the tool column, the Quick Selection settings and the Layers panel"
+          alt="The real Image Editor: the sample aluminium bracket with its background removed through a layer mask, on a transparency checkerboard, with the tool column, the Quick Selection settings and the Layers panel"
         />
         <p class="product-caption mono">The Image Editor in the app · background hidden by a layer mask, fully reversible</p>
       </div>
       <p class="fine-print center">
-        Opens PNG, JPEG, TIFF, BMP, WebP, GIF, HEIC and AVIF. AI <em>Select
+        The sample is an original, opaque render of a fictional part, made with
+        CAD and Blender. Opens PNG, JPEG, TIFF, BMP, WebP, GIF, HEIC and AVIF. AI <em>Select
         Subject</em> works with an optional model pack you install yourself and
         that runs offline; none is bundled. Up to 80 megapixels and 64 layers
         per image; saved as an editable <code>.engimg</code> project.
@@ -581,50 +551,66 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsRele
           illustration tool.
         </p>
       </div>
-      <div class="trace-demo" data-trace>
+      <div class="trace-demo" data-trace data-step="6">
         <div class="trace-stage">
           <img
             class="trace-source"
-            src={demoFile('trace-source.png')}
-            width={demo.trace.source.width}
-            height={demo.trace.source.height}
-            alt="The traced picture: the rotor's silhouette"
+            src={demoFile(demo.trace.source_file)}
+            width="1600"
+            height="693"
+            alt="The traced picture: an original render of a digital caliper, opaque, on a light backdrop"
             loading="lazy"
             decoding="async"
           />
-          <svg viewBox={demo.trace.viewBox} role="img" aria-label={`The traced outline: ${demo.trace.contours} closed contours with ${demo.trace.nodes} editable points`}>
+          <img class="trace-layer trace-edges" src={demoFile('caliper-edges.svg')} alt="" width="1200" height="520" loading="lazy" decoding="async" />
+          <img class="trace-layer trace-raw" src={demoFile('caliper-raw.svg')} alt="" width="1200" height="520" loading="lazy" decoding="async" />
+          <svg viewBox={demo.trace.viewBox} role="img" aria-label={`The traced caliper: ${demo.trace.contours} closed contours with ${demo.trace.nodes} editable points, ${demo.trace.width_mm} by ${demo.trace.height_mm} millimetres`}>
             {demo.trace.paths.map((d) => (
-              <path class="trace-path" d={d} fill-rule="evenodd" pathLength="1" />
+              <path class="trace-fill" d={d} fill-rule="evenodd" />
+            ))}
+            {demo.trace.paths.map((d) => (
+              <path class="trace-path" d={d} pathLength="1" />
             ))}
             <g class="trace-nodes">
               {nodes.map(([x, y], i) => (
-                <circle cx={x} cy={y} r="0.9" style={`--d:${(i / nodes.length).toFixed(3)}`} />
+                <circle cx={x} cy={y} r="0.85" style={`--d:${(i / nodes.length).toFixed(3)}`} />
               ))}
             </g>
+            <g class="trace-dims">
+              <path d={`M${bx0} ${by1 + 2}V${by1 + 11} M${bx1} ${by1 + 2}V${by1 + 11} M${bx0} ${by1 + 9}H${bx1}`} />
+              <path d={`M${bx1 + 2} ${by0}H${bx1 + 5.5} M${bx1 + 2} ${by1}H${bx1 + 5.5} M${bx1 + 4} ${by0}V${by1}`} />
+              <text x={(bx0 + bx1) / 2} y={by1 + 15} text-anchor="middle">{demo.trace.width_mm} mm</text>
+              <text transform={`translate(${bx1 + 3.2} ${(by0 + by1) / 2 + 18}) rotate(-90)`}>{demo.trace.height_mm} mm</text>
+            </g>
           </svg>
-          <div class="trace-steps mono" aria-hidden="true">
-            <span data-step="0">RASTER</span>
-            <span data-step="1">TRACE</span>
-            <span data-step="2">NODES</span>
-            <span data-step="3">EXPORT</span>
-          </div>
+        </div>
+        <div class="trace-steps" role="group" aria-label="Steps from raster to vector">
+          {traceSteps.map((label, i) => (
+            <button type="button" data-trace-step={i} aria-pressed={i === 6}>{label}</button>
+          ))}
         </div>
         <div class="trace-panel">
           <dl class="trace-facts">
             <div><dt>Closed contours</dt><dd>{demo.trace.contours}</dd></div>
-            <div><dt>Editable points</dt><dd>{demo.trace.nodes}</dd></div>
-            <div><dt>Size</dt><dd>{demo.trace.width_mm} × {demo.trace.height_mm} mm</dd></div>
+            <div><dt>Editable points</dt><dd data-trace-count data-raw={demo.trace.raw_nodes} data-final={demo.trace.nodes}>{demo.trace.nodes}</dd></div>
+            <div><dt>Traced size</dt><dd>{demo.trace.width_mm} × {demo.trace.height_mm} mm</dd></div>
           </dl>
-          <div class="export-chips" aria-label="Vector export formats">
-            <span>SVG · {(demo.trace.svg_bytes / 1000).toFixed(1)} KB</span>
-            <span>DXF · {(demo.trace.dxf_bytes / 1000).toFixed(1)} KB</span>
-            <span>PDF</span>
-            <span>PNG</span>
+          <div class="trace-side">
+            <div class="export-chips" aria-label="Vector export files">
+              <a href={demoFile(demo.trace.svg_file)} download>SVG · {(demo.trace.svg_bytes / 1000).toFixed(1)} KB ↓</a>
+              <a href={demoFile(demo.trace.dxf_file)} download>DXF · {(demo.trace.dxf_bytes / 1000).toFixed(1)} KB ↓</a>
+              <span>PDF</span>
+              <span>PNG</span>
+            </div>
+            <button class="text-link" data-trace-replay>Replay the trace ↻</button>
           </div>
-          <button class="text-link" data-trace-replay>Replay the trace ↻</button>
           <p class="fine-print">
-            The outline above is the app’s real trace of this silhouette,
-            shown from its own SVG export.
+            Real output of the app’s tracing and export, and the files are yours
+            to open. The picture is an original render at {demo.trace.pixels_per_mm} pixels per
+            millimetre of a {demo.trace.model_mm[0]} × {demo.trace.model_mm[1]} mm model. Small print
+            on the display fell below the trace’s noise filter, and refining took
+            the outline from {demo.trace.raw_nodes.toLocaleString('en-GB')} points to {demo.trace.nodes}. Traces are
+            straight segments that follow curves closely.
           </p>
         </div>
       </div>
@@ -632,9 +618,9 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsRele
         <Screenshot
           light={vectorLight}
           dark={vectorDark}
-          alt="The real Vector Editor: the traced rotor outline selected with the node tool, its points shown, with millimetre rulers and the geometry panel"
+          alt="The real Vector Editor: the traced digital caliper selected with the node tool, its points shown, with millimetre rulers, the geometry panel, the Trace layer and the Export button; the status bar reads selection 284.12 × 70.62 mm"
         />
-        <p class="product-caption mono">The Vector Editor in the app · millimetre geometry, node editing, layers</p>
+        <p class="product-caption mono">The Vector Editor in the app · the same trace · millimetre rulers, nodes, layers, SVG and DXF export</p>
       </div>
       <ul class="capability-list">
         <li><strong>Draw</strong> lines, Bézier paths, rectangles, ellipses and text; edit nodes and handles.</li>
@@ -871,4 +857,5 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsRele
   import '../scripts/home';
   import '../scripts/mark';
   import '../scripts/editors';
+  import '../scripts/review';
 </script>

@@ -22,8 +22,7 @@ export async function mountAssembly(host: HTMLElement) {
       powerPreference: 'low-power',
     });
   } catch {
-    host.dataset.state = 'fallback';
-    return;
+    throw new Error('WebGL is not available');
   }
   renderer.setPixelRatio(
     Math.min(devicePixelRatio, innerWidth < 700 ? 1.5 : 2),
@@ -227,8 +226,9 @@ export async function mountAssembly(host: HTMLElement) {
   document.addEventListener('visibilitychange', draw);
   renderer.domElement.addEventListener('webglcontextlost', (e) => {
     e.preventDefault();
-    host.dataset.state = 'fallback';
-    if (drawing) drawing.style.opacity = '0';
+    host.dataset.state = 'sheet';
+    host.dataset.phase = 'drawing';
+    if (drawing) drawing.style.removeProperty('opacity');
     if (replay) replay.hidden = true;
     cancelAnimationFrame(raf);
   });

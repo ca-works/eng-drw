@@ -1,0 +1,88 @@
+---
+// From drawing to slide. Everything here comes from one real run of the app (src/data/review.json and
+// public/demo/review): the marks are MARK's, and the finished slide uses the title, the comments, the
+// picture and the positions read from the exported .pptx, which visitors can download.
+import Drawing from './Drawing.astro';
+import review from '../data/review.json';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const s = review.slide;
+const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(2)}%`;
+const box = ([l, t, w, h]: number[]) =>
+  `left:${pct(l, s.width_emu)};top:${pct(t, s.height_emu)};width:${pct(w, s.width_emu)};height:${pct(h, s.height_emu)}`;
+const steps = ['Drawing', 'Callout', 'Comment', 'All three', 'Queue', 'Slide'];
+const kb = Math.round(review.pptx_bytes / 1000);
+---
+
+<div class="review-story" data-review>
+  <div class="review-progress" role="group" aria-label="Steps from the drawing to the slide">
+    {
+      steps.map((label, i) => (
+        <button type="button" data-review-step={i} aria-pressed={i === 5}>
+          <span class="mono">{i + 1}</span> {label}
+        </button>
+      ))
+    }
+  </div>
+  <div class="review-board">
+    <div class="review-work">
+      <div class="review-sheet">
+        <Drawing id="review" marks />
+      </div>
+      <div class="review-notes">
+        <span class="mono">NUMBERED COMMENTS</span>
+        <ol>
+          {
+            review.bubbles.map((b) => (
+              <li data-at={b.number === 1 ? 2 : 3}>
+                <span class="callout-chip" aria-hidden="true">{b.number}</span>
+                <span>{b.comment}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+      <p class="review-queued" data-at="4">
+        <span aria-hidden="true">✓</span> Added to the PowerPoint queue · {review.bubbles.length} comments
+      </p>
+    </div>
+    <figure class="review-slide" data-at="5">
+      <div class="review-slide-page">
+        <div class="review-slide-title">{s.title}</div>
+        <div class="review-slide-comments" style={box(s.comment_box)}>
+          {
+            s.comments.map((line) => {
+              const [n, ...rest] = line.split(' ');
+              return (
+                <p>
+                  <b>{n}</b> {rest.join(' ')}
+                </p>
+              );
+            })
+          }
+        </div>
+        <img
+          src={`${base}/demo/review/blade-marked.webp`}
+          style={box(s.picture_box)}
+          width={s.picture_px[0]}
+          height={s.picture_px[1]}
+          alt="The rotor blade drawing with callouts 1, 2 and 3: a circle around section A–A, an arrow to the blade root and an arrow to a highlighted area of the airfoil"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </figure>
+  </div>
+  <div class="review-foot">
+    <p>
+      Real output of version {review.app_version}. MARK added the callouts and the app’s own
+      export wrote the deck; title, comments, picture and positions above are read from that file.
+      In PowerPoint the comments are editable text.
+    </p>
+    <div class="review-actions">
+      <button type="button" class="text-link" data-review-replay>Replay ↻</button>
+      <a class="text-link" href={`${base}/demo/review/blade-review.pptx`} download>
+        Download this slide · .pptx · {kb} KB ↓
+      </a>
+    </div>
+  </div>
+</div>

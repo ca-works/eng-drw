@@ -28,6 +28,12 @@ Requirements, architecture text and install notes per edition live in `src/data/
 
 After the owner publishes an approved release, dispatch the deploy workflow (or wait for the daily run) and check the download page: each card's version, size and SHA-256 against the release's `SHA256SUMS.txt`. Never infer approval from CI success or the existence of a local file. No large binaries belong in this website repository.
 
+## Staged releases
+
+A version can reach the editions one at a time. v2.3.0 went out for Apple Silicon first: `tools/publish_release.sh` in the app repository is generic and publishes whatever `SHA256SUMS.txt` in its folder lists, so a stage is a folder of its own beside the candidate, with its own notes, sums and manifest. The site then shows each edition from the newest release that contains it, which keeps Windows on the 2.2.1 Preview until a 2.3.0 Windows file exists.
+
+A published tag never moves. Adding an edition to a release means uploading its files and replacing `SHA256SUMS.txt`, `THIRD_PARTY_SOURCES.txt` and the notes (`gh release upload --clobber`, `gh release edit`). If the new edition was built from source that differs from the tag, attach that source as a supplement in the same step; if the application source itself changed, publish a new version instead. `docs/RELEASE_STATUS.md` holds the current state and the steps still to do.
+
 ## Free hosting limits (checked 24 October 2026)
 
 GitHub Pages: 1 GB published site, soft 100 GB/month bandwidth, 10-minute deployment timeout. Custom Actions workflows are exempt from the soft ten-builds-per-hour limit. This site presents a free desktop project, with no commercial transactions or SaaS service.

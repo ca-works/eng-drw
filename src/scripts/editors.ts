@@ -12,7 +12,7 @@ if (cutout) {
   const captions: Record<string, string> = {
     remove: caption?.innerHTML ?? '',
     select:
-      'Real output of the app’s <em>Quick Selection</em>: one brush stroke across the hub, and the selection follows the edges it finds. Selections become masks, crops or new layers.',
+      'Real output of the app’s <em>Quick Selection</em>: ten short brush strokes, each adding to the selection, which follows the edges it finds. Selections become masks, crops or new layers.',
   };
   document.querySelectorAll<HTMLButtonElement>('[data-cutout-mode]').forEach((b) =>
     b.addEventListener('click', () => {
@@ -61,28 +61,47 @@ compress?.querySelector('[role="radiogroup"]')?.addEventListener('keydown', (eve
   next.focus();
 });
 
-// Vector tracing: raster → outline drawn → points → export, once in view (replayable).
+// Vector tracing: raster, edges, outline, raw points, refined points, finished vector, export. The
+// layers are real output of the app; the steps are buttons too, so they can be read at any pace.
 const trace = document.querySelector<HTMLElement>('[data-trace]');
 if (trace) {
+  const buttons = [...trace.querySelectorAll<HTMLButtonElement>('[data-trace-step]')];
+  const count = trace.querySelector<HTMLElement>('[data-trace-count]');
+  const last = buttons.length - 1;
+  const hold = [1000, 1300, 1700, 1500, 1500, 1500];
   let timers: number[] = [];
-  const play = () => {
+  const stop = () => {
     timers.forEach(clearTimeout);
     timers = [];
-    if (reduced) {
-      trace.dataset.step = '3';
-      return;
-    }
-    trace.dataset.step = '0';
-    void trace.offsetWidth;
-    [1, 2, 3].forEach((s, i) => timers.push(window.setTimeout(() => (trace.dataset.step = String(s)), 700 + i * 1500)));
   };
-  trace.dataset.step = reduced ? '3' : '0';
+  const show = (step: number) => {
+    trace.dataset.step = String(step);
+    buttons.forEach((b, i) => b.setAttribute('aria-pressed', String(i === step)));
+    if (count) count.textContent = Number(step < 4 ? count.dataset.raw : count.dataset.final).toLocaleString('en-GB');
+  };
+  const play = () => {
+    stop();
+    if (reduced) return show(last);
+    show(0);
+    let at = 0;
+    hold.forEach((ms, i) => {
+      at += ms;
+      timers.push(window.setTimeout(() => show(i + 1), at));
+    });
+  };
+  buttons.forEach((b, i) =>
+    b.addEventListener('click', () => {
+      stop();
+      show(i);
+    }),
+  );
+  show(reduced ? last : 0);
   new IntersectionObserver((entries, observer) => {
     if (!entries[0].isIntersecting) return;
     observer.disconnect();
     play();
-  }, { threshold: 0.45 }).observe(trace);
-  document.querySelector('[data-trace-replay]')?.addEventListener('click', play);
+  }, { threshold: 0.4 }).observe(trace);
+  trace.querySelector('[data-trace-replay]')?.addEventListener('click', play);
 }
 
 // Platform tabs (WAI-ARIA tabs pattern).

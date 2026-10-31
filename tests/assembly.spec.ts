@@ -10,11 +10,12 @@ test('reduced motion keeps the 3D engine opt-in', async ({ page }) => {
   await expect(
     page.getByRole('button', { name: 'Explore in 3D', exact: true }),
   ).toBeVisible();
-  await expect(page.locator('.assembly-fallback img')).toBeVisible();
+  // Without the 3D scene the marked-up sheet is the opening picture.
+  await expect(page.locator('.blade-sheet svg')).toBeVisible();
   expect(engines).toEqual([]);
 });
 
-test('3D loading failure retains the original model poster and navigation', async ({
+test('3D loading failure keeps the marked-up sheet and navigation', async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -25,9 +26,9 @@ test('3D loading failure retains the original model poster and navigation', asyn
     .click();
   await expect(page.locator('[data-assembly]')).toHaveAttribute(
     'data-state',
-    'fallback',
+    'sheet',
   );
-  await expect(page.locator('.assembly-fallback img')).toBeVisible();
+  await expect(page.locator('.blade-sheet svg')).toBeVisible();
   await page.locator('.hero-actions a').first().click();
   await expect(page).toHaveURL(/\/download\/$/);
 });
