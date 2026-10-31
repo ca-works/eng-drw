@@ -437,7 +437,7 @@ const editorsNote = allEditorsReleased || nativeEditorsReleased ? 'New in versio
         >
           <path d={demo.quick_selection.outline} />
         </svg>
-        <div class="cutout-handle" aria-hidden="true"><span>⟷</span></div>
+        <div class="cutout-handle" aria-hidden="true"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h20M6 8l-4 4 4 4M18 8l4 4-4 4" /></svg></span></div>
         <input
           class="cutout-range"
           type="range"
@@ -760,6 +760,7 @@ const editorsNote = allEditorsReleased || nativeEditorsReleased ? 'New in versio
         <ul class="platform-notes">
           <li>{universal.available ? 'Universal (Intel + Apple silicon) and a dedicated Apple Silicon edition' : 'A native Apple Silicon edition today; a Universal edition for Intel Macs is coming soon'}</li>
           <li>Scan with iPhone through Continuity Camera; OCR with Apple Vision</li>
+          <li>Send slides into a presentation open in PowerPoint, or export a .pptx file</li>
           <li>macOS spelling, native menus and trackpad gestures</li>
         </ul>
       </div>

@@ -170,6 +170,23 @@ def world(strength, color=(1, 1, 1)):
     scene.world = w
 
 
+def backdrop_material(blue, neutral):
+    """Blue to the camera, neutral grey to everything else, so the metal never picks up blue."""
+    m = bpy.data.materials.new('backdrop')
+    m.use_nodes = True
+    nodes, links = m.node_tree.nodes, m.node_tree.links
+    nodes.clear()
+    a = nodes.new('ShaderNodeBsdfDiffuse'); a.inputs['Color'].default_value = (*blue, 1)
+    b = nodes.new('ShaderNodeBsdfDiffuse'); b.inputs['Color'].default_value = (*neutral, 1)
+    lp = nodes.new('ShaderNodeLightPath')
+    mix = nodes.new('ShaderNodeMixShader')
+    out = nodes.new('ShaderNodeOutputMaterial')
+    links.new(lp.outputs['Is Camera Ray'], mix.inputs['Fac'])
+    links.new(b.outputs[0], mix.inputs[1]); links.new(a.outputs[0], mix.inputs[2])
+    links.new(mix.outputs[0], out.inputs['Surface'])
+    return m
+
+
 def quads(name, rects, z, material):
     """Flat dark marks: scale lines and display segments. rects = (x0, y0, x1, y1) in mm."""
     verts, faces = [], []
@@ -226,9 +243,9 @@ if part == 'bracket':
     machined = principled('machined', (.86, .87, .88), metallic=1, rough=.2, grain=.05, grain_scale=1400)
     load(f'{folder}/bracket.npz', {('aluminium', 'flat'): blasted, ('aluminium', 'chamfer'): bright,
                                    ('aluminium', 'curved'): machined})
-    backdrop = principled('backdrop', (.014, .055, .15), rough=1, spec=0)
+    backdrop = backdrop_material((.02, .075, .21), (.5, .5, .5))
     sweep(backdrop)
-    world(.25, (.72, .8, 1))
+    world(.25, (.9, .9, .9))
     cam = bpy.data.cameras.new('cam')
     cam.lens = 105
     cam.sensor_width = 36

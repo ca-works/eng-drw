@@ -901,11 +901,24 @@ input[type='range'] {
   color: var(--muted);
 }
 .local-files {
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 0 14px;
   font-family: monospace;
-  font-size: 12px;
-  word-spacing: 10px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  word-spacing: 2px;
+  text-align: center;
+  text-wrap: balance;
   margin-top: 14px;
   color: var(--blue);
+}
+@media (max-width: 380px) {
+  .local-files {
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    word-spacing: 0;
+  }
 }
 .offline-note {
   position: absolute;
@@ -2453,8 +2466,17 @@ body:has(dialog[open]) {
   place-items: center;
   background: #fff;
   color: #1d1d1f;
-  font-size: 18px;
   box-shadow: 0 6px 20px #0004;
+}
+.cutout-handle svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .cutout-range {
   position: absolute;
