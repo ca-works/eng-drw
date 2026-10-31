@@ -128,11 +128,19 @@ for (const theme of ['light', 'dark'] as const)
     for (const width of [360, 390, 768, 1280, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(new URL('', baseURL).href);
-      expect(
-        await page.evaluate(
-          () => document.documentElement.scrollWidth <= innerWidth + 1,
-        ),
-      ).toBe(true);
+      const layout = await page.evaluate(() => {
+        const name = (el: Element) => `${el.tagName.toLowerCase()}.${el.getAttribute('class')?.split(' ')[0] ?? ''}`;
+        const wide = [...document.querySelectorAll('body *')]
+          .filter((el) => el.getBoundingClientRect().right > innerWidth + 1)
+          .map((el) => `${name(el)} right ${Math.round(el.getBoundingClientRect().right)}`);
+        return {
+          fits: document.documentElement.scrollWidth <= innerWidth + 1,
+          scrollWidth: document.documentElement.scrollWidth,
+          fonts: document.fonts.status,
+          wide: wide.slice(0, 15),
+        };
+      });
+      expect(layout.fits, `${width} px: ${JSON.stringify(layout)}`).toBe(true);
     }
   });
 
