@@ -18,8 +18,8 @@ Latest local run: 31 October 2026, production build served by `astro preview` un
 
 | Preset | Performance | Accessibility | Best practices | SEO | LCP | TBT | CLS |
 |---|---|---|---|---|---|---|---|
-| Mobile | 96 | 100 | 100 | 100 | 2.4 s | 0 ms | 0.002 |
-| Desktop | 100 | 100 | 100 | 100 | 0.7 s | 0 ms | 0.005 |
+| Mobile | 96 | 100 | 100 | 100 | 2.4 s | 20 ms | 0.002 |
+| Desktop | 100 | 100 | 100 | 100 | 0.6 s | 0 ms | 0.005 |
 
 Lab measurements on a fast Mac, not field data. One of three desktop runs scored 91 with 240 ms blocking time while other apps were busy; the other two were 100 with 0 ms.
 

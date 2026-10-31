@@ -15,6 +15,8 @@ macOS 2.2.0 stays in the release history.
 
 The v2.3.0 tag is commit `db81eafd` of the public app repository. Its tree is exactly `eng-drawing-viewer-2.3.0-source.zip`. A published tag never moves.
 
+The status table in the app repository's `docs/WEBSITE_HANDOFF.md` predates this release. This page supersedes it until that file is next updated on the application side.
+
 ## Still to do: Windows and Linux 2.3.0
 
 The Windows and Linux candidates in the private `release/candidate-2.3.0` folder must **not** be published. They bundle FFmpeg and, on Linux, OpenSSL 1.1.1k through the published OpenCV wheel. The corrected builds come from the separate Windows and Linux session, which is the only place their source and packaging change.
