@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Screenshot from '../components/Screenshot.astro';
-import { edition, allEditorsReleased, macEditorsReleased } from '../data/editions';
+import { edition, allEditorsReleased, macEditorsReleased, nativeEditorsReleased } from '../data/editions';
 const win = edition('windows-x64');
 const mac = edition('macos-apple-silicon');
+const linux = edition('linux-x86_64');
 import pdfeditLight from '../assets/screens/pdfedit-light.png';
 import pdfeditDark from '../assets/screens/pdfedit-dark.png';
 import imageLight from '../assets/screens/image-light.png';
@@ -385,8 +386,9 @@ const categories: Record<string, string> = {
         </table>
         <p style="margin-top:25px">
           {mac.available ? `Available now: Mac Apple Silicon ${mac.version}` : 'Nothing is released yet'}
-          {win.available ? `, Windows ${win.version}${win.preview ? ' Preview' : ''}` : ''}.
-          {allEditorsReleased ? '' : ' Windows and Linux 2.3.0, with the editors, are being finished; a Universal Mac edition is coming soon.'}
+          {win.available ? `, Windows ${win.version}${win.preview ? ' Preview' : ''}` : ''}
+          {linux.available ? `, Linux ${linux.version}` : ''}.
+          {allEditorsReleased ? '' : nativeEditorsReleased ? ' A Universal Mac edition is coming soon.' : ' Windows and Linux 2.3.0, with the editors, are being finished; a Universal Mac edition is coming soon.'}
           Windows and Linux are tested automatically; hands-on testing on
           everyday PCs and Linux desktops is ongoing.
         </p>

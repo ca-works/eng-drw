@@ -73,4 +73,6 @@ export function compare(a: string, b: string) {
   return 0;
 }
 export const allEditorsReleased = editions.every((e) => hasEditors(e));
+// Everything but the Universal Mac edition, which is released on the owner's decision.
+export const nativeEditorsReleased = editions.filter((e) => e.id !== 'macos-universal').every((e) => hasEditors(e));
 export const macEditorsReleased = hasEditors(edition('macos-apple-silicon'));

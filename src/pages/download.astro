@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Downloads from '../components/Downloads.astro';
 import { site, url } from '../data/site';
 import release from '../data/release.json';
-import { edition, compare } from '../data/editions';
+import { edition, compare, nativeEditorsReleased } from '../data/editions';
 const released = release.status === 'available';
 const mac = edition('macos-apple-silicon');
 const universal = edition('macos-universal');
@@ -28,7 +28,9 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
       <p>
         {all230
           ? 'Version 2.3.0 for Mac, Windows and Linux: free and open source, with the new Image, Vector and Edit PDF workspaces. No account, subscription or cloud workspace required.'
-          : released
+          : nativeEditorsReleased
+            ? 'Version 2.3.0 for Macs with Apple silicon, Windows and Linux: free and open source, with the new Image, Vector and Edit PDF workspaces. A Universal Mac edition is coming soon. No account, subscription or cloud workspace required.'
+            : released
             ? `Version ${mac.available ? mac.version : ''} for Macs with Apple silicon is here, with the new Image, Vector and Edit PDF workspaces.${win.available ? ` Windows ${win.version}${win.preview ? ' stays available as a Preview' : ' is available'}.` : ''} Windows and Linux 2.3.0 are being finished, and a Universal Mac edition is coming soon. No account, subscription or cloud workspace required.`
             : 'The first public release is being prepared. Choose your platform below for the current status. No account, subscription or cloud workspace required.'}
       </p>

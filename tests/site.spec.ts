@@ -44,7 +44,7 @@ test('download buttons match the verified release data', async ({ page, baseURL 
     'linux-x86_64',
   ]);
   const verified = [
-    ...release.editions.flatMap((e) => (e.available ? [e.url!, ...(e.extras ?? []).map((x) => x.url)] : [])),
+    ...release.editions.flatMap((e) => (e.available ? [e.url!, ...((e.extras ?? []) as { url: string }[]).map((x) => x.url)] : [])),
     ...(release.source ? [release.source.url] : []),
   ];
   const hrefs = await page

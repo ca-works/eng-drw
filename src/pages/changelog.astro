@@ -1,5 +1,5 @@
 ---
-import { allEditorsReleased } from '../data/editions';
+import { allEditorsReleased, nativeEditorsReleased } from '../data/editions';
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
@@ -29,9 +29,13 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
             <br />
             {allEditorsReleased
               ? 'Mac, Windows and Linux, with the source code, on the '
-              : 'Macs with Apple silicon first, with the source code, on the '}
+              : nativeEditorsReleased
+                ? 'Macs with Apple silicon, Windows and Linux, with the source code, on the '
+                : 'Macs with Apple silicon first, with the source code, on the '}
             <a href={url('download/')}>download page</a> and the <a href={r230.url}>GitHub release</a>.
-            {!allEditorsReleased && ' Windows and Linux 2.3.0 are being finished; Windows 2.2.1 stays available as a Preview.'}
+            {!allEditorsReleased && (nativeEditorsReleased
+              ? ' A Universal Mac edition for Intel Macs is coming soon.'
+              : ' Windows and Linux 2.3.0 are being finished; Windows 2.2.1 stays available as a Preview.')}
           </>
         ) : (
           <>
@@ -49,6 +53,11 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
         {r230 ? (
           allEditorsReleased ? (
             <>One version for every platform, built from the same source: <a href={r230.url}>GitHub release</a>.</>
+          ) : nativeEditorsReleased ? (
+            <>
+              Published in stages. The <a href={r230.url}>Apple Silicon, Windows and Linux editions are out</a>;
+              a Universal Mac edition is coming soon.
+            </>
           ) : (
             <>
               Published in stages. The <a href={r230.url}>Apple Silicon edition is out</a>; Windows and Linux
@@ -71,12 +80,20 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           and node editing, booleans, SVG and DXF, raster tracing).
         </li>
         <li>
-          <strong>Four editions</strong> in preparation from one source:
-          macOS Apple Silicon (out now), Windows x64, a new Linux x86-64
-          AppImage and macOS Universal for Intel and Apple Silicon Macs.
+          <strong>Four editions</strong> from one source: macOS Apple Silicon,
+          Windows x64 and a new Linux x86-64 AppImage ({nativeEditorsReleased ? 'all out now' : 'Apple Silicon out now'}),
+          and macOS Universal for Intel and Apple Silicon Macs (coming soon).
         </li>
         <li>Optional offline AI model packs for subject selection, installed by you; none is bundled.</li>
         <li>The Windows improvements of 2.2.1 reach every platform.</li>
+      </ul>
+      <h3>Smaller</h3>
+      <ul>
+        <li>
+          OpenCV is built from source with only the parts the app uses, on every edition. The
+          Windows ZIP shrinks from 162 MB to 128 MB and the Linux AppImage from 177 MB to 134 MB,
+          and the packages no longer contain FFmpeg (or, on Linux, OpenSSL 1.1.1k). No features changed.
+        </li>
       </ul>
       <h3>Faster</h3>
       <ul>

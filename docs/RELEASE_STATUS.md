@@ -7,31 +7,24 @@ Updated 31 October 2026. This page says what is public and what is still to do. 
 | Edition | State | Source |
 |---|---|---|
 | macOS Apple Silicon | **2.3.0**, released 31 October 2026 | [v2.3.0](https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.0) |
-| Windows x64 | 2.2.1 Preview | [v2.2.1](https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.1) |
-| Linux x86-64 | Coming soon | no release yet |
+| Windows x64 | **2.3.0**, added to v2.3.0 on 31 October 2026 (portable ZIP, 128,139,653 bytes) | same release |
+| Linux x86-64 | **2.3.0**, added to v2.3.0 on 31 October 2026 (AppImage, 133,618,168 bytes) | same release |
 | macOS Universal | Coming soon, on the owner's decision | no release; do not build or publish it |
 
-macOS 2.2.0 stays in the release history.
+macOS 2.2.0 and Windows 2.2.1 stay in the release history. The site now shows Windows 2.3.0 (a ZIP, no installer) instead of the 2.2.1 Preview.
 
-The v2.3.0 tag is commit `db81eafd` of the public app repository. Its tree is exactly `eng-drawing-viewer-2.3.0-source.zip`. A published tag never moves.
+The v2.3.0 tag is commit `db81eafd` of the public app repository. Its tree is exactly `eng-drawing-viewer-2.3.0-source.zip` (the Apple silicon edition). A published tag never moves.
 
-The status table in the app repository's `docs/WEBSITE_HANDOFF.md` predates this release. This page supersedes it until that file is next updated on the application side.
+## Windows and Linux 2.3.0: what was published
 
-## Still to do: Windows and Linux 2.3.0
+- `ENG-Drawing-Viewer-Windows-x64.zip` SHA-256 `4a9b1b88…89bb5`; `ENG-Drawing-Viewer-Linux-x86_64.AppImage` SHA-256 `49c815fb…c41e91`. Built by private CI run 41205118213 from application commit `022e504` (application source identical to the Mac 2.3.0 build; only packaging, build scripts, tests and docs differ).
+- Supplemental corresponding source: `eng-drawing-viewer-2.3.0-windows-linux-source.zip` (scanned export of `022e504`, byte-identical to the CI archive, SHA-256 `bcdf2d27…10`). Added to the release; the tag was not touched.
+- Also added: the AppImage runtime source (libfuse, LGPL-2.1), `gcc-14.3.0.tar.xz` for NumPy's libquadmath (LGPL-2.1; nearest upstream release, disclosed in `THIRD_PARTY_SOURCES.txt` with a source offer), per-edition `THIRD_PARTY_NOTICES-*.txt` and SBOMs. `SHA256SUMS.txt`, `THIRD_PARTY_SOURCES.txt` and the release notes were updated.
+- Private-terms scan (`check_bundle.py --private-terms`) of both unpacked packages and the scanned source export: only upstream false positives (Qt's vendor table "Robert Bosch GmbH"; SymPy's AUTHORS credits an unrelated contributor). No scan was weakened.
+- Limitation: Windows and Linux were tested by automated runs and scripted desktop sessions only; no person has used them on an everyday Windows 10/11 PC or a GNOME/KDE desktop. The release notes, download page and support page say so.
+- The sync script already handles the versionless file names (`tests/unit/release.test.mjs` covers it).
 
-The Windows and Linux candidates in the private `release/candidate-2.3.0` folder must **not** be published. They bundle FFmpeg and, on Linux, OpenSSL 1.1.1k through the published OpenCV wheel. The corrected builds come from the separate Windows and Linux session, which is the only place their source and packaging change.
-
-When its handoff arrives:
-
-1. Check the handoff has artifact paths, SHA-256 and sizes, source commits, test results, security and licensing results, corresponding source and platform requirements.
-2. Hash the files independently and compare them with the handoff. Unpack without running them and scan them with `tools/check_bundle.py --private-terms`.
-3. Confirm FFmpeg and OpenSSL are gone, or that their source and licence position are settled.
-4. Decide where they go:
-   - If `src/` and `pyproject.toml` match the v2.3.0 tag and only build files differ, add them to v2.3.0 with a supplemental source archive, for example `eng-drawing-viewer-2.3.0-windows-linux-source.zip`, exported from the commit they were built from.
-   - If the application source changed, publish them as a new version with its own tag. Never add them to v2.3.0, and never move that tag.
-5. Update `SHA256SUMS.txt`, `THIRD_PARTY_SOURCES.txt` (add the AppImage runtime archive and any Windows-only lines) and the release notes, then `gh release upload --clobber`. The file names must be `ENG-Drawing-Viewer-Windows-x64.zip` and `ENG-Drawing-Viewer-Linux-x86_64.AppImage`, or the site won't see them.
-6. Download every new asset anonymously and verify it against `SHA256SUMS.txt`.
-7. Dispatch `Deploy website` and verify both download buttons on the live site, with their sizes and checksums. `allEditorsReleased` then switches the remaining copy by itself once Universal also exists, so reread the download page's intro, which still mentions pending editions until then.
+Remaining: the Universal Mac edition, and a hands-on pass on Windows and Linux.
 
 ## Known items for the next application build
 
