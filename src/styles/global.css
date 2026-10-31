@@ -3369,9 +3369,11 @@ button.text-link {
   margin-inline: auto;
 }
 @media (max-width: 800px) {
+  /* Padding, not aspect-ratio: on this flex item WebKit can derive the width from the height. */
   .assembly-stage[data-state='sheet'] {
     min-height: 0;
-    aspect-ratio: 820 / 540;
+    height: 0;
+    padding-top: 65.85%;
   }
   .assembly-caption {
     margin-top: 10px;
