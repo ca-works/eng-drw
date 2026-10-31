@@ -29,7 +29,7 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
         {all230
           ? 'Version 2.3.0 for Mac, Windows and Linux: free and open source, with the new Image, Vector and Edit PDF workspaces. No account, subscription or cloud workspace required.'
           : released
-            ? `Four editions, one app. Version ${mac.available ? mac.version : ''} for Mac is here${win.available ? `, with Windows ${win.version}${win.preview ? ' as a Preview' : ''}` : ''}. Version 2.3.0, with the new editors, a Universal Mac edition and Linux, is being prepared. No account, subscription or cloud workspace required.`
+            ? `Version ${mac.available ? mac.version : ''} for Macs with Apple silicon is here, with the new Image, Vector and Edit PDF workspaces.${win.available ? ` Windows ${win.version}${win.preview ? ' stays available as a Preview' : ' is available'}.` : ''} Windows and Linux 2.3.0 are being finished, and a Universal Mac edition is coming soon. No account, subscription or cloud workspace required.`
             : 'The first public release is being prepared. Choose your platform below for the current status. No account, subscription or cloud workspace required.'}
       </p>
     </header>
@@ -39,12 +39,12 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
       <div class="prose">
         <h2 id="which-mac">Which Mac edition?</h2>
         <p>
-          Both Mac editions have the same features and need macOS 14.4 or
-          later. <strong>Apple Silicon</strong> is a smaller, native build for
-          Macs with an M1 chip or newer. <strong>Universal</strong> contains
-          both Intel and Apple silicon code and runs on any supported Mac. To
-          check, choose Apple menu › About This Mac: “Chip: Apple M…” means
-          Apple silicon, “Processor: … Intel” means Intel.
+          <strong>Apple Silicon</strong> is a native build for Macs with an M1
+          chip or newer, on macOS 14.4 or later. It does not run on Intel Macs.
+          <strong>Universal</strong>, one application for both Intel and Apple
+          Silicon Macs, has the same features and {universal.available ? 'needs the same macOS' : 'is coming soon'}.
+          To check your Mac, choose Apple menu › About This Mac: “Chip: Apple
+          M…” means Apple silicon, “Processor: … Intel” means Intel.
         </p>
 
         <h2>Installing on a Mac</h2>
@@ -111,7 +111,7 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
 
         <h2>Running on Linux</h2>
         <p>
-          {linux.available ? 'The Linux edition is one AppImage file' : 'The Linux edition, coming with 2.3.0, is one AppImage file'}
+          {linux.available ? 'The Linux edition is one AppImage file' : 'The Linux edition, coming soon, is one AppImage file'}
           for 64-bit (x86-64) distributions with glibc 2.34 or later: Ubuntu
           22.04, Debian 12, Fedora 35, RHEL / Rocky / AlmaLinux 9, Linux Mint
           21 or newer, on X11 or Wayland.

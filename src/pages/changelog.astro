@@ -1,4 +1,5 @@
 ---
+import { allEditorsReleased } from '../data/editions';
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
@@ -26,8 +27,11 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           <>
             <strong>Version 2.3.0 · {date(r230.published)}</strong>
             <br />
-            Mac, Windows and Linux, with the source code, on the{' '}
+            {allEditorsReleased
+              ? 'Mac, Windows and Linux, with the source code, on the '
+              : 'Macs with Apple silicon first, with the source code, on the '}
             <a href={url('download/')}>download page</a> and the <a href={r230.url}>GitHub release</a>.
+            {!allEditorsReleased && ' Windows and Linux 2.3.0 are being finished; Windows 2.2.1 stays available as a Preview.'}
           </>
         ) : (
           <>
@@ -43,7 +47,14 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
       <h2>2.3.0 · {r230 ? date(r230.published) : 'in preparation'}</h2>
       <p>
         {r230 ? (
-          <>One version for every platform, built from the same source: <a href={r230.url}>GitHub release</a>.</>
+          allEditorsReleased ? (
+            <>One version for every platform, built from the same source: <a href={r230.url}>GitHub release</a>.</>
+          ) : (
+            <>
+              Published in stages. The <a href={r230.url}>Apple Silicon edition is out</a>; Windows and Linux
+              follow once they are verified, and a Universal Mac edition is coming soon.
+            </>
+          )
         ) : (
           'One version for every platform, built from the same source. It is being tested and audited and will be listed on the download page once it is released.'
         )}
@@ -60,9 +71,9 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           and node editing, booleans, SVG and DXF, raster tracing).
         </li>
         <li>
-          <strong>Four editions</strong>: macOS Universal (Intel and Apple
-          silicon), macOS Apple Silicon, Windows x64 and, new, Linux x86-64 as
-          an AppImage.
+          <strong>Four editions</strong> in preparation from one source:
+          macOS Apple Silicon (out now), Windows x64, a new Linux x86-64
+          AppImage and macOS Universal for Intel and Apple Silicon Macs.
         </li>
         <li>Optional offline AI model packs for subject selection, installed by you; none is bundled.</li>
         <li>The Windows improvements of 2.2.1 reach every platform.</li>
@@ -89,7 +100,7 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
         <li>Keyboard shortcuts that work with every keyboard layout, plus Ctrl+, F1 and F5.</li>
         <li>Offline like the Mac app: no network connections, no telemetry.</li>
       </ul>
-      <p>The Mac version stays at 2.2.0; these shared improvements reach it in its next release.</p>
+      <p>The shared improvements reached the Mac in 2.3.0.</p>
       <h2>2.2.0</h2>
       <p>
         The first public release. ENG Drawing Viewer becomes free software under

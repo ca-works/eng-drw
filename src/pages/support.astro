@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { site, url } from '../data/site';
-import { editions, info } from '../data/editions';
+import { edition, editions, info } from '../data/editions';
 const availableNow = editions
   .filter((e) => e.available)
   .map((e) => (e.available ? `${info[e.id].name} ${e.version}${e.preview ? ' (Preview)' : ''}` : ''))
@@ -13,7 +13,7 @@ const faqs = [
   ],
   [
     'Which Mac edition should I choose?',
-    'Both have the same features and need macOS 14.4 or later. Apple Silicon is a smaller native build for Macs with an M1 chip or newer. Universal runs on Intel and Apple silicon Macs. Apple menu › About This Mac shows which chip you have.',
+    `Apple Silicon is a native build for Macs with an M1 chip or newer, on macOS 14.4 or later; it does not run on Intel Macs. Universal, one application for both Intel and Apple Silicon Macs, ${edition('macos-universal').available ? 'has the same features' : 'is coming soon'}. Apple menu › About This Mac shows which chip you have.`,
   ],
   [
     'Why does my Mac say it cannot verify the app?',
@@ -61,7 +61,7 @@ const faqs = [
   ],
   [
     'Which systems are supported?',
-    'Mac: macOS 14.4 or later; the Apple Silicon edition needs an M1 or newer, the Universal edition also runs on Intel Macs. Windows: Windows 10 (1809 or later) or 11, 64-bit, tested automatically on Windows Server 2022 and 2025 but not yet on an everyday PC. Linux: 64-bit x86-64 with glibc 2.34 or later (Ubuntu 22.04, Debian 12, Fedora 35, RHEL 9 or newer), X11 or Wayland.',
+    'Mac: macOS 14.4 or later; the Apple Silicon edition needs an M1 or newer, and the Universal edition for Intel Macs is coming soon. Windows: Windows 10 (1809 or later) or 11, 64-bit, tested automatically on Windows Server 2022 and 2025 but not yet on an everyday PC. Linux: 64-bit x86-64 with glibc 2.34 or later (Ubuntu 22.04, Debian 12, Fedora 35, RHEL 9 or newer), X11 or Wayland.',
   ],
   [
     'How do I uninstall it?',

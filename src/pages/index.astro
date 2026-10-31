@@ -23,7 +23,7 @@ import imageDark from '../assets/screens/image-dark.png';
 import vectorLight from '../assets/screens/vector-light.png';
 import vectorDark from '../assets/screens/vector-dark.png';
 import { url } from '../data/site';
-import { edition, allEditorsReleased } from '../data/editions';
+import { edition, allEditorsReleased, macEditorsReleased } from '../data/editions';
 import demo from '../data/demo.json';
 const win = edition('windows-x64');
 const linux = edition('linux-x86_64');
@@ -36,7 +36,8 @@ const nodes = demo.trace.paths
   .join(' ')
   .match(/[ML]\s*[-\d.]+\s+[-\d.]+/g)!
   .map((m) => m.slice(1).trim().split(/\s+/).map(Number));
-const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : 'Coming in version 2.3.0';
+const universal = edition('macos-universal');
+const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : macEditorsReleased ? 'New in version 2.3.0 · On Mac now' : 'Coming in version 2.3.0';
 ---
 
 <Layout>
@@ -371,6 +372,7 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : 'Coming in ver
     <p>
       Edit PDF, Image and Vector sit on their own tabs beside the Viewer and PDF
       Tools. They work on your computer, like everything else.
+      {!allEditorsReleased && macEditorsReleased && ' Windows and Linux get them with their 2.3.0 editions.'}
     </p>
   </div>
 
@@ -749,8 +751,9 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : 'Coming in ver
         <span>Every desk.</span>
       </h2>
       <p>
-        The same Viewer, MARK, PowerPoint export, PDF Tools and editors on every
-        edition, built from one source, each fitting in with its system.
+        {allEditorsReleased
+          ? 'The same Viewer, MARK, PowerPoint export, PDF Tools and editors on every edition, built from one source, each fitting in with its system.'
+          : 'One app built from one source, fitting in with each system. The editors are on Mac now and reach Windows and Linux with their 2.3.0 editions.'}
       </p>
     </div>
     <div class="platform-tabs" role="tablist" aria-label="Platforms">
@@ -769,7 +772,7 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : 'Coming in ver
           alt="ENG Drawing Viewer on macOS, a real screenshot"
         />
         <ul class="platform-notes">
-          <li>Universal (Intel + Apple silicon) and a dedicated Apple Silicon edition</li>
+          <li>{universal.available ? 'Universal (Intel + Apple silicon) and a dedicated Apple Silicon edition' : 'A native Apple Silicon edition today; a Universal edition for Intel Macs is coming soon'}</li>
           <li>Scan with iPhone through Continuity Camera; OCR with Apple Vision</li>
           <li>macOS spelling, native menus and trackpad gestures</li>
         </ul>
@@ -856,8 +859,7 @@ const editorsNote = allEditorsReleased ? 'New in version 2.3.0' : 'Coming in ver
       <span>for better work.</span>
     </h2>
     <p>
-      Free and open source. Four editions: Mac Universal, Mac Apple Silicon,
-      Windows and Linux.
+      Free and open source, for {platforms}.
     </p>
     <Downloads compact />
     <a class="text-link" href={url('download/')}>

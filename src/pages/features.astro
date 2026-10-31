@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Screenshot from '../components/Screenshot.astro';
-import { edition, allEditorsReleased } from '../data/editions';
+import { edition, allEditorsReleased, macEditorsReleased } from '../data/editions';
 const win = edition('windows-x64');
 const mac = edition('macos-apple-silicon');
 import pdfeditLight from '../assets/screens/pdfedit-light.png';
@@ -12,7 +12,7 @@ import vectorLight from '../assets/screens/vector-light.png';
 import vectorDark from '../assets/screens/vector-dark.png';
 import queueLight from '../assets/screens/queue-light.png';
 import queueDark from '../assets/screens/queue-dark.png';
-const newIn = allEditorsReleased ? ' · NEW IN 2.3.0' : ' · COMING IN 2.3.0';
+const newIn = macEditorsReleased ? ' · NEW IN 2.3.0' : ' · COMING IN 2.3.0';
 import mainLight from '../assets/screens/main-light.png';
 import mainDark from '../assets/screens/main-dark.png';
 import markLight from '../assets/screens/mark-light.png';
@@ -386,7 +386,7 @@ const categories: Record<string, string> = {
         <p style="margin-top:25px">
           {mac.available ? `Available now: Mac Apple Silicon ${mac.version}` : 'Nothing is released yet'}
           {win.available ? `, Windows ${win.version}${win.preview ? ' Preview' : ''}` : ''}.
-          {allEditorsReleased ? '' : ' Version 2.3.0 brings the editors, the Universal Mac edition and Linux.'}
+          {allEditorsReleased ? '' : ' Windows and Linux 2.3.0, with the editors, are being finished; a Universal Mac edition is coming soon.'}
           Windows and Linux are tested automatically; hands-on testing on
           everyday PCs and Linux desktops is ongoing.
         </p>

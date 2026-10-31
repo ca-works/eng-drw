@@ -20,9 +20,9 @@ const label: Record<string, string> = {
   'linux-x86_64': 'Download for Linux',
 };
 const pending = (e: Edition) =>
-  e.id === 'macos-universal' || e.id === 'linux-x86_64'
-    ? 'New with version 2.3.0, which is being prepared for release.'
-    : 'Version 2.3.0 is being prepared for release.';
+  e.id === 'macos-universal'
+    ? 'Until then, Intel Macs have no edition: the Apple Silicon build does not run on them.'
+    : 'Version 2.3.0 is being finished and tested. It will appear here once it is verified.';
 ---
 
 <div class:list={['edition-picker', { compact }]} data-edition-picker>
@@ -88,7 +88,7 @@ const pending = (e: Edition) =>
               {!hasEditors(e) && (
                 <p class="download-note">
                   Version {e.version} has the Viewer, MARK, PDF Tools and PowerPoint export. The Image,
-                  Vector and Edit PDF workspaces arrive with 2.3.0.
+                  Vector and Edit PDF workspaces arrive here with 2.3.0, which is being finished and tested.
                 </p>
               )}
               {e.preview && (

@@ -5,13 +5,14 @@ import '@fontsource-variable/jetbrains-mono';
 import { Image } from 'astro:assets';
 import icon from '../assets/icon.png';
 import { site, url } from '../data/site';
+import { edition } from '../data/editions';
 interface Props {
   title?: string;
   description?: string;
 }
 const {
   title = 'Engineering drawings. Beautifully simple.',
-  description = 'A precise, offline workspace for viewing, annotating, editing, converting and presenting engineering drawings. Free for Mac, Windows and Linux.',
+  description = `A precise, offline workspace for viewing, annotating, editing, converting and presenting engineering drawings. Free for ${edition('linux-x86_64').available ? 'Mac, Windows and Linux' : 'Mac and Windows, with Linux on the way'}.`,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const nav = [

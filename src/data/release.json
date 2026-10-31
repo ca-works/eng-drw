@@ -1,6 +1,6 @@
 {
   "status": "available",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "editions": [
     {
       "id": "macos-universal",
@@ -9,14 +9,14 @@
     {
       "id": "macos-apple-silicon",
       "available": true,
-      "name": "ENG-Drawing-Viewer-2.2.0-macOS-AppleSilicon.dmg",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.2.0/ENG-Drawing-Viewer-2.2.0-macOS-AppleSilicon.dmg",
-      "size": 74828149,
-      "sha256": "3181a0ef9a25c777e2c8a355a7c9c4f8dd7e6fba20d24fc2bbf6daa0e458d48a",
-      "version": "2.2.0",
+      "name": "ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.0/ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg",
+      "size": 118103008,
+      "sha256": "ff9f5d04d8076c30ae7096d7657973469ec5cf64b1f6ca8c969f42dafb2213af",
+      "version": "2.3.0",
       "preview": false,
-      "published": "2026-10-28T03:12:26Z",
-      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.0",
+      "published": "2026-10-31T12:06:53Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.0",
       "extras": []
     },
     {
@@ -49,29 +49,29 @@
     }
   ],
   "source": {
-    "name": "eng-drawing-viewer-2.2.1-source.zip",
-    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.2.1/eng-drawing-viewer-2.2.1-source.zip",
-    "size": 7449605,
-    "sha256": "0e41b4686733b9be74860ccb51cbeb012a3257204c4d283d11e975d9e5dd9ccc",
-    "version": "2.2.1",
-    "preview": true,
-    "published": "2026-10-28T12:58:28Z",
-    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.1"
+    "name": "eng-drawing-viewer-2.3.0-source.zip",
+    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.0/eng-drawing-viewer-2.3.0-source.zip",
+    "size": 8400927,
+    "sha256": "8df327de77c658e677b60bc52ae3aa08d9871a9e9e2a32c5fc9c12b443d08c17",
+    "version": "2.3.0",
+    "preview": false,
+    "published": "2026-10-31T12:06:53Z",
+    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.0"
   },
-  "notes": "**ENG Drawing Viewer 2.2.1 for Windows — Preview.** The rebuilt Windows version of the free, offline workspace for engineering drawings: view folders of PDF drawings and images, mark them up with numbered review comments, use 32 offline PDF tools and export PowerPoint slides, on your own PC.\n\nThis is a **Preview**: it has been built and tested automatically on Windows Server 2022 and 2025, but not yet on everyday Windows 10/11 PCs. Please report anything that doesn't look or work right in [Issues](https://github.com/ca-works/eng-drw/issues).\n\n**Mac users:** the current Mac version is [2.2.0](https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.0).\n\n## Download\n\n| File | For |\n|---|---|\n| `ENG-Drawing-Viewer-2.2.1-Windows-x64-Setup.exe` | **Windows 10 or 11, 64-bit.** Installs for your user account only (no administrator rights), with a Start menu shortcut and an uninstaller. |\n| `ENG-Drawing-Viewer-2.2.1-Windows-x64-Portable.zip` | The same app with no installer: unzip it first, then open `ENG Drawing Viewer.exe`. |\n| `eng-drawing-viewer-2.2.1-source.zip` | The complete source code of this version, with build instructions. |\n| `ENG-Drawing-Viewer-2.2.1-Windows-x64.cdx.json` | Software bill of materials. |\n| `THIRD_PARTY_SOURCES.txt` and the two `libiconv` archives | Where to get the unmodified source of the copyleft libraries inside the app. |\n| `SHA256SUMS.txt` | Checksums of every file. |\n\n**First launch:** the app isn't code-signed, so Windows SmartScreen may say it protected your PC. Click **More info**, check that it's ENG Drawing Viewer, then **Run anyway**.\n\n**Check your download** in PowerShell: `Get-FileHash .\\ENG-Drawing-Viewer-2.2.1-Windows-x64-Setup.exe` and compare with `SHA256SUMS.txt`.\n\n## What's in it\n\n- Everything from the Mac app: sharp viewing of PDFs and images, MARK with numbered callouts and linked comments, 32 offline PDF tools, PowerPoint export and queue → PDF.\n- Make Searchable (OCR) works out of the box with seven languages.\n- Spelling uses Windows' own spell checker, and words you add are remembered.\n- Send slides straight into a presentation open in PowerPoint.\n- iPhone HEIC photos open once Microsoft's free HEIF and HEVC extensions are installed.\n- Windows 11 styling with title bars that follow your light or dark theme; keyboard shortcuts that work with every keyboard layout.\n- Open drawings aren't locked, and opening a file while the app runs brings it to the existing window.\n- Offline: no account, no telemetry, no network connections.\n\n## Built and checked\n\n- Built from the published source archive; two builds are byte-for-byte identical.\n- On Windows Server 2022 and 2025: 137 tests pass; the packaged app runs with no Python installed and outbound traffic blocked, opens no network connections, and loads only its own DLLs and Windows' own; the installer installs and uninstalls cleanly.\n\nENG Drawing Viewer is free software under the GNU Affero General Public License v3 or later. Help › About lists every bundled component and its licence.\n",
-  "published": "2026-10-28T12:58:28Z",
+  "notes": "**ENG Drawing Viewer 2.3.0 for Macs with Apple silicon.** A free, offline workspace for engineering drawings: view folders of PDF drawings and images sharply at any zoom, mark them up with numbered review comments, turn them into PowerPoint slides, edit images, vectors and PDFs, and use 32 PDF tools, all on your own computer.\n\nENG Drawing Viewer is free software under the GNU Affero General Public License v3 or later.\n\n## Download\n\n| File | For |\n|---|---|\n| `ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg` | **Mac with Apple silicon** (M1 or newer), **macOS 14.4 or later** |\n| `eng-drawing-viewer-2.3.0-source.zip` | The complete source code of this version, with build instructions |\n| `SHA256SUMS.txt` | Checksums of every file |\n| `THIRD_PARTY_SOURCES.txt` | Where the source of every copyleft component is published, with checksums |\n| `THIRD_PARTY_NOTICES.txt` | The licence notices of every bundled component (the same file as inside the app) |\n| Upstream source archives | The unmodified source code of pillow-heif, libheif, libde265, x265 and OpenCV |\n\n**Other editions.** This release is published in stages. The Windows and Linux editions of 2.3.0 are still being finished and will be published only after they have been verified; until then the [Windows 2.2.1 Preview](https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.1) remains available. A Universal Mac edition for Intel and Apple silicon is coming soon. **This download does not run on Intel Macs.**\n\n## Install and first launch\n\n1. Open the DMG and drag **ENG Drawing Viewer** onto **Applications**.\n2. Open the app. It is ad-hoc signed only: it has no Apple Developer ID signature and is **not notarized by Apple**, so macOS says it could not verify the app. Click **Done**.\n3. Open **System Settings › Privacy & Security**, scroll down, click **Open Anyway** next to the message about ENG Drawing Viewer, and confirm with your password or Touch ID.\n\nYou do this once. You do not need to turn off Gatekeeper or any other system security setting.\n\n**Check your download:**\n\n```bash\nshasum -a 256 -c SHA256SUMS.txt --ignore-missing\n```\n\n## What's in it\n\n- **View:** folders and nested subfolders of PDFs and images, thumbnails, sheet sizes, natural sorting, sharp tiled rendering from 1.5 % to 4800 %.\n- **MARK:** pen, highlighter, arrow, circle, text, eraser and numbered callouts with linked, spell-checked comments; undo and redo; copy the marked page or save it as a PDF with vector markup. The original PDF is never changed.\n- **PowerPoint:** queue pages and export editable `.pptx` slides without PowerPoint; marked pages put the drawing on the right and the numbered comments on the left.\n- **New in 2.3.0: Image Editor, Vector Editor and Edit PDF:** layered image editing with background removal and Quick Selection, real SVG/DXF vector editing with raster tracing, and PDF editing with genuine redaction.\n- **PDF Tools:** 32 offline tools to organize, convert, optimize, edit, secure and compare drawings. *Office to PDF* needs LibreOffice installed.\n- **Private:** no account, no telemetry, no network connections.\n\n## Built and checked\n\n- Built from the published source archive with Python 3.13 and hash-checked dependencies. Every ENG Drawing Viewer Python module in the app was compared with that archive and is identical.\n- 308 automated tests passed on Apple silicon; the 16 skipped tests are for Windows, Linux or Windows OCR data.\n- The packaged app was started on an Apple M3 Max with macOS 27.0.1: it rendered a drawing, ran the PDF tools and the editor checks, left the original file unchanged, and it and its worker processes held 0 network sockets.\n- macOS 14.4 is the highest minimum declared by any bundled binary. This build has been run on macOS 27.0.1 only; the 2.2 builds ran on macOS 14.8, 15.7 and 26.6.\n- OpenCV is a minimal build from source (core, imgproc, photo), so the app contains no FFmpeg and no OpenSSL.\n- No AI model is included. Optional model packs are installed by you from local files.\n- Every bundled component and its licence is listed in the app under **Help › About › Third-Party Notices**.\n\n## Known issues\n\n- The **Read Me** on the disk image still opens with a line left over from testing that calls this a \"private development candidate\". It is the public 2.3.0 release; the line will go in the next build.\n- The workspaces have been exercised by automated tests and the packaged smoke test, not yet by a person clicking through the packaged app.\n\nChanges in detail: [CHANGELOG.md](https://github.com/ca-works/eng-drawing-viewer/blob/main/CHANGELOG.md)\n\n*GitHub also attaches \"Source code (zip/tar.gz)\" archives of this repository automatically; they contain the same source as `eng-drawing-viewer-2.3.0-source.zip`.*\n",
+  "published": "2026-10-31T12:06:53Z",
   "releases": [
+    {
+      "version": "2.3.0",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.0",
+      "published": "2026-10-31T12:06:53Z",
+      "preview": false
+    },
     {
       "version": "2.2.1",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.1",
       "published": "2026-10-28T12:58:28Z",
       "preview": true
-    },
-    {
-      "version": "2.2.0",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.2.0",
-      "published": "2026-10-28T03:12:26Z",
-      "preview": false
     }
   ]
 }

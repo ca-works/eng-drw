@@ -24,7 +24,7 @@ export const info: Record<
   'macos-universal': {
     name: 'macOS Universal',
     short: 'Mac · Universal',
-    tagline: 'For every Mac: Intel and Apple silicon.',
+    tagline: 'One application for both Intel and Apple Silicon Macs.',
     arch: 'Intel (x86_64) + Apple silicon (arm64)',
     requires: 'macOS 14.4 or later',
     format: 'Disk image (DMG)',
@@ -65,7 +65,7 @@ export const sourceAsset = release.source as Asset | null;
 export const megabytes = (bytes: number) => `${(bytes / 1e6).toFixed(1)} MB`;
 export const releaseDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
-// The editors (Image, Vector, Edit PDF) and the Linux and Universal editions arrive with 2.3.0.
+// The editors (Image, Vector, Edit PDF) arrive with 2.3.0, one edition at a time.
 export const hasEditors = (e: Edition) => e.available && compare(e.version, '2.3.0') >= 0;
 export function compare(a: string, b: string) {
   const [x, y] = [a, b].map((v) => v.split('.').map(Number));
@@ -73,3 +73,4 @@ export function compare(a: string, b: string) {
   return 0;
 }
 export const allEditorsReleased = editions.every((e) => hasEditors(e));
+export const macEditorsReleased = hasEditors(edition('macos-apple-silicon'));
