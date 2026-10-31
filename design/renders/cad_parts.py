@@ -42,7 +42,7 @@ def bracket():
         wp = (cq.Workplane('YZ').workplane(offset=x - 6)
               .moveTo(y1 - 4, thick - 4).lineTo(y1 - 4, zc - 2).lineTo(y1, zc - 2)
               .lineTo(36, thick + 2).lineTo(36, thick - 4).close().extrude(12))
-        return fillet_edges(wp, '>X or <X', 0.1) if False else wp.faces('>X or <X').chamfer(1.4)
+        return wp.faces('>X or <X').chamfer(1.4)
 
     body = base.union(upright).union(gusset(47)).union(gusset(-47))
     body = fillet_edges(body, cq.selectors.BoxSelector((-62, -28, thick - .2), (62, 40, thick + .2)), 3.5)
@@ -56,7 +56,7 @@ def bracket():
     cone = cq.Solid.makeCone(28.4, 27, 1.4, pnt=cq.Vector(0, y0, zc), dir=cq.Vector(0, 1, 0))
     body = body.cut(cq.Workplane(obj=cone))
 
-    # Six M5 threaded holes on a 84 mm circle, with countersinks.
+    # Six M5 threaded holes on an 86 mm circle, with countersinks.
     for i in range(6):
         a = math.radians(30 + 60 * i)
         x, z = 43 * math.cos(a), zc + 43 * math.sin(a)
@@ -122,9 +122,6 @@ def caliper(opening=46):
     return {'steel': steel, 'plastic': plastic, 'lcd': lcd, 'light': light}
 
 
-AXES = [(1, 0, 0), (0, 1, 0), (0, 0, 1)]
-
-
 def classify(face):
     kind = face.geomType()
     if kind != 'PLANE':
@@ -149,8 +146,8 @@ def collect(solid, tol, ang, store, material):
 def save(store, path):
     arrays = {}
     for key, parts in store.items():
-        offset, vs, ts, fs = 0, [], [], []
-        for i, (v, t) in enumerate(parts):
+        offset, vs, ts = 0, [], []
+        for v, t in parts:
             vs.append(v)
             ts.append(t + offset)
             offset += len(v)
