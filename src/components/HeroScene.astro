@@ -19,7 +19,7 @@ import poster from '../assets/assembly-poster.png';
       />
     </div>
     <div class="blade-sheet" data-blade-sheet aria-hidden="true">
-      <Drawing id="hero-blade" />
+      <Drawing id="hero-blade" marks />
     </div>
   </div>
   <figcaption class="assembly-caption">
@@ -58,11 +58,24 @@ import poster from '../assets/assembly-poster.png';
           }
         })
         .catch(() => {
-          stage.dataset.state = 'fallback';
+          sheet();
           if (button) button.hidden = true;
         });
     };
+    // Without the 3D scene the annotated sheet is the opening picture, and its marks play once in view.
+    const sheet = () => {
+      stage.dataset.state = 'sheet';
+      new IntersectionObserver(
+        (entries, observer) => {
+          if (!entries[0].isIntersecting) return;
+          observer.disconnect();
+          stage.dataset.phase = 'drawing';
+        },
+        { threshold: 0.3 },
+      ).observe(stage);
+    };
     if (manual && button) {
+      sheet();
       button.hidden = false;
       button.textContent = 'Explore in 3D';
       button.setAttribute('aria-label', 'Explore in 3D');

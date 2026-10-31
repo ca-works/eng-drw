@@ -9,11 +9,13 @@ import {
   sectionLoop,
   sectionHatching,
 } from '../geometry/turbine';
+import MarkLayer from './MarkLayer.astro';
 interface Props {
   id?: string;
   interactive?: boolean;
+  marks?: boolean;
 }
-const { id = 'blade', interactive = false } = Astro.props;
+const { id = 'blade', interactive = false, marks = false } = Astro.props;
 const front = { x: 210, y: 340, k: 2.5 },
   side = { x: 440, y: 340, k: 2.5 };
 const top = front.y - s.span * front.k,
@@ -78,7 +80,7 @@ for (const [x, y] of rootProfile.filter(([x]) => x > 0))
   class="drawing"
   viewBox="0 0 820 540"
   role="img"
-  aria-label="Blade drawing with aligned front and right views, dimensioned span and root, and a hatched section A–A through the midspan"
+  aria-label={`Blade drawing with aligned front and right views, dimensioned span and root, and a hatched section A–A through the midspan${marks ? ', marked up with three numbered review callouts' : ''}`}
   data-drawing={id}
 >
   <defs>
@@ -265,4 +267,5 @@ for (const [x, y] of rootProfile.filter(([x]) => x > 0))
     </text>
   </g>
   {interactive && <g data-annotations></g>}
+  {marks && <MarkLayer />}
 </svg>

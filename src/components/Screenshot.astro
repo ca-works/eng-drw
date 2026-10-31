@@ -32,6 +32,9 @@ const common = { formats, widths, sizes, alt, quality: 82 };
       <Picture {...common} src={dark} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} />
     )
   }
+  <button type="button" class="shot-zoom" data-zoom aria-label={`Enlarge this screenshot: ${alt}`}>
+    <span aria-hidden="true">⤢</span>
+  </button>
 </figure>
 
 <style>
@@ -74,6 +77,45 @@ const common = { formats, widths, sizes, alt, quality: 82 };
   .app-lights i:nth-child(1) { background: #ff5f57; }
   .app-lights i:nth-child(2) { background: #febc2e; }
   .app-lights i:nth-child(3) { background: #28c840; }
+  .shot-zoom {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: 0;
+    cursor: zoom-in;
+  }
+  .shot-zoom span {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-size: 16px;
+    color: #fff;
+    background: rgb(11 13 16 / 0.62);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .shot-zoom:hover span,
+  .shot-zoom:focus-visible span {
+    opacity: 1;
+  }
+  .shot-zoom:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: -3px;
+  }
+  @media (hover: none) {
+    .shot-zoom span {
+      opacity: 1;
+    }
+  }
   .app-shot :global(.shot-dark) { display: none; }
   :global(:root[data-theme='dark']) .app-shot :global(.shot-light) { display: none; }
   :global(:root[data-theme='dark']) .app-shot :global(.shot-dark) { display: block; }

@@ -1,3 +1,5 @@
+import './lightbox';
+
 const root = document.documentElement;
 const themeButton = document.querySelector<HTMLButtonElement>(
   '[data-theme-toggle]',
