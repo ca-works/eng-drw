@@ -21,22 +21,21 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--snapshot', type=Path, required=True)
     parser.add_argument('--site', type=Path, required=True)
+    parser.add_argument('--only', default='', help='comma-separated: viewer (main to Edit PDF), image, vector')
     args = parser.parse_args()
+    wanted = {'viewer', 'image', 'vector'} if not args.only else set(args.only.split(','))
     site = args.site.resolve()
     sys.path.insert(0, str(args.snapshot.resolve() / 'src'))
     os.environ.pop('QT_QPA_PLATFORM', None)
     os.environ.pop('QT_SCALE_FACTOR', None)
 
-    from PySide6.QtCore import QPointF, QRectF
-    from PySide6.QtGui import QColor, QPixmap
+    from PySide6.QtGui import QPixmap
     from PySide6.QtWidgets import QApplication
     import eng_viewer.core.config as config
     import eng_viewer.ui.thumbnails as thumbnails
     from eng_viewer.core.config import Settings
     from eng_viewer.core.render_service import RenderService
     from eng_viewer.ui.main_window import MainWindow
-    from eng_viewer.ui.mark.commands import AddItems
-    from eng_viewer.ui.mark.items import ArrowItem, BubbleItem, EllipseItem, StrokeItem
     from eng_viewer.ui.theme import ThemeManager
 
     work = Path(tempfile.mkdtemp(prefix='eng-site-capture-'))
@@ -84,6 +83,48 @@ def main():
     w.viewer_split.setSizes([880, 260])
     w.view.fit_page()
     wait(2)
+    if 'viewer' in wanted:
+        capture_viewer(w, tm, app, wait, save, flange, flange_c, root)
+
+    # Image Editor (2.3.0): the site's sample photo after "Remove background automatically".
+    demo = site / 'public' / 'demo'
+    if 'image' in wanted:
+        w.set_mode('image')
+        wait(2)
+        img = w.image_editor
+        img.open_file(str(demo / 'sample.jpg'))
+        wait(4)
+        img.remove_background()
+        wait(6)
+        img.set_tool('quick')
+        wait(1)
+        save(w, 'image')
+
+    # Vector Editor (2.3.0): the caliper outline the app traced (tools/demo/make_demo_assets.py),
+    # selected with the node tool so its editable points show.
+    if 'vector' in wanted:
+        w.set_mode('vector')
+        wait(2)
+        vec = w.vector_editor
+        vec.open_file(str(demo / 'caliper.svg'))
+        wait(3)
+        for item in vec.items.values():
+            item.setSelected(True)
+        vec.set_tool('nodes')
+        wait(2)
+        save(w, 'vector')
+
+    render.shutdown()
+    print('Captured native windows into', out)
+    os._exit(0)
+
+
+def capture_viewer(w, tm, app, wait, save, flange, flange_c, root):
+    from PySide6.QtCore import QPointF, QRectF
+    from PySide6.QtGui import QColor
+    from eng_viewer.ui.mark.commands import AddItems
+    from eng_viewer.ui.mark.items import ArrowItem, BubbleItem, EllipseItem, StrokeItem
+
     save(w, 'main')
 
     # MARK: review callouts with linked comments, plus a circle, an arrow and a highlight.
@@ -174,36 +215,6 @@ def main():
     pdf.fit_page()
     wait(2)
     save(w, 'pdfedit')
-
-    # Image Editor (2.3.0): the site's sample photo after "Remove background automatically".
-    demo = site / 'public' / 'demo'
-    w.set_mode('image')
-    wait(2)
-    img = w.image_editor
-    img.open_file(str(demo / 'sample.jpg'))
-    wait(4)
-    img.remove_background()
-    wait(6)
-    img.set_tool('quick')
-    wait(1)
-    save(w, 'image')
-
-    # Vector Editor (2.3.0): the rotor outline the app traced (tools/demo/make_demo_assets.py),
-    # selected with the node tool so its editable points show.
-    w.set_mode('vector')
-    wait(2)
-    vec = w.vector_editor
-    vec.open_file(str(demo / 'trace.svg'))
-    wait(3)
-    for item in vec.items.values():
-        item.setSelected(True)
-    vec.set_tool('nodes')
-    wait(2)
-    save(w, 'vector')
-
-    render.shutdown()
-    print('Captured native windows into', out)
-    os._exit(0)
 
 
 if __name__ == '__main__':

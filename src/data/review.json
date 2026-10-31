@@ -1,0 +1,93 @@
+{
+  "app_version": "2.3.0",
+  "sheet": {
+    "width": 820,
+    "height": 540
+  },
+  "bubble_diameter": 34,
+  "ring": [
+    596,
+    116,
+    712,
+    178
+  ],
+  "bubbles": [
+    {
+      "number": 1,
+      "x": 744,
+      "y": 118,
+      "comment": "Review the midspan section."
+    },
+    {
+      "number": 2,
+      "x": 532,
+      "y": 392,
+      "comment": "Review the blade root fit."
+    },
+    {
+      "number": 3,
+      "x": 330,
+      "y": 118,
+      "comment": "Check the airfoil surface."
+    }
+  ],
+  "arrows": [
+    [
+      [
+        515,
+        389
+      ],
+      [
+        466,
+        384
+      ]
+    ],
+    [
+      [
+        313,
+        123
+      ],
+      [
+        236,
+        146
+      ]
+    ]
+  ],
+  "highlight": [
+    [
+      226,
+      130
+    ],
+    [
+      231,
+      208
+    ]
+  ],
+  "slide": {
+    "title": "ENG-003 Rotor blade.pdf",
+    "comments": [
+      "1. Review the midspan section.",
+      "2. Review the blade root fit.",
+      "3. Check the airfoil surface."
+    ],
+    "picture_px": [
+      3421,
+      2254
+    ],
+    "width_emu": 12191695,
+    "height_emu": 6858000,
+    "picture_box": [
+      5303386,
+      1646154,
+      6400641,
+      4217201
+    ],
+    "comment_box": [
+      487667,
+      994409,
+      4389010,
+      5520691
+    ]
+  },
+  "pptx_bytes": 259911
+}
