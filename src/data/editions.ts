@@ -75,4 +75,11 @@ export function compare(a: string, b: string) {
 export const allEditorsReleased = editions.every((e) => hasEditors(e));
 // Everything but the Universal Mac edition, which is released on the owner's decision.
 export const nativeEditorsReleased = editions.filter((e) => e.id !== 'macos-universal').every((e) => hasEditors(e));
+// 2.3.1 reaches the editions one at a time (Apple silicon first, then Linux and Windows).
+const at231 = (id: EditionId) => {
+  const e = edition(id);
+  return e.available && compare(e.version, '2.3.1') >= 0;
+};
+export const windows231 = at231('windows-x64');
+export const linux231 = at231('linux-x86_64');
 export const macEditorsReleased = hasEditors(edition('macos-apple-silicon'));

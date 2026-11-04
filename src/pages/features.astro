@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Screenshot from '../components/Screenshot.astro';
-import { edition, allEditorsReleased, macEditorsReleased, nativeEditorsReleased } from '../data/editions';
+import { edition, allEditorsReleased, macEditorsReleased, nativeEditorsReleased, windows231, linux231 } from '../data/editions';
 const win = edition('windows-x64');
 const mac = edition('macos-apple-silicon');
 const linux = edition('linux-x86_64');
@@ -210,11 +210,11 @@ const categories: Record<string, string> = {
           rotate, flip and canvas size, with rulers, guides and a grid.
         </p>
         <p>
-          <strong>New in 2.3.1 (Apple silicon edition so far):</strong> drop,
+          <strong>New in 2.3.1 ({windows231 && linux231 ? 'Mac, Windows and Linux' : 'Apple silicon' + (linux231 ? ' and Linux' : windows231 ? ' and Windows' : '') + ' so far'}):</strong> drop,
           paste or import images as layers and move, scale and rotate them on
           the canvas; copy, cut and paste layers with Photoshop-style
-          shortcuts; a Paint Bucket tool; and a more accurate Magic Eraser. Older
-          Windows and Linux releases do not have these yet.
+          shortcuts (Ctrl instead of ⌘ on Windows and Linux); a Paint Bucket tool; and a more accurate Magic Eraser.
+          {!(windows231 && linux231) && (linux231 ? ' The Windows edition does not have these yet.' : windows231 ? ' The Linux edition does not have these yet.' : ' Older Windows and Linux releases do not have these yet.')}
         </p>
         <p>
           <strong>Remove background automatically</strong> separates an object

@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Downloads from '../components/Downloads.astro';
 import { site, url } from '../data/site';
 import release from '../data/release.json';
-import { edition, compare, nativeEditorsReleased } from '../data/editions';
+import { edition, compare, nativeEditorsReleased, windows231, linux231 } from '../data/editions';
 const released = release.status === 'available';
 const mac = edition('macos-apple-silicon');
 const universal = edition('macos-universal');
@@ -29,7 +29,7 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
         {all230
           ? 'Version 2.3.0 for Mac, Windows and Linux: free and open source, with the new Image, Vector and Edit PDF workspaces. No account, subscription or cloud workspace required.'
           : nativeEditorsReleased
-            ? `Version ${mac.available ? mac.version : '2.3.0'} for Macs with Apple silicon, and version ${win.available ? win.version : '2.3.0'} for Windows and Linux: free and open source, with the Image, Vector and Edit PDF workspaces. The 2.3.1 image layers, clipboard and Paint Bucket improvements are in the Apple silicon edition so far. A Universal Mac edition is coming soon. No account, subscription or cloud workspace required.`
+            ? `${windows231 && linux231 ? `Version ${mac.available ? mac.version : "2.3.1"} for Macs with Apple silicon, Windows and Linux:` : `Version ${mac.available ? mac.version : '2.3.0'} for Macs with Apple silicon, and version ${win.available ? win.version : '2.3.0'} for Windows and Linux:`} free and open source, with the Image, Vector and Edit PDF workspaces. ${windows231 && linux231 ? 'The 2.3.1 image layers, clipboard and Paint Bucket improvements are in the Apple silicon, Windows and Linux editions.' : `The 2.3.1 image layers, clipboard and Paint Bucket improvements are in the Apple silicon edition${linux231 ? ' and Linux' : windows231 ? ' and Windows' : ''} so far.`} A Universal Mac edition is coming soon. No account, subscription or cloud workspace required.`
             : released
             ? `Version ${mac.available ? mac.version : ''} for Macs with Apple silicon is here, with the new Image, Vector and Edit PDF workspaces.${win.available ? ` Windows ${win.version}${win.preview ? ' stays available as a Preview' : ' is available'}.` : ''} Windows and Linux 2.3.0 are being finished, and a Universal Mac edition is coming soon. No account, subscription or cloud workspace required.`
             : 'The first public release is being prepared. Choose your platform below for the current status. No account, subscription or cloud workspace required.'}
