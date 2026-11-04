@@ -3,6 +3,7 @@ import { allEditorsReleased, nativeEditorsReleased } from '../data/editions';
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
+const r231 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.1');
 const r230 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.0');
 const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 ---
@@ -22,6 +23,14 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
       <p>A record of the work going into a clearer engineering workspace.</p>
     </header>
     <article class="page-content prose">
+      {r231 && (
+        <div class="callout">
+          <strong>Version 2.3.1 · {date(r231.published)}</strong>
+          <br />
+          For Macs with Apple silicon, with the source code, on the <a href={url('download/')}>download page</a> and the{' '}
+          <a href={r231.url}>GitHub release</a>. Windows and Linux stay at 2.3.0 until their 2.3.1 builds are verified.
+        </div>
+      )}
       <div class="callout">
         {r230 ? (
           <>
@@ -48,6 +57,30 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           </>
         )}
       </div>
+      {r231 && (
+        <>
+          <h2>2.3.1 · {date(r231.published)} · macOS Apple Silicon</h2>
+          <p>
+            Image Editor composition, accuracy and interface fixes. Published for Macs with Apple silicon;
+            the Windows and Linux editions are still at 2.3.0 and do not have these changes yet.
+          </p>
+          <h3>New</h3>
+          <ul>
+            <li><strong>Images as layers:</strong> drop, paste or import images as layers, then stack, move, scale and rotate them with handles, snapping and numeric fields. Layers keep their original pixels, so repeated transforms never compound blur.</li>
+            <li><strong>Clipboard:</strong> copy, copy merged, cut, paste as a new layer, and layer via copy or cut with the familiar shortcuts. Copies keep masks, opacity and blend mode inside the editor and reach other apps as PNG or TIFF.</li>
+            <li><strong>Paint Bucket</strong> with tolerance, contiguous and anti-aliasing options, selection limits and fill on a new layer.</li>
+          </ul>
+          <h3>Better</h3>
+          <ul>
+            <li><strong>Magic Eraser</strong> tells a light subject from a light backdrop more reliably and stops at visible edges. On a synthetic test figure the match to the true subject rose from 52.7 % to 98–99.8 %; real photographs vary.</li>
+            <li><strong>Automatic background removal</strong> uses edge-aware seeding and full-resolution edge refinement. It is a helper, not a guarantee: difficult subjects still need the mask tools.</li>
+            <li>The window moves by dragging any empty part of the title bar, dropdown labels and arrows no longer overlap, and the View/Grid/Snap/Rulers bar folds into the View menu when space is short.</li>
+            <li>The welcome screen's app icon no longer touches the “Open a folder of drawings” heading.</li>
+          </ul>
+          <h3>Compatibility</h3>
+          <p>Projects with transformed layers are saved as ENGIMG version 2, which 2.3.0 cannot open. Other projects remain version 1.</p>
+        </>
+      )}
       <h2>2.3.0 · {r230 ? date(r230.published) : 'in preparation'}</h2>
       <p>
         {r230 ? (

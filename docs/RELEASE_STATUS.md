@@ -6,12 +6,14 @@ Updated 31 October 2026. This page says what is public and what is still to do. 
 
 | Edition | State | Source |
 |---|---|---|
-| macOS Apple Silicon | **2.3.0**, released 31 October 2026 | [v2.3.0](https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.0) |
+| macOS Apple Silicon | **2.3.1**, released 4 November 2026 (DMG, 120,491,678 bytes, SHA-256 `a1a9122e…f55c55`, ad-hoc signed, not notarized) | [v2.3.1](https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.1) |
 | Windows x64 | **2.3.0**, added to v2.3.0 on 31 October 2026 (portable ZIP, 128,139,653 bytes) | same release |
 | Linux x86-64 | **2.3.0**, added to v2.3.0 on 31 October 2026 (AppImage, 133,618,168 bytes) | same release |
 | macOS Universal | Coming soon, on the owner's decision | no release; do not build or publish it |
 
 macOS 2.2.0 and Windows 2.2.1 stay in the release history. The site now shows Windows 2.3.0 (a ZIP, no installer) instead of the 2.2.1 Preview.
+
+v2.3.1 is Apple silicon only (tag commit `f4417989`, tree = `eng-drawing-viewer-2.3.1-source.zip`); Windows and Linux stay at 2.3.0 and Universal is still unreleased, until each has a verified 2.3.1 build. The site shows each edition from the newest release that contains its file.
 
 The v2.3.0 tag is commit `db81eafd` of the public app repository. Its tree is exactly `eng-drawing-viewer-2.3.0-source.zip` (the Apple silicon edition). A published tag never moves.
 
