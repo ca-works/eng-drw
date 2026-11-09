@@ -213,14 +213,19 @@ test('the opening drawing is marked up without the 3D scene', async ({ page }) =
   await expect(page.locator('.blade-sheet .m-pop')).toHaveCount(3);
   await expect(page.locator('.blade-sheet .m-pop').first()).toHaveCSS('opacity', '1');
 });
-test('download page: Apple Silicon 2.3.1, Universal stays Coming soon', async ({ page, baseURL }) => {
+test('download page: Universal and Apple Silicon 2.3.1 are separate, verified downloads', async ({ page, baseURL }) => {
   const release = (await import('../src/data/release.json', { with: { type: 'json' } })).default;
   const mac = release.editions.find((e) => e.id === 'macos-apple-silicon')!;
   await page.goto(new URL('download/', baseURL).href);
   const universal = page.locator('.edition-picker:not(.compact) [data-edition="macos-universal"]');
   await expect(universal).toContainText('One application for both Intel and Apple Silicon Macs.');
-  await expect(universal.locator('.status')).toHaveText('Coming soon');
-  await expect(universal.locator('a')).toHaveCount(0);
+  const uni = release.editions.find((e) => e.id === 'macos-universal')!;
+  expect(uni.available).toBe(true);
+  expect(uni.url).toBe('https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.1/ENG-Drawing-Viewer-macOS-Universal.dmg');
+  await expect(universal.locator('.status')).toHaveCount(0);
+  await expect(universal.locator('a.download-button')).toHaveAttribute('href', uni.url!);
+  await expect(universal).toContainText('Intel (x86_64) + Apple silicon (arm64)');
+  await expect(universal).toContainText('227.9 MB');
   expect(mac.version).toBe('2.3.1');
   expect(mac.url).toBe('https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.1/ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg');
   const card = page.locator('.edition-picker:not(.compact) [data-edition="macos-apple-silicon"]');

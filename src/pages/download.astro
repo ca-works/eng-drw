@@ -26,7 +26,9 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
         <span>Yours, for free.</span>
       </h1>
       <p>
-        {all230
+        {universal.available && windows231 && linux231
+          ? `Version ${mac.available ? mac.version : '2.3.1'} for Mac (Universal for Intel and Apple silicon, or Apple Silicon only), Windows and Linux: free and open source, with the Image, Vector and Edit PDF workspaces and the 2.3.1 image layers, clipboard and Paint Bucket improvements. No account, subscription or cloud workspace required.`
+          : all230
           ? 'Version 2.3.0 for Mac, Windows and Linux: free and open source, with the new Image, Vector and Edit PDF workspaces. No account, subscription or cloud workspace required.'
           : nativeEditorsReleased
             ? `${windows231 && linux231 ? `Version ${mac.available ? mac.version : "2.3.1"} for Macs with Apple silicon, Windows and Linux:` : `Version ${mac.available ? mac.version : '2.3.0'} for Macs with Apple silicon, and version ${win.available ? win.version : '2.3.0'} for Windows and Linux:`} free and open source, with the Image, Vector and Edit PDF workspaces. ${windows231 && linux231 ? 'The 2.3.1 image layers, clipboard and Paint Bucket improvements are in the Apple silicon, Windows and Linux editions.' : `The 2.3.1 image layers, clipboard and Paint Bucket improvements are in the Apple silicon edition${linux231 ? ' and Linux' : windows231 ? ' and Windows' : ''} so far.`} A Universal Mac edition is coming soon. No account, subscription or cloud workspace required.`
@@ -44,7 +46,14 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
           <strong>Apple Silicon</strong> is a native build for Macs with an M1
           chip or newer, on macOS 14.4 or later. It does not run on Intel Macs.
           <strong>Universal</strong>, one application for both Intel and Apple
-          Silicon Macs, has the same features and {universal.available ? 'needs the same macOS' : 'is coming soon'}.
+          Silicon Macs, has the same features and {universal.available ? 'needs the same macOS (14.4 or later). It is a larger download because every part of the application is included twice, once for each kind of Mac' : 'is coming soon'}.
+          {universal.available && (
+            <>
+              The Universal edition was built and tested on an Intel Mac; its Apple
+              silicon half has not yet been run on an Apple silicon Mac. Apple
+              silicon Macs can use the Apple Silicon edition, which has.{' '}
+            </>
+          )}
           To check your Mac, choose Apple menu › About This Mac: “Chip: Apple
           M…” means Apple silicon, “Processor: … Intel” means Intel.
         </p>

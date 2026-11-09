@@ -1,6 +1,6 @@
 # Release status
 
-Updated 31 October 2026. This page says what is public and what is still to do. The download page itself only ever shows what `scripts/sync-release.mjs` verifies from the public releases.
+Updated 9 November 2026. This page says what is public and what is still to do. The download page itself only ever shows what `scripts/sync-release.mjs` verifies from the public releases.
 
 ## Public now
 
@@ -9,11 +9,11 @@ Updated 31 October 2026. This page says what is public and what is still to do. 
 | macOS Apple Silicon | **2.3.1**, released 4 November 2026 (DMG, 120,491,678 bytes, SHA-256 `a1a9122e…f55c55`, ad-hoc signed, not notarized) | [v2.3.1](https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.1) |
 | Windows x64 | **2.3.0**, added to v2.3.0 on 31 October 2026 (portable ZIP, 128,139,653 bytes) | same release |
 | Linux x86-64 | **2.3.0**, added to v2.3.0 on 31 October 2026 (AppImage, 133,618,168 bytes) | same release |
-| macOS Universal | Coming soon, on the owner's decision | no release; do not build or publish it |
+| macOS Universal | **2.3.1**, released 9 November 2026 (DMG, 227,924,838 bytes, SHA-256 `5a4d897f100e3966228bf31d6c8c821ab25a186d5280639b87e531f7abf27401`, ad-hoc signed, not notarized). Built on an Intel Mac; the arm64 half is verified by inspection only and **has not been run on Apple silicon** | same release |
 
 macOS 2.2.0 and Windows 2.2.1 stay in the release history. The site now shows Windows 2.3.0 (a ZIP, no installer) instead of the 2.2.1 Preview.
 
-v2.3.1 is Apple silicon only (tag commit `f4417989`, tree = `eng-drawing-viewer-2.3.1-source.zip`); Windows and Linux stay at 2.3.0 and Universal is still unreleased, until each has a verified 2.3.1 build. The site shows each edition from the newest release that contains its file.
+v2.3.1 (tag commit `f4417989`, tree = `eng-drawing-viewer-2.3.1-source.zip`) now carries all four editions: Apple silicon, Windows, Linux and, since 9 November, Universal (source supplement `eng-drawing-viewer-2.3.1-macos-universal-source.zip`: the same application code with three Mac build scripts changed to build on an Intel Mac). The site shows each edition from the newest release that contains its file.
 
 The v2.3.0 tag is commit `db81eafd` of the public app repository. Its tree is exactly `eng-drawing-viewer-2.3.0-source.zip` (the Apple silicon edition). A published tag never moves.
 
@@ -26,7 +26,7 @@ The v2.3.0 tag is commit `db81eafd` of the public app repository. Its tree is ex
 - Limitation: Windows and Linux were tested by automated runs and scripted desktop sessions only; no person has used them on an everyday Windows 10/11 PC or a GNOME/KDE desktop. The release notes, download page and support page say so.
 - The sync script already handles the versionless file names (`tests/unit/release.test.mjs` covers it).
 
-Remaining: the Universal Mac edition, and a hands-on pass on Windows and Linux.
+Remaining: a run of the Universal edition on an Apple silicon Mac (the owner will do this), and a hands-on pass on Windows and Linux.
 
 ## Known items for the next application build
 
