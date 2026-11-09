@@ -1,5 +1,5 @@
 ---
-import { allEditorsReleased, nativeEditorsReleased, windows231, linux231 } from '../data/editions';
+import { allEditorsReleased, universalReleased, nativeEditorsReleased, windows231, linux231 } from '../data/editions';
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
@@ -126,7 +126,7 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
         <li>
           <strong>Four editions</strong> from one source: macOS Apple Silicon,
           Windows x64 and a new Linux x86-64 AppImage ({nativeEditorsReleased ? 'all out now' : 'Apple Silicon out now'}),
-          and macOS Universal for Intel and Apple Silicon Macs (coming soon).
+          and macOS Universal for Intel and Apple Silicon Macs ({universalReleased ? 'out now' : 'coming soon'}).
         </li>
         <li>Optional offline AI model packs for subject selection, installed by you; none is bundled.</li>
         <li>The Windows improvements of 2.2.1 reach every platform.</li>

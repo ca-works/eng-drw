@@ -82,4 +82,5 @@ const at231 = (id: EditionId) => {
 };
 export const windows231 = at231('windows-x64');
 export const linux231 = at231('linux-x86_64');
+export const universalReleased = edition('macos-universal').available;
 export const macEditorsReleased = hasEditors(edition('macos-apple-silicon'));

@@ -61,7 +61,7 @@ const faqs = [
   ],
   [
     'Which systems are supported?',
-    'Mac: macOS 14.4 or later; the Apple Silicon edition needs an M1 or newer, and the Universal edition for Intel Macs is coming soon. Windows: Windows 10 (1809 or later) or 11, 64-bit, tested automatically on Windows Server 2022 and 2025 but not yet on an everyday PC. Linux: 64-bit x86-64 with glibc 2.34 or later (Ubuntu 22.04, Debian 12, Fedora 35, RHEL 9 or newer), X11 or Wayland.',
+    'Mac: macOS 14.4 or later; the Apple Silicon edition needs an M1 or newer, and ' + (edition('macos-universal').available ? 'the Universal edition runs on Intel Macs and Apple silicon Macs alike' : 'the Universal edition for Intel Macs is coming soon') + '. Windows: Windows 10 (1809 or later) or 11, 64-bit, tested automatically on Windows Server 2022 and 2025 but not yet on an everyday PC. Linux: 64-bit x86-64 with glibc 2.34 or later (Ubuntu 22.04, Debian 12, Fedora 35, RHEL 9 or newer), X11 or Wayland.',
   ],
   [
     'How do I uninstall it?',
