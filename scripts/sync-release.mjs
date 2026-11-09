@@ -32,6 +32,8 @@ const compare = (a, b) => {
   return 0;
 };
 const versionless = (v) => compare(v, '2.3.0') >= 0;
+// From 2.3.2 the Windows edition is one per-user Setup program (no ZIP).
+const windowsSetup = (v) => compare(v, '2.3.2') >= 0 || !versionless(v);
 // For each edition: its file for a version (null when that version can't have it) and the extra
 // files that must accompany it.
 const EDITIONS = [
@@ -49,9 +51,9 @@ const EDITIONS = [
   {
     id: 'windows-x64',
     file: (v) =>
-      versionless(v)
-        ? 'ENG-Drawing-Viewer-Windows-x64.zip'
-        : `ENG-Drawing-Viewer-${v}-Windows-x64-Setup.exe`,
+      windowsSetup(v)
+        ? `ENG-Drawing-Viewer-${v}-Windows-x64-Setup.exe`
+        : 'ENG-Drawing-Viewer-Windows-x64.zip',
     extras: (v) => (versionless(v) ? [] : [`ENG-Drawing-Viewer-${v}-Windows-x64-Portable.zip`]),
   },
   {

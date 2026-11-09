@@ -23,6 +23,8 @@ import imageLight from '../assets/screens/image-light.png';
 import imageDark from '../assets/screens/image-dark.png';
 import vectorLight from '../assets/screens/vector-light.png';
 import vectorDark from '../assets/screens/vector-dark.png';
+import winLight from '../assets/screens/windows-light.png';
+import winDark from '../assets/screens/windows-dark.png';
 import { url } from '../data/site';
 import { edition, allEditorsReleased, macEditorsReleased, nativeEditorsReleased } from '../data/editions';
 import demo from '../data/demo.json';
@@ -764,8 +766,22 @@ const editorsNote = allEditorsReleased || nativeEditorsReleased ? 'New in versio
           <li>macOS spelling, native menus and trackpad gestures</li>
         </ul>
       </div>
+      <div class="platform-panel" id="panel-Windows" role="tabpanel" aria-labelledby="tab-Windows" hidden>
+        <Screenshot
+          light={winLight}
+          dark={winDark}
+          windows
+          sizes="(max-width: 900px) 95vw, 1000px"
+          alt="ENG Drawing Viewer on Windows, a real screenshot of MARK with circles, an arrow, a highlight and numbered callouts"
+        />
+        <ul class="platform-notes">
+          <li>One Setup.exe: installs for your user, no administrator rights, with a Start menu entry</li>
+          <li>Select, resize (Shift keeps proportions) and copy markup between drawings</li>
+          <li>Send slides into a presentation open in PowerPoint</li>
+          <li>Windows spelling; OCR with bundled Tesseract data (7 languages)</li>
+        </ul>
+      </div>
       {[
-        ['Windows', '⊞', ['Portable: unzip and run, no administrator rights', 'Send slides into a presentation open in PowerPoint', 'Windows spelling; OCR with bundled Tesseract data (7 languages)', 'Title bars follow light and dark mode']],
         ['Linux', '◆', ['One AppImage for x86-64 with glibc 2.34 or later', 'Native Wayland or X11; desktop-portal file dialogs', 'Help › Add to Applications Menu', 'HEIC through bundled libheif; OCR with bundled Tesseract data']],
       ].map(([p, sym, notes]) => (
         <div class="platform-panel" id={`panel-${p}`} role="tabpanel" aria-labelledby={`tab-${p}`} hidden>

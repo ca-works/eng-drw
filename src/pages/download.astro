@@ -9,7 +9,7 @@ const mac = edition('macos-apple-silicon');
 const universal = edition('macos-universal');
 const win = edition('windows-x64');
 const linux = edition('linux-x86_64');
-const winZip = win.available && compare(win.version, '2.3.0') >= 0;
+const winZip = win.available && compare(win.version, '2.3.0') >= 0 && compare(win.version, '2.3.2') < 0;
 const all230 = [mac, universal, win, linux].every((e) => e.available && compare(e.version, '2.3.0') >= 0);
 ---
 
@@ -99,7 +99,9 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
           <ol>
             <li>
               Download the installer above and run it. It installs for your
-              user account only and adds a Start menu shortcut.
+              user account only (no administrator rights) and adds a Start
+              menu entry and an optional desktop shortcut. To remove it later,
+              use Settings › Apps.
             </li>
             <li>
               Because the app isn't code-signed, Windows SmartScreen may say
@@ -107,10 +109,12 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
               that the file is ENG Drawing Viewer, then click
               <strong>Run anyway</strong>.
             </li>
-            <li>
-              Prefer not to install? Unzip the portable ZIP first (don't run
-              it from inside the ZIP) and open <code>ENG Drawing Viewer.exe</code>.
-            </li>
+            {win.available && win.extras.length > 0 && (
+              <li>
+                Prefer not to install? Unzip the portable ZIP first (don't run
+                it from inside the ZIP) and open <code>ENG Drawing Viewer.exe</code>.
+              </li>
+            )}
           </ol>
         )}
         <p>

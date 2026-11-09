@@ -13,15 +13,16 @@ interface Props {
   sizes?: string;
   eager?: boolean;
   class?: string;
+  windows?: boolean;
 }
-const { light, dark, alt, sizes = '(max-width: 900px) 95vw, 1200px', eager = false, class: cls = '' } = Astro.props;
+const { light, dark, alt, sizes = '(max-width: 900px) 95vw, 1200px', eager = false, class: cls = '', windows = false } = Astro.props;
 const widths = [640, 960, 1440, 1920, 2880];
 const formats: ('avif' | 'webp')[] = ['avif', 'webp'];
 const common = { formats, widths, sizes, alt, quality: 82 };
 ---
 
 <figure class:list={['app-shot', cls]}>
-  <span class="app-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+  {!windows && <span class="app-lights" aria-hidden="true"><i></i><i></i><i></i></span>}
   {
     light ? (
       <>

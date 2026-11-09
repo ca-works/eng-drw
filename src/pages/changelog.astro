@@ -3,6 +3,7 @@ import { allEditorsReleased, universalReleased, nativeEditorsReleased, windows23
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
+const r232 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.2');
 const r231 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.1');
 const r230 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.0');
 const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
@@ -23,6 +24,14 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
       <p>A record of the work going into a clearer engineering workspace.</p>
     </header>
     <article class="page-content prose">
+      {r232 && (
+        <div class="callout">
+          <strong>Version 2.3.2 · {date(r232.published)}</strong>
+          <br />
+          Windows only, as a one-file installer, on the <a href={url('download/')}>download page</a> and the{' '}
+          <a href={r232.url}>GitHub release</a>. macOS and Linux stay at 2.3.1.
+        </div>
+      )}
       {r231 && (
         <div class="callout">
           <strong>Version 2.3.1 · {date(r231.published)}</strong>
@@ -64,6 +73,32 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           </>
         )}
       </div>
+      {r232 && (
+        <>
+          <h2>2.3.2 · {date(r232.published)} · Windows</h2>
+          <h3>New</h3>
+          <ul>
+            <li>
+              <strong>One-file installer.</strong> Windows now downloads as a single Setup program that installs for
+              your user (no administrator rights), with a Start menu entry, an optional desktop shortcut and a normal
+              uninstaller.
+            </li>
+            <li>
+              <strong>Select and resize markup in MARK.</strong> Click an annotation to get resize handles; drag them to
+              resize, and hold Shift to keep proportions. Drag to move.
+            </li>
+            <li>
+              <strong>Select several at once.</strong> Drag a selection rectangle on empty space, or Shift-click to add or
+              remove objects, then move, delete or copy them together.
+            </li>
+            <li>
+              <strong>Copy and paste markup between drawings.</strong> Ctrl+C copies the selected annotations as editable
+              objects and Ctrl+V pastes them on the same drawing or on another one. Pasted callouts continue the
+              numbering and keep their comments. With nothing selected, Ctrl+C still copies the marked page as an image.
+            </li>
+          </ul>
+        </>
+      )}
       {r231 && (
         <>
           <h2>2.3.1 · {date(r231.published)} · macOS Apple Silicon{windows231 ? ', Windows' : ''}{linux231 ? ', Linux' : ''}</h2>

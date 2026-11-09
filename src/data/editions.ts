@@ -42,10 +42,10 @@ export const info: Record<
   'windows-x64': {
     name: 'Windows',
     short: 'Windows',
-    tagline: 'Standalone Windows x64 edition.',
+    tagline: 'One-file installer for Windows x64.',
     arch: '64-bit (x64)',
     requires: 'Windows 10 (1809 or later) or Windows 11',
-    format: 'Portable ZIP, no installation',
+    format: 'Setup program (.exe), no administrator rights',
     signing: 'Not code-signed: SmartScreen may ask once',
   },
   'linux-x86_64': {
