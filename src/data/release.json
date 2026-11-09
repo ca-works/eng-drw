@@ -19,13 +19,13 @@
       "id": "macos-apple-silicon",
       "available": true,
       "name": "ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.1/ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg",
-      "size": 120491678,
-      "sha256": "a1a9122ea7acdf8810e13dcd0f780232f96bdeaa4210ad6e59a8af3945f55c55",
-      "version": "2.3.1",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.2/ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg",
+      "size": 120484273,
+      "sha256": "559523a1095f61e0b0eb57aa56cc71d0efa886e2ace3d5b5e1cb075f0b839883",
+      "version": "2.3.2",
       "preview": false,
-      "published": "2026-11-04T02:46:08Z",
-      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.1",
+      "published": "2026-11-09T19:45:45Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.2",
       "extras": []
     },
     {
@@ -65,7 +65,7 @@
     "published": "2026-11-09T19:45:45Z",
     "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.2"
   },
-  "notes": "Windows-only release. macOS and Linux stay at 2.3.1.\n\n**Download:** `ENG-Drawing-Viewer-2.3.2-Windows-x64-Setup.exe` (Windows 10 1809 or later, or Windows 11, 64-bit). Not code-signed, so SmartScreen may ask once: More info, then Run anyway.\n\n### New\n- **One-file installer.** Installs for your user (no administrator rights), adds a Start menu entry and an optional desktop shortcut, and uninstalls from Settings > Apps.\n- **MARK: select and resize.** Click an annotation to show resize handles. Drag them to resize (hold Shift to keep proportions) or drag the object to move it.\n- **MARK: multiple selection.** Drag a selection rectangle on empty space, or Shift-click to add or remove objects, then move, delete or copy them together.\n- **MARK: copy and paste between drawings.** Ctrl+C copies the selected annotations as editable objects; Ctrl+V pastes them on the same drawing or another one. Pasted callouts continue the numbering and keep their comments. With nothing selected, Ctrl+C still copies the marked page as an image.\n\n`SHA256SUMS.txt` lists the checksums of the installer and the source archive.\n",
+  "notes": "Windows and macOS Apple Silicon. macOS Universal and Linux stay at 2.3.1.\n\n**Download:** `ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg` (macOS 14.4 or later, Apple Silicon) or `ENG-Drawing-Viewer-2.3.2-Windows-x64-Setup.exe` (Windows 10 1809 or later, or Windows 11, 64-bit). Not code-signed, so SmartScreen may ask once: More info, then Run anyway.\n\n### New\n- **One-file installer.** Installs for your user (no administrator rights), adds a Start menu entry and an optional desktop shortcut, and uninstalls from Settings > Apps.\n- **MARK: select and resize.** Click an annotation to show resize handles. Drag them to resize (hold Shift to keep proportions) or drag the object to move it.\n- **MARK: multiple selection.** Drag a selection rectangle on empty space, or Shift-click to add or remove objects, then move, delete or copy them together.\n- **MARK: copy and paste between drawings.** Ctrl+C (⌘C on Mac) copies the selected annotations as editable objects; Ctrl+V (⌘V) pastes them on the same drawing or another one. Pasted callouts continue the numbering and keep their comments. With nothing selected, Ctrl+C still copies the marked page as an image.\n\n`SHA256SUMS.txt` lists the checksums of the installers and the source archive. The Mac build's source is on `main`.\n\n",
   "published": "2026-11-09T19:45:45Z",
   "releases": [
     {

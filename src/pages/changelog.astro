@@ -28,8 +28,8 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
         <div class="callout">
           <strong>Version 2.3.2 · {date(r232.published)}</strong>
           <br />
-          Windows only, as a one-file installer, on the <a href={url('download/')}>download page</a> and the{' '}
-          <a href={r232.url}>GitHub release</a>. macOS and Linux stay at 2.3.1.
+          Windows (as a one-file installer) and macOS Apple Silicon, on the <a href={url('download/')}>download page</a> and the{' '}
+          <a href={r232.url}>GitHub release</a>. macOS Universal and Linux stay at 2.3.1.
         </div>
       )}
       {r231 && (
@@ -75,11 +75,11 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
       </div>
       {r232 && (
         <>
-          <h2>2.3.2 · {date(r232.published)} · Windows</h2>
+          <h2>2.3.2 · {date(r232.published)} · Windows, macOS Apple Silicon</h2>
           <h3>New</h3>
           <ul>
             <li>
-              <strong>One-file installer.</strong> Windows now downloads as a single Setup program that installs for
+              <strong>One-file installer (Windows).</strong> Windows now downloads as a single Setup program that installs for
               your user (no administrator rights), with a Start menu entry, an optional desktop shortcut and a normal
               uninstaller.
             </li>
@@ -92,8 +92,8 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
               remove objects, then move, delete or copy them together.
             </li>
             <li>
-              <strong>Copy and paste markup between drawings.</strong> Ctrl+C copies the selected annotations as editable
-              objects and Ctrl+V pastes them on the same drawing or on another one. Pasted callouts continue the
+              <strong>Copy and paste markup between drawings.</strong> Ctrl+C (⌘C on Mac) copies the selected annotations as editable
+              objects and Ctrl+V (⌘V) pastes them on the same drawing or on another one. Pasted callouts continue the
               numbering and keep their comments. With nothing selected, Ctrl+C still copies the marked page as an image.
             </li>
           </ul>
