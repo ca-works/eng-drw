@@ -28,8 +28,8 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
         <div class="callout">
           <strong>Version 2.3.2 · {date(r232.published)}</strong>
           <br />
-          Windows (as a one-file installer) and macOS Apple Silicon, on the <a href={url('download/')}>download page</a> and the{' '}
-          <a href={r232.url}>GitHub release</a>. macOS Universal and Linux stay at 2.3.1.
+          Windows (as a one-file installer), macOS Universal and macOS Apple Silicon, on the <a href={url('download/')}>download page</a> and the{' '}
+          <a href={r232.url}>GitHub release</a>. Linux stays at 2.3.1.
         </div>
       )}
       {r231 && (
@@ -75,7 +75,7 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
       </div>
       {r232 && (
         <>
-          <h2>2.3.2 · {date(r232.published)} · Windows, macOS Apple Silicon</h2>
+          <h2>2.3.2 · {date(r232.published)} · Windows, macOS Universal, macOS Apple Silicon</h2>
           <h3>New</h3>
           <ul>
             <li>
