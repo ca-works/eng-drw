@@ -1,5 +1,5 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
-import { resolve, dirname, join } from 'node:path';
+import { resolve, dirname, join, basename } from 'node:path';
 import { gzipSync } from 'node:zlib';
 const root = resolve('dist'),
   base = '/eng-drw/';
@@ -20,7 +20,7 @@ async function walk(d) {
 for (const file of await walk(root)) {
   const text = await readFile(file);
   if (file.endsWith('.js')) {
-    if (file.includes('/three-engine.')) three += gzipSync(text).length;
+    if (basename(file).startsWith('three-engine.')) three += gzipSync(text).length;
     else js += gzipSync(text).length;
   }
   if (file.endsWith('.css')) css += gzipSync(text).length;
