@@ -213,7 +213,7 @@ test('the opening drawing is marked up without the 3D scene', async ({ page }) =
   await expect(page.locator('.blade-sheet .m-pop')).toHaveCount(3);
   await expect(page.locator('.blade-sheet .m-pop').first()).toHaveCSS('opacity', '1');
 });
-test('download page: Universal and Apple Silicon 2.3.2 are separate, verified downloads', async ({ page, baseURL }) => {
+test('download page: Universal and Apple Silicon are separate, verified downloads', async ({ page, baseURL }) => {
   const release = (await import('../src/data/release.json', { with: { type: 'json' } })).default;
   const mac = release.editions.find((e) => e.id === 'macos-apple-silicon')!;
   await page.goto(new URL('download/', baseURL).href);
@@ -221,16 +221,15 @@ test('download page: Universal and Apple Silicon 2.3.2 are separate, verified do
   await expect(universal).toContainText('One application for both Intel and Apple Silicon Macs.');
   const uni = release.editions.find((e) => e.id === 'macos-universal')!;
   expect(uni.available).toBe(true);
-  expect(uni.url).toBe('https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.2/ENG-Drawing-Viewer-macOS-Universal.dmg');
+  expect(uni.url).toBe(`https://github.com/ca-works/eng-drawing-viewer/releases/download/v${uni.version}/ENG-Drawing-Viewer-macOS-Universal.dmg`);
   await expect(universal.locator('.status')).toHaveCount(0);
   await expect(universal.locator('a.download-button')).toHaveAttribute('href', uni.url!);
   await expect(universal).toContainText('Intel (x86_64) + Apple silicon (arm64)');
-  await expect(universal).toContainText('227.1 MB');
-  expect(mac.version).toBe('2.3.2');
-  expect(mac.url).toBe('https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.2/ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg');
+  await expect(universal).toContainText(`${(uni.size! / 1e6).toFixed(1)} MB`);
+  expect(mac.url).toBe(`https://github.com/ca-works/eng-drawing-viewer/releases/download/v${mac.version}/ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg`);
   const card = page.locator('.edition-picker:not(.compact) [data-edition="macos-apple-silicon"]');
   await expect(card.locator('a.download-button')).toHaveAttribute('href', mac.url!);
-  await expect(card).toContainText('120.5 MB');
+  await expect(card).toContainText(`${(mac.size! / 1e6).toFixed(1)} MB`);
 });
 test('screenshots enlarge and close again', async ({ page }) => {
   await page.goto('./');
