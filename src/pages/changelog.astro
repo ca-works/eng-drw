@@ -3,6 +3,7 @@ import { allEditorsReleased, universalReleased, nativeEditorsReleased, windows23
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
+const r233 = release.releases.find((r) => r.version === '2.3.3');
 const r232 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.2');
 const r231 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.1');
 const r230 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.0');
@@ -73,6 +74,18 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           </>
         )}
       </div>
+      {r233 && (
+        <>
+          <h2>2.3.3 · {date(r233.published)} · macOS Universal</h2>
+          <ul>
+            <li>Checkmark, cross, and dated PASS and FAIL stamps in MARK, with annotation display in VIEWER.</li>
+            <li>Dockable Standards Reference with temporary annotations and local document previews.</li>
+            <li>Send drawings to Pages and Keynote or literal table values to Numbers.</li>
+            <li>Image layer and background removal improvements, plus preceding-slide backgrounds in PowerPoint export.</li>
+          </ul>
+          <p><a href={url('download/')}>Download macOS Universal</a> or read the <a href={r233.url}>release notes</a>.</p>
+        </>
+      )}
       {r232 && (
         <>
           <h2>2.3.2 · {date(r232.published)} · Windows, macOS Universal, macOS Apple Silicon</h2>
