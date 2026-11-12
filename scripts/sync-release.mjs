@@ -2,7 +2,8 @@
 //
 // There are four editions, always listed in this order:
 //   macos-universal      ENG-Drawing-Viewer-macOS-Universal.dmg              (2.3.0 and later)
-//   macos-apple-silicon  ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg          (2.3.0 and later)
+//   macos-apple-silicon  ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg          (2.3.x)
+//                        ENG-Drawing-Viewer-<v>-macOS-Apple-Silicon.dmg      (versioned)
 //                        ENG-Drawing-Viewer-<v>-macOS-AppleSilicon.dmg       (2.2.x)
 //   windows-x64          ENG-Drawing-Viewer-Windows-x64.zip                  (2.3.0 and later)
 //                        ENG-Drawing-Viewer-<v>-Windows-x64-Setup.exe        (2.2.x, with the
@@ -45,7 +46,7 @@ const EDITIONS = [
     id: 'macos-apple-silicon',
     file: (v) =>
       versionless(v)
-        ? 'ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg'
+        ? [`ENG-Drawing-Viewer-${v}-macOS-Apple-Silicon.dmg`, 'ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg']
         : `ENG-Drawing-Viewer-${v}-macOS-AppleSilicon.dmg`,
   },
   {
@@ -128,8 +129,10 @@ if (response.status !== 404) {
     let found = { id: edition.id, available: false };
     for (const r of releases) {
       const v = versionOf(r);
-      const name = edition.file(v);
-      if (!name || !r.assets.some((a) => a.name === name)) continue;
+      const name = [edition.file(v)].flat().find((candidate) =>
+        r.assets.some((a) => a.name === candidate),
+      );
+      if (!name) continue;
       const main = await verified(r, name);
       const extras = [];
       for (const extra of edition.extras?.(v) ?? []) {

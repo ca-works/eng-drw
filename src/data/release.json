@@ -18,14 +18,14 @@
     {
       "id": "macos-apple-silicon",
       "available": true,
-      "name": "ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.2/ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg",
-      "size": 120484273,
-      "sha256": "559523a1095f61e0b0eb57aa56cc71d0efa886e2ace3d5b5e1cb075f0b839883",
-      "version": "2.3.2",
+      "name": "ENG-Drawing-Viewer-2.3.3-macOS-Apple-Silicon.dmg",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/ENG-Drawing-Viewer-2.3.3-macOS-Apple-Silicon.dmg",
+      "size": 119678313,
+      "sha256": "5b7c72747b70759ef68b69df1b9e68ad5f3229f7c34765e3368c6684761cf875",
+      "version": "2.3.3",
       "preview": false,
-      "published": "2026-11-09T19:45:45Z",
-      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.2",
+      "published": "2026-11-12T19:23:09Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3",
       "extras": []
     },
     {
@@ -65,7 +65,7 @@
     "published": "2026-11-12T19:23:09Z",
     "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3"
   },
-  "notes": "### macOS Universal 2.3.3\n\nRequires macOS 14.4 or later. The separate Apple Silicon, Windows, and Linux downloads are available from their previous releases.\n\n- Add checkmark, cross, PASS, and FAIL markup. PASS and FAIL stamps retain the placement date. VIEWER can display MARK annotations.\n- Add a dockable Standards Reference workspace with temporary annotations and local previews for PDFs, text, tables, and iWork documents.\n- Send drawings to Pages and Keynote or literal table values to Numbers. iWork previews and direct Keynote insertion may require macOS Automation permission.\n- Delete every image layer, clear the canvas on close, and remove backgrounds from a dedicated button.\n- Inherit the preceding slide’s background when exporting into PowerPoint.\n\nThe packaged app passed native Intel testing. Every Mach-O binary contains both x86_64 and arm64 slices. The arm64 slices of this exact build were checked structurally. The app is ad-hoc signed.\n\nThe attached source archive contains the application and build scripts. `THIRD_PARTY_SOURCES.txt` lists corresponding upstream archives, and `SHA256SUMS.txt` lists the release checksums.\n",
+  "notes": "### macOS Universal 2.3.3\n\nRequires macOS 14.4 or later. Windows and Linux downloads remain available from their respective releases.\n\n- Add checkmark, cross, PASS, and FAIL markup. PASS and FAIL stamps retain the placement date. VIEWER can display MARK annotations.\n- Add a dockable Standards Reference workspace with temporary annotations and local previews for PDFs, text, tables, and iWork documents.\n- Send drawings to Pages and Keynote or literal table values to Numbers. iWork previews and direct Keynote insertion may require macOS Automation permission.\n- Delete every image layer, clear the canvas on close, and remove backgrounds from a dedicated button.\n- Inherit the preceding slide’s background when exporting into PowerPoint.\n\nThe packaged app passed native Intel testing. Every Mach-O binary contains both x86_64 and arm64 slices. The arm64 slices of this exact build were checked structurally. The app is ad-hoc signed.\n\nThe attached source archive contains the application and build scripts. `THIRD_PARTY_SOURCES.txt` lists corresponding upstream archives, and `SHA256SUMS.txt` lists the release checksums.\n\n### macOS Apple Silicon 2.3.3\n\nDownload the [native Apple Silicon DMG](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/ENG-Drawing-Viewer-2.3.3-macOS-Apple-Silicon.dmg) for M-series Macs running macOS 14.4 or later. This build was tested on Apple Silicon and is signed ad hoc.\n\nThe [corresponding Apple Silicon source archive](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/eng-drawing-viewer-2.3.3-macos-apple-silicon-source.zip) includes the app and its build scripts. The shared checksum file lists both macOS builds and their source archives.\n",
   "published": "2026-11-12T19:23:09Z",
   "releases": [
     {

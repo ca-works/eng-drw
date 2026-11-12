@@ -181,3 +181,27 @@ test('an empty release list is honestly unreleased', () => {
   assert.equal(r.status, 0, r.stderr);
   assert.equal(JSON.parse(r.output).status, 'unreleased');
 });
+
+test('versioned Apple Silicon DMG updates only that edition', () => {
+  const apple = 'ENG-Drawing-Viewer-2.3.3-macOS-Apple-Silicon.dmg';
+  const older = [
+    'ENG-Drawing-Viewer-macOS-Universal.dmg',
+    'ENG-Drawing-Viewer-macOS-Apple-Silicon.dmg',
+    'ENG-Drawing-Viewer-2.3.2-Windows-x64-Setup.exe',
+    'ENG-Drawing-Viewer-Linux-x86_64.AppImage',
+  ];
+  const r = run([
+    { status: 200, body: [
+      rel('2.3.3', [apple], { published: '2026-11-12T16:00:00Z' }),
+      rel('2.3.2', older, { published: '2026-11-09T19:45:45Z' }),
+    ] },
+    sums(older),
+    sums([apple]),
+  ]);
+  assert.equal(r.status, 0, r.stderr);
+  const editions = byId(JSON.parse(r.output));
+  assert.equal(editions['macos-apple-silicon'].name, apple);
+  for (const id of ids.filter((id) => id !== 'macos-apple-silicon')) {
+    assert.equal(editions[id].version, '2.3.2');
+  }
+});
