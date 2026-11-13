@@ -1,6 +1,6 @@
 {
   "status": "available",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "editions": [
     {
       "id": "macos-universal",
@@ -31,14 +31,14 @@
     {
       "id": "windows-x64",
       "available": true,
-      "name": "ENG-Drawing-Viewer-2.3.4-Windows-x64-Setup.exe",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/ENG-Drawing-Viewer-2.3.4-Windows-x64-Setup.exe",
-      "size": 89642635,
-      "sha256": "06277022ec8e3be1b591f3ceb78e677bd07e6b7d9d276127ed9f42fea35f9467",
-      "version": "2.3.4",
+      "name": "ENG-Drawing-Viewer-2.3.5-Windows-x64-Setup.exe",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/ENG-Drawing-Viewer-2.3.5-Windows-x64-Setup.exe",
+      "size": 89648718,
+      "sha256": "e6e4fc4c521c00650a8158ab76c8014c51a985111af7fc23d1d1b81e41b99d2d",
+      "version": "2.3.5",
       "preview": false,
-      "published": "2026-11-13T10:58:39Z",
-      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.4",
+      "published": "2026-11-13T11:05:26Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.5",
       "extras": []
     },
     {
@@ -56,22 +56,22 @@
     }
   ],
   "source": {
-    "name": "eng-drawing-viewer-2.3.4-source.zip",
-    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/eng-drawing-viewer-2.3.4-source.zip",
-    "size": 8809317,
-    "sha256": "f53293e4b6d0d5f3408a6cd3790649fcf528881624defc21dcf4afd0e56dbea9",
-    "version": "2.3.4",
+    "name": "eng-drawing-viewer-2.3.5-source.zip",
+    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/eng-drawing-viewer-2.3.5-source.zip",
+    "size": 8810464,
+    "sha256": "9bfd52030ac4496b9ea4895eb8d079dd550aa48a27ea18e85c1416c5eca371ab",
+    "version": "2.3.5",
     "preview": false,
-    "published": "2026-11-13T10:58:39Z",
-    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.4"
+    "published": "2026-11-13T11:05:26Z",
+    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.5"
   },
-  "notes": "### Windows x64 2.3.4\n\n[Download the one-file Windows installer](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/ENG-Drawing-Viewer-2.3.4-Windows-x64-Setup.exe) for 64-bit Windows 10 (1809 or later) or Windows 11.\n\n- Standards is now **Reference**. The toolbar has a compact pen-width field, and the arrows switch between open documents.\n- Scroll continuously from one PDF page to the next. Pages render as they come into view.\n- Add text annotations. Use Ctrl+Z to undo completed annotation edits across pages in the active document and Ctrl+Y or Ctrl+Shift+Z to redo them.\n\nSource commit: 30e888ff5a736b676aa3f50ce1f0a74c3b944af2. The [corresponding source archive](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/eng-drawing-viewer-2.3.4-source.zip), [third-party source references](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/THIRD_PARTY_SOURCES-Windows-x64.txt), and [SHA-256 checksums](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/SHA256SUMS.txt) accompany the installer.\n",
-  "published": "2026-11-13T10:58:39Z",
+  "notes": "### Windows x64 2.3.5\n\n[Download the one-file Windows installer](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/ENG-Drawing-Viewer-2.3.5-Windows-x64-Setup.exe) for 64-bit Windows 10 (1809 or later) or Windows 11.\n\n- Standards is now **Reference**. The toolbar has a compact pen-width field, and the arrows switch between open documents.\n- Scroll continuously from one PDF page to the next. Pages render as they come into view. Precision touchpad scroll input is supported.\n- Add text annotations. Use Ctrl+Z to undo completed annotation edits across pages in the active document and Ctrl+Y or Ctrl+Shift+Z to redo them.\n\nSource commit: 96cc205a903afc160c33210a38225d4fa38cc1aa. The [corresponding source archive](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/eng-drawing-viewer-2.3.5-source.zip), [third-party source references](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/THIRD_PARTY_SOURCES-Windows-x64.txt), and [SHA-256 checksums](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/SHA256SUMS.txt) accompany the installer.\n",
+  "published": "2026-11-13T11:05:26Z",
   "releases": [
     {
-      "version": "2.3.4",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.4",
-      "published": "2026-11-13T10:58:39Z",
+      "version": "2.3.5",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.5",
+      "published": "2026-11-13T11:05:26Z",
       "preview": false
     },
     {
