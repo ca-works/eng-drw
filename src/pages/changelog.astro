@@ -3,9 +3,10 @@ import { allEditorsReleased, universalReleased, nativeEditorsReleased, windows23
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
+const r234 = release.releases.find((r) => r.version === '2.3.4');
 const r233 = release.releases.find((r) => r.version === '2.3.3');
 const appleSilicon233 = release.editions.some((e) => e.id === 'macos-apple-silicon' && e.version === '2.3.3');
-const windows233 = release.editions.some((e) => e.id === 'windows-x64' && e.version === '2.3.3');
+const windows233 = Boolean(r234) || release.editions.some((e) => e.id === 'windows-x64' && e.version === '2.3.3');
 const r232 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.2');
 const r231 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.1');
 const r230 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.0');
@@ -76,6 +77,17 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           </>
         )}
       </div>
+      {r234 && (
+        <>
+          <h2>2.3.4 · {date(r234.published)} · Windows</h2>
+          <ul>
+            <li>Standards is now Reference, with a simpler toolbar and arrows for switching documents.</li>
+            <li>Scroll continuously through a PDF. Pages render as they come into view.</li>
+            <li>Add text and undo or redo completed text, pen, highlight, and eraser edits across pages in the active document.</li>
+          </ul>
+          <p><a href={url('download/')}>Download for Windows</a> or read the <a href={r234.url}>release notes</a>.</p>
+        </>
+      )}
       {r233 && (
         <>
           <h2>2.3.3 · {date(r233.published)} · macOS Universal{appleSilicon233 ? ' and Apple Silicon' : ''}{windows233 ? ', Windows' : ''}</h2>
