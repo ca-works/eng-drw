@@ -1,6 +1,6 @@
 {
   "status": "available",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "editions": [
     {
       "id": "macos-universal",
@@ -31,14 +31,14 @@
     {
       "id": "windows-x64",
       "available": true,
-      "name": "ENG-Drawing-Viewer-2.3.3-Windows-x64-Setup.exe",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/ENG-Drawing-Viewer-2.3.3-Windows-x64-Setup.exe",
-      "size": 89622952,
-      "sha256": "eba5a333230bed84932253cad7da51fe69e855ce4b923bcc68a1adf911c484f7",
-      "version": "2.3.3",
+      "name": "ENG-Drawing-Viewer-2.3.4-Windows-x64-Setup.exe",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/ENG-Drawing-Viewer-2.3.4-Windows-x64-Setup.exe",
+      "size": 89642635,
+      "sha256": "06277022ec8e3be1b591f3ceb78e677bd07e6b7d9d276127ed9f42fea35f9467",
+      "version": "2.3.4",
       "preview": false,
-      "published": "2026-11-12T19:23:09Z",
-      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3",
+      "published": "2026-11-13T10:58:39Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.4",
       "extras": []
     },
     {
@@ -56,18 +56,24 @@
     }
   ],
   "source": {
-    "name": "eng-drawing-viewer-2.3.3-source.zip",
-    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/eng-drawing-viewer-2.3.3-source.zip",
-    "size": 8765504,
-    "sha256": "3e7b3f86520a38584a6be974ef027886a33144868474d7607fda033029a51a71",
-    "version": "2.3.3",
+    "name": "eng-drawing-viewer-2.3.4-source.zip",
+    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/eng-drawing-viewer-2.3.4-source.zip",
+    "size": 8809317,
+    "sha256": "f53293e4b6d0d5f3408a6cd3790649fcf528881624defc21dcf4afd0e56dbea9",
+    "version": "2.3.4",
     "preview": false,
-    "published": "2026-11-12T19:23:09Z",
-    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3"
+    "published": "2026-11-13T10:58:39Z",
+    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.4"
   },
-  "notes": "### Windows x64 2.3.3\n\nDownload the [one-file Windows installer](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/ENG-Drawing-Viewer-2.3.3-Windows-x64-Setup.exe) for 64-bit Windows 10 (1809 or later) or Windows 11. It installs for your user without administrator rights. The installer is unsigned, so Windows may show a SmartScreen warning.\n\n- Add checkmarks, crosses, dated PASS and FAIL stamps, and the Show Annotations toggle in VIEWER.\n- Open standards in a dockable reference panel with temporary ink. Word and Excel previews require local LibreOffice.\n- Delete every image layer, clear the canvas on close, and remove backgrounds from a dedicated button.\n- Keep the preceding slide's background when inserting drawings into PowerPoint.\n\nTested on Windows 11: upgrade from 2.3.2, launch and reopen, clean reinstall, uninstall, and live PowerPoint insertion. The [Windows source archive](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/eng-drawing-viewer-2.3.3-windows-source.zip), [Windows source references](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/THIRD_PARTY_SOURCES-Windows-x64.txt), and SHA256SUMS.txt accompany the installer.\n\n### macOS Universal 2.3.3\n\nRequires macOS 14.4 or later. Linux remains available from its previous release.\n\n- Add checkmark, cross, PASS, and FAIL markup. PASS and FAIL stamps retain the placement date. VIEWER can display MARK annotations.\n- Add a dockable Standards Reference workspace with temporary annotations and local previews for PDFs, text, tables, and iWork documents.\n- Send drawings to Pages and Keynote or literal table values to Numbers. iWork previews and direct Keynote insertion may require macOS Automation permission.\n- Delete every image layer, clear the canvas on close, and remove backgrounds from a dedicated button.\n- Inherit the preceding slide’s background when exporting into PowerPoint.\n\nThe packaged app passed native Intel testing. Every Mach-O binary contains both x86_64 and arm64 slices. The arm64 slices of this exact build were checked structurally. The app is ad-hoc signed.\n\nThe attached source archive contains the application and build scripts. `THIRD_PARTY_SOURCES.txt` lists corresponding upstream archives, and `SHA256SUMS.txt` lists the release checksums.\n\n### macOS Apple Silicon 2.3.3\n\nDownload the [native Apple Silicon DMG](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/ENG-Drawing-Viewer-2.3.3-macOS-Apple-Silicon.dmg) for M-series Macs running macOS 14.4 or later. This build was tested on Apple Silicon and is signed ad hoc.\n\nThe [corresponding Apple Silicon source archive](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/eng-drawing-viewer-2.3.3-macos-apple-silicon-source.zip) includes the app and its build scripts. The shared checksum file includes both macOS builds and their source archives.\n",
-  "published": "2026-11-12T19:23:09Z",
+  "notes": "### Windows x64 2.3.4\n\n[Download the one-file Windows installer](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/ENG-Drawing-Viewer-2.3.4-Windows-x64-Setup.exe) for 64-bit Windows 10 (1809 or later) or Windows 11.\n\n- Standards is now **Reference**. The toolbar has a compact pen-width field, and the arrows switch between open documents.\n- Scroll continuously from one PDF page to the next. Pages render as they come into view.\n- Add text annotations. Use Ctrl+Z to undo completed annotation edits across pages in the active document and Ctrl+Y or Ctrl+Shift+Z to redo them.\n\nSource commit: 30e888ff5a736b676aa3f50ce1f0a74c3b944af2. The [corresponding source archive](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/eng-drawing-viewer-2.3.4-source.zip), [third-party source references](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/THIRD_PARTY_SOURCES-Windows-x64.txt), and [SHA-256 checksums](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.4/SHA256SUMS.txt) accompany the installer.\n",
+  "published": "2026-11-13T10:58:39Z",
   "releases": [
+    {
+      "version": "2.3.4",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.4",
+      "published": "2026-11-13T10:58:39Z",
+      "preview": false
+    },
     {
       "version": "2.3.3",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3",
