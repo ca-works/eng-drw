@@ -3,6 +3,7 @@ import { allEditorsReleased, universalReleased, nativeEditorsReleased, windows23
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
+const r236 = release.releases.find((r) => r.version === '2.3.6');
 const r235 = release.releases.find((r) => r.version === '2.3.5');
 const r234 = release.releases.find((r) => r.version === '2.3.4');
 const r233 = release.releases.find((r) => r.version === '2.3.3');
@@ -78,6 +79,17 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           </>
         )}
       </div>
+      {r236 && (
+        <>
+          <h2>2.3.6 · {date(r236.published)} · macOS Universal</h2>
+          <ul>
+            <li>The Reference panel scrolls through the full PDF and renders pages as they come into view.</li>
+            <li>The toolbar arrows switch documents, and a compact field controls pen width.</li>
+            <li>Text and ink stay on their pages when you reopen a document. Press Command-Z to undo a completed edit and Shift-Command-Z to redo it.</li>
+          </ul>
+          <p><a href={url('download/')}>Download macOS Universal</a> or read the <a href={r236.url}>release notes</a>.</p>
+        </>
+      )}
       {r235 && (
         <>
           <h2>2.3.5 · {date(r235.published)} · Windows</h2>
