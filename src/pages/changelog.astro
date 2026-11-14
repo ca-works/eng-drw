@@ -3,11 +3,14 @@ import { allEditorsReleased, universalReleased, nativeEditorsReleased, windows23
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
+const r237 = release.releases.find((r) => r.version === '2.3.7');
 const r236 = release.releases.find((r) => r.version === '2.3.6');
 const r235 = release.releases.find((r) => r.version === '2.3.5');
 const r234 = release.releases.find((r) => r.version === '2.3.4');
-const r233 = release.releases.find((r) => r.version === '2.3.3');
-const appleSilicon233 = release.editions.some((e) => e.id === 'macos-apple-silicon' && e.version === '2.3.3');
+const r233 = release.releases.find((r) => r.version === '2.3.3') ?? {
+  published: '2026-11-12T19:23:09Z',
+  url: 'https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3',
+};
 const windows233 = Boolean(r234 || r235) || release.editions.some((e) => e.id === 'windows-x64' && e.version === '2.3.3');
 const r232 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.2');
 const r231 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.1');
@@ -79,6 +82,17 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           </>
         )}
       </div>
+      {r237 && (
+        <>
+          <h2>2.3.7 · {date(r237.published)} · macOS Apple Silicon</h2>
+          <ul>
+            <li>Open the renamed Reference panel, set pen width in a compact field, and use the toolbar arrows to switch documents.</li>
+            <li>Scroll continuously across PDF pages as they render. Text and ink stay on their pages when you reopen a document.</li>
+            <li>Press Command-Z to undo completed annotation edits in the active reference, and Shift-Command-Z to redo them. The Edit menu offers the same commands.</li>
+          </ul>
+          <p><a href={url('download/')}>Download for Apple Silicon</a> or read the <a href={r237.url}>release notes</a>.</p>
+        </>
+      )}
       {r236 && (
         <>
           <h2>2.3.6 · {date(r236.published)} · macOS Universal</h2>
@@ -114,7 +128,7 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
       )}
       {r233 && (
         <>
-          <h2>2.3.3 · {date(r233.published)} · macOS Universal{appleSilicon233 ? ' and Apple Silicon' : ''}{windows233 ? ', Windows' : ''}</h2>
+          <h2>2.3.3 · {date(r233.published)} · macOS Universal and Apple Silicon{windows233 ? ', Windows' : ''}</h2>
           <ul>
             <li>Checkmark, cross, and dated PASS and FAIL stamps in MARK, with annotation display in VIEWER.</li>
             <li>Dockable Standards Reference with temporary annotations and local document previews.</li>

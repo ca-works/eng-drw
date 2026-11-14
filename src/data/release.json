@@ -1,6 +1,6 @@
 {
   "status": "available",
-  "version": "2.3.6",
+  "version": "2.3.7",
   "editions": [
     {
       "id": "macos-universal",
@@ -18,14 +18,14 @@
     {
       "id": "macos-apple-silicon",
       "available": true,
-      "name": "ENG-Drawing-Viewer-2.3.3-macOS-Apple-Silicon.dmg",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/ENG-Drawing-Viewer-2.3.3-macOS-Apple-Silicon.dmg",
-      "size": 119678313,
-      "sha256": "5b7c72747b70759ef68b69df1b9e68ad5f3229f7c34765e3368c6684761cf875",
-      "version": "2.3.3",
+      "name": "ENG-Drawing-Viewer-2.3.7-macOS-Apple-Silicon.dmg",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.7/ENG-Drawing-Viewer-2.3.7-macOS-Apple-Silicon.dmg",
+      "size": 120584949,
+      "sha256": "204fcf669b2f3ff0b0784ffc2c9a103bc0016d1b6d0b7cd69d89050bdd91c8a2",
+      "version": "2.3.7",
       "preview": false,
-      "published": "2026-11-12T19:23:09Z",
-      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3",
+      "published": "2026-11-14T15:33:06Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.7",
       "extras": []
     },
     {
@@ -56,18 +56,24 @@
     }
   ],
   "source": {
-    "name": "eng-drawing-viewer-2.3.6-source.zip",
-    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.6/eng-drawing-viewer-2.3.6-source.zip",
-    "size": 8784600,
-    "sha256": "d1e5c826a4a84b8d8f506ba22e520e14665b0c4fd2e770d9ba8703c60c043dec",
-    "version": "2.3.6",
+    "name": "eng-drawing-viewer-2.3.7-source.zip",
+    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.7/eng-drawing-viewer-2.3.7-source.zip",
+    "size": 8748955,
+    "sha256": "4cfb7f996696538a62bfa032a0afb264ac7875a5cb2a9195e2685205c2e19f3d",
+    "version": "2.3.7",
     "preview": false,
-    "published": "2026-11-14T10:52:43Z",
-    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6"
+    "published": "2026-11-14T15:33:06Z",
+    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.7"
   },
-  "notes": "### macOS Universal 2.3.6\n\nFor Intel and Apple silicon Macs running macOS 14.4 or later.\n\n- Open the renamed **Reference** panel, adjust pen width in a compact field, and use the toolbar arrows to switch between open documents.\n- Scroll continuously through PDFs with the mouse wheel, trackpad, or scrollbar. Pages render as they come into view.\n- Add text, pen strokes, and highlights. Use Command-Z and Shift-Command-Z or the Edit menu to undo and redo completed edits in the active reference. Annotations stay on their pages when you reopen a document.\n\nBuilt and tested on an Intel Mac Pro. The app is signed ad hoc. Every bundled Mach-O file contains x86_64 and arm64 slices. The arm64 slices were verified structurally.\n\nSource commit: `20576ac17d84c4b78f248f7b8dd026b86c9d83b3`. The corresponding source archive, third-party notices and source references, and SHA-256 checksums accompany the DMG.\n",
-  "published": "2026-11-14T10:52:43Z",
+  "notes": "### macOS Apple Silicon 2.3.7\n\nFor Apple silicon Macs running macOS 14.4 or later.\n\n- Open the renamed **Reference** panel. Set pen width in a compact field and use the left and right toolbar arrows to switch between open documents.\n- Scroll continuously across PDF page boundaries with a trackpad, mouse wheel, or scrollbar. Pages render as they come into view.\n- Use Command-Z and Shift-Command-Z or the Edit menu to undo and redo completed annotation edits in the active document. Text has its own undo and redo while you type. Text and ink stay anchored to their pages when you zoom, resize, or reopen a reference.\n\nThe app is built and signed ad hoc on Apple Silicon. The DMG includes only arm64 app binaries. The corresponding source archive, third-party notices and source references, and SHA-256 checksums accompany the DMG.\n\nSource commit `f668eb9ed21592fcb0a5a2fe583946b3d93a66e8`.\n",
+  "published": "2026-11-14T15:33:06Z",
   "releases": [
+    {
+      "version": "2.3.7",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.7",
+      "published": "2026-11-14T15:33:06Z",
+      "preview": false
+    },
     {
       "version": "2.3.6",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6",
@@ -78,12 +84,6 @@
       "version": "2.3.5",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.5",
       "published": "2026-11-13T11:05:26Z",
-      "preview": false
-    },
-    {
-      "version": "2.3.3",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3",
-      "published": "2026-11-12T19:23:09Z",
       "preview": false
     },
     {
