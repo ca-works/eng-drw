@@ -1,18 +1,18 @@
 {
   "status": "available",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "editions": [
     {
       "id": "macos-universal",
       "available": true,
       "name": "ENG-Drawing-Viewer-macOS-Universal.dmg",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.3/ENG-Drawing-Viewer-macOS-Universal.dmg",
-      "size": 227285339,
-      "sha256": "d41a5a2281d5eff242d1ebba90582a63d1c58b27eb0cefcf7a0a893da9eae209",
-      "version": "2.3.3",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.6/ENG-Drawing-Viewer-macOS-Universal.dmg",
+      "size": 227229638,
+      "sha256": "222b84773ddd5c93220e9b5d712268a8b0e768aa4502b12c285e5b0e08014aae",
+      "version": "2.3.6",
       "preview": false,
-      "published": "2026-11-12T19:23:09Z",
-      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3",
+      "published": "2026-11-14T10:52:43Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6",
       "extras": []
     },
     {
@@ -56,18 +56,24 @@
     }
   ],
   "source": {
-    "name": "eng-drawing-viewer-2.3.5-source.zip",
-    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/eng-drawing-viewer-2.3.5-source.zip",
-    "size": 8810464,
-    "sha256": "9bfd52030ac4496b9ea4895eb8d079dd550aa48a27ea18e85c1416c5eca371ab",
-    "version": "2.3.5",
+    "name": "eng-drawing-viewer-2.3.6-source.zip",
+    "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.6/eng-drawing-viewer-2.3.6-source.zip",
+    "size": 8784600,
+    "sha256": "d1e5c826a4a84b8d8f506ba22e520e14665b0c4fd2e770d9ba8703c60c043dec",
+    "version": "2.3.6",
     "preview": false,
-    "published": "2026-11-13T11:05:26Z",
-    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.5"
+    "published": "2026-11-14T10:52:43Z",
+    "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6"
   },
-  "notes": "### Windows x64 2.3.5\n\n[Download the one-file Windows installer](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/ENG-Drawing-Viewer-2.3.5-Windows-x64-Setup.exe) for 64-bit Windows 10 (1809 or later) or Windows 11.\n\n- Standards is now **Reference**. The toolbar has a compact pen-width field, and the arrows switch between open documents.\n- Scroll continuously from one PDF page to the next. Pages render as they come into view. Precision touchpad scroll input is supported.\n- Add text annotations. Use Ctrl+Z to undo completed annotation edits across pages in the active document and Ctrl+Y or Ctrl+Shift+Z to redo them.\n\nSource commit: 96cc205a903afc160c33210a38225d4fa38cc1aa. The [corresponding source archive](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/eng-drawing-viewer-2.3.5-source.zip), [third-party source references](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/THIRD_PARTY_SOURCES-Windows-x64.txt), and [SHA-256 checksums](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/SHA256SUMS.txt) accompany the installer.\n",
-  "published": "2026-11-13T11:05:26Z",
+  "notes": "### macOS Universal 2.3.6\n\nFor Intel and Apple silicon Macs running macOS 14.4 or later.\n\n- Open the renamed **Reference** panel, adjust pen width in a compact field, and use the toolbar arrows to switch between open documents.\n- Scroll continuously through PDFs with the mouse wheel, trackpad, or scrollbar. Pages render as they come into view.\n- Add text, pen strokes, and highlights. Use Command-Z and Shift-Command-Z or the Edit menu to undo and redo completed edits in the active reference. Annotations stay on their pages when you reopen a document.\n\nBuilt and tested on an Intel Mac Pro. The app is signed ad hoc. Every bundled Mach-O file contains x86_64 and arm64 slices. The arm64 slices were verified structurally.\n\nSource commit: `20576ac17d84c4b78f248f7b8dd026b86c9d83b3`. The corresponding source archive, third-party notices and source references, and SHA-256 checksums accompany the DMG.\n",
+  "published": "2026-11-14T10:52:43Z",
   "releases": [
+    {
+      "version": "2.3.6",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6",
+      "published": "2026-11-14T10:52:43Z",
+      "preview": false
+    },
     {
       "version": "2.3.5",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.5",
