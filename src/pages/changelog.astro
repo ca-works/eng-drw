@@ -1,11 +1,16 @@
 ---
-import { allEditorsReleased, universalReleased, nativeEditorsReleased, windows231, linux231 } from '../data/editions';
+import { allEditorsReleased, edition, universalReleased, nativeEditorsReleased, windows231, linux231 } from '../data/editions';
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
 const r239 = release.releases.find((r) => r.url.endsWith('/v2.3.9'));
 const universalUpdate = r239 ?? release.releases.find((r) => r.url.endsWith('/v2.3.8'));
-const r237 = release.releases.find((r) => r.version === '2.3.7');
+const apple = edition('macos-apple-silicon');
+const native239 = r239 && apple.available && apple.release_url === r239.url;
+const r237 = release.releases.find((r) => r.version === '2.3.7') ?? {
+  published: '2026-11-14T15:33:06Z',
+  url: 'https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.7',
+};
 const r236 = release.releases.find((r) => r.url.endsWith('/v2.3.6')) ?? {
   published: '2026-11-14T10:52:43Z',
   url: 'https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6',
@@ -90,14 +95,14 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
       </div>
       {universalUpdate && (
         <>
-          <h2>{universalUpdate.version} · {date(universalUpdate.published)} · macOS Universal</h2>
+          <h2>{universalUpdate.version} · {date(universalUpdate.published)} · macOS Universal{native239 ? ' and Apple Silicon' : ''}</h2>
           <ul>
             <li>Image Editor numeric fields have more room for coordinates, dimensions, angles, and opacity values.</li>
             <li>Type on the canvas, change font size while editing, and resize editable text with the layer handles.</li>
             <li>Open .xlsx files offline in Reference. Switch worksheets, copy cells, and view saved formula results.</li>
             {r239 && <li>Fixed a macOS accessibility crash when navigating large worksheets.</li>}
           </ul>
-          <p><a href={url('download/')}>Download macOS Universal</a> or read the <a href={universalUpdate.url}>release notes and source</a>.</p>
+          <p><a href={url('download/')}>{native239 ? 'Download for macOS' : 'Download macOS Universal'}</a> or read the <a href={universalUpdate.url}>release notes and source</a>.</p>
         </>
       )}
       {r236Windows && (

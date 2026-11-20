@@ -18,14 +18,14 @@
     {
       "id": "macos-apple-silicon",
       "available": true,
-      "name": "ENG-Drawing-Viewer-2.3.7-macOS-Apple-Silicon.dmg",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.7/ENG-Drawing-Viewer-2.3.7-macOS-Apple-Silicon.dmg",
-      "size": 120584949,
-      "sha256": "204fcf669b2f3ff0b0784ffc2c9a103bc0016d1b6d0b7cd69d89050bdd91c8a2",
-      "version": "2.3.7",
+      "name": "ENG-Drawing-Viewer-2.3.9-macOS-Apple-Silicon.dmg",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.9/ENG-Drawing-Viewer-2.3.9-macOS-Apple-Silicon.dmg",
+      "size": 120542733,
+      "sha256": "1e7fb08c4291518fdfa1e438571981fe95619244aab69c6ebac9f24cce67beb4",
+      "version": "2.3.9",
       "preview": false,
-      "published": "2026-11-14T15:33:06Z",
-      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.7",
+      "published": "2026-11-20T19:32:22Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.9",
       "extras": []
     },
     {
@@ -65,7 +65,7 @@
     "published": "2026-11-20T19:32:22Z",
     "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.9"
   },
-  "notes": "### macOS Universal 2.3.9\n\nFor Intel and Apple silicon Macs running macOS 14.4 or later.\n\n- **Image Editor controls** · Enter coordinates, dimensions, angles, and opacity in wider numeric fields without stepper arrows.\n- **On-canvas text** · Click the image and type. Change font size during the edit and resize committed text with the layer handles. Press Command-Return to commit or Esc to cancel. Command-Z and Shift-Command-Z undo and redo committed edits.\n- **Excel workbooks in Reference** · Open .xlsx files in an offline, read-only grid. Switch worksheets, select and copy cells, and view saved formula results. Formulas without saved results show “Result unavailable.”\n- **Worksheet navigation on macOS** · Fixed an accessibility crash when jumping across a large worksheet. The focused grid exposes the current cell address and value.\n\n- **PDF Reference** · The document arrows, continuous page scrolling, and annotation undo and redo remain available.\n\nBuilt and tested on an Intel Mac Pro. The app is signed ad hoc. Every bundled Mach-O file contains x86_64 and arm64 slices. The arm64 slices were checked structurally.\n\nSource commit: `cdf9f54b9e1e418d6ee0562e5221372908c7529c`. The corresponding source archive, third-party notices and source references, and SHA-256 checksums accompany the DMG.\n",
+  "notes": "### macOS Universal 2.3.9\n\nFor Intel and Apple silicon Macs running macOS 14.4 or later.\n\n- **Image Editor controls** · Enter coordinates, dimensions, angles, and opacity in wider numeric fields without stepper arrows.\n- **On-canvas text** · Click the image and type. Change font size during the edit and resize committed text with the layer handles. Press Command-Return to commit or Esc to cancel. Command-Z and Shift-Command-Z undo and redo committed edits.\n- **Excel workbooks in Reference** · Open .xlsx files in an offline, read-only grid. Switch worksheets, select and copy cells, and view saved formula results. Formulas without saved results show “Result unavailable.”\n- **Worksheet navigation on macOS** · Fixed an accessibility crash when jumping across a large worksheet. The focused grid exposes the current cell address and value.\n\n- **PDF Reference** · The document arrows, continuous page scrolling, and annotation undo and redo remain available.\n\nBuilt and tested on an Intel Mac Pro. The app is signed ad hoc. Every bundled Mach-O file contains x86_64 and arm64 slices. The arm64 slices were checked structurally.\n\nSource commit: `cdf9f54b9e1e418d6ee0562e5221372908c7529c`. The corresponding source archive, third-party notices and source references, and SHA-256 checksums accompany the DMG.\n\n### macOS Apple Silicon 2.3.9\n\nThe separate native arm64 DMG for M-series Macs includes the same 2.3.9 Image Editor controls, editable on-canvas text, offline Excel preview and large worksheet accessibility fix, and PDF Reference features. It requires macOS 14.4 or later and is signed ad hoc.\n\n- [Apple Silicon DMG (120.5 MB)](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.9/ENG-Drawing-Viewer-2.3.9-macOS-Apple-Silicon.dmg)\n- [Apple Silicon SHA-256 file](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.9/ENG-Drawing-Viewer-2.3.9-macOS-Apple-Silicon.dmg.sha256)\n- SHA-256 `1e7fb08c4291518fdfa1e438571981fe95619244aab69c6ebac9f24cce67beb4`\n",
   "published": "2026-11-20T19:32:22Z",
   "releases": [
     {
@@ -78,12 +78,6 @@
       "version": "2.3.6",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6-windows",
       "published": "2026-11-20T13:16:20Z",
-      "preview": false
-    },
-    {
-      "version": "2.3.7",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.7",
-      "published": "2026-11-14T15:33:06Z",
       "preview": false
     },
     {

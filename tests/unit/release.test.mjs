@@ -206,6 +206,25 @@ test('versioned Apple Silicon DMG updates only that edition', () => {
   }
 });
 
+test('a supplemental Apple Silicon checksum preserves the published Universal checksum', () => {
+  const universal = 'ENG-Drawing-Viewer-macOS-Universal.dmg';
+  const apple = 'ENG-Drawing-Viewer-2.3.9-macOS-Apple-Silicon.dmg';
+  const release = rel('2.3.9', [universal, apple, `${apple}.sha256`], {
+    published: '2026-11-20T19:32:00Z',
+  });
+  const responses = [{ status: 200, body: [release] }, sums([universal])];
+  const result = run([...responses, sums([apple])]);
+  assert.equal(result.status, 0, result.stderr);
+  const editions = byId(JSON.parse(result.output));
+  assert.equal(editions['macos-universal'].name, universal);
+  assert.equal(editions['macos-apple-silicon'].name, apple);
+  assert.equal(editions['macos-apple-silicon'].sha256, H);
+
+  const invalid = run([...responses, { status: 200, text: `${'b'.repeat(64)}  ${apple}` }]);
+  assert.notEqual(invalid.status, 0);
+  assert.equal(invalid.output, 'original');
+});
+
 test('a Windows tag can share the macOS version and keep the newest source version', () => {
   const win = ['ENG-Drawing-Viewer-2.3.6-Windows-x64-Setup.exe', 'eng-drawing-viewer-2.3.6-source.zip'];
   const universal = ['ENG-Drawing-Viewer-macOS-Universal.dmg', 'eng-drawing-viewer-2.3.6-source.zip'];

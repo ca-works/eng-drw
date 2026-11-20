@@ -151,9 +151,9 @@ const all230 = [mac, universal, win, linux].every((e) => e.available && compare(
 
         <h2>Verify a download</h2>
         <p>
-          Every file has a SHA-256 checksum, shown on its card above and in
-          <code>SHA256SUMS.txt</code> on the GitHub release page. Compare the
-          whole result:
+          Every file has a SHA-256 checksum on its card and on the GitHub
+          release page. Look in <code>SHA256SUMS.txt</code> or the
+          <code>.dmg.sha256</code> file for the Apple Silicon download.
         </p>
         <ul>
           <li>Mac: <code>shasum -a 256 ~/Downloads/ENG-Drawing-Viewer-*.dmg</code></li>

@@ -14,7 +14,7 @@
 // Each edition comes from the newest published (non-draft) release that contains its file; a
 // pre-release is marked "preview". Versionless names are accepted only from 2.3.0 on and versioned
 // names only before it, so a 2.2.0 file can never be shown as 2.3.0. Every file is checked against
-// its release's SHA256SUMS.txt and GitHub's own digest, and must be served from this repository's
+// a published checksum and GitHub's own digest, and must be served from this repository's
 // releases. Any API failure stops the build, so the site never shows stale or unverified
 // downloads. An edition no release contains is written with "available": false ("Coming soon").
 import { writeFile } from 'node:fs/promises';
@@ -84,25 +84,26 @@ if (response.status !== 404) {
     .sort((a, b) => Date.parse(b.published_at) - Date.parse(a.published_at));
 
   const sumsCache = new Map();
-  async function checksums(r) {
-    if (!sumsCache.has(r.tag_name)) {
-      const file = r.assets.find((a) => a.name === 'SHA256SUMS.txt');
-      if (!file) throw Error(`${r.tag_name} lacks SHA256SUMS.txt`);
+  async function checksums(r, filename) {
+    const key = `${r.tag_name}/${filename}`;
+    if (!sumsCache.has(key)) {
+      const file = r.assets.find((a) => a.name === filename);
+      if (!file) throw Error(`${r.tag_name} lacks ${filename}`);
       const res = await fetch(file.browser_download_url);
-      if (!res.ok) throw Error(`Cannot read checksums of ${r.tag_name}`);
-      sumsCache.set(r.tag_name, await res.text());
+      if (!res.ok) throw Error(`Cannot read ${key}`);
+      sumsCache.set(key, await res.text());
     }
-    return sumsCache.get(r.tag_name);
+    return sumsCache.get(key);
   }
   const versionOf = (r) => {
     const match = /^v?(\d+\.\d+\.\d+)(?:-windows)?$/.exec(r.tag_name);
     if (!match) throw Error(`Invalid version ${r.tag_name}`);
     return match[1];
   };
-  async function verified(r, name) {
+  async function verified(r, name, checksumFile = 'SHA256SUMS.txt') {
     const a = r.assets.find((x) => x.name === name);
     if (!a) return null;
-    const sums = await checksums(r);
+    const sums = await checksums(r, checksumFile);
     const hash = sums
       .split('\n')
       .map((l) => l.trim().split(/\s+\*?/))
@@ -133,7 +134,11 @@ if (response.status !== 404) {
         r.assets.some((a) => a.name === candidate),
       );
       if (!name) continue;
-      const main = await verified(r, name);
+      // Apple Silicon can be added after the original release checksum file was published.
+      const detached = `${name}.sha256`;
+      const checksumFile = edition.id === 'macos-apple-silicon' &&
+        r.assets.some((a) => a.name === detached) ? detached : undefined;
+      const main = await verified(r, name, checksumFile);
       const extras = [];
       for (const extra of edition.extras?.(v) ?? []) {
         const e = await verified(r, extra);
