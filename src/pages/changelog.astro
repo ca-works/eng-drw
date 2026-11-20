@@ -3,8 +3,12 @@ import { allEditorsReleased, universalReleased, nativeEditorsReleased, windows23
 import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
+const r238 = release.releases.find((r) => r.url.endsWith('/v2.3.8'));
 const r237 = release.releases.find((r) => r.version === '2.3.7');
-const r236 = release.releases.find((r) => r.url.endsWith('/v2.3.6'));
+const r236 = release.releases.find((r) => r.url.endsWith('/v2.3.6')) ?? {
+  published: '2026-11-14T10:52:43Z',
+  url: 'https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6',
+};
 const r236Windows = release.releases.find((r) => r.url.endsWith('/v2.3.6-windows'));
 const r235 = release.releases.find((r) => r.version === '2.3.5');
 const r234 = release.releases.find((r) => r.version === '2.3.4');
@@ -83,6 +87,17 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           </>
         )}
       </div>
+      {r238 && (
+        <>
+          <h2>2.3.8 · {date(r238.published)} · macOS Universal</h2>
+          <ul>
+            <li>Image Editor numeric fields have more room for coordinates, dimensions, angles, and opacity values.</li>
+            <li>Type on the canvas, change font size while editing, and resize editable text with the layer handles.</li>
+            <li>Open .xlsx files offline in Reference. Switch worksheets, copy cells, and view saved formula results.</li>
+          </ul>
+          <p><a href={url('download/')}>Download macOS Universal</a> or read the <a href={r238.url}>release notes and source</a>.</p>
+        </>
+      )}
       {r236Windows && (
         <>
           <h2>2.3.6 · {date(r236Windows.published)} · Windows</h2>
