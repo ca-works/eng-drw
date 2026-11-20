@@ -205,3 +205,27 @@ test('versioned Apple Silicon DMG updates only that edition', () => {
     assert.equal(editions[id].version, '2.3.2');
   }
 });
+
+test('a Windows tag can share the macOS version and keep the newest source version', () => {
+  const win = ['ENG-Drawing-Viewer-2.3.6-Windows-x64-Setup.exe', 'eng-drawing-viewer-2.3.6-source.zip'];
+  const universal = ['ENG-Drawing-Viewer-macOS-Universal.dmg', 'eng-drawing-viewer-2.3.6-source.zip'];
+  const apple = ['ENG-Drawing-Viewer-2.3.7-macOS-Apple-Silicon.dmg', 'eng-drawing-viewer-2.3.7-source.zip'];
+  const result = run([
+    { status: 200, body: [
+      rel('2.3.6-windows', win, { published: '2026-11-20T12:00:00Z' }),
+      rel('2.3.7', apple, { published: '2026-11-14T16:00:00Z' }),
+      rel('2.3.6', universal, { published: '2026-11-14T10:00:00Z' }),
+    ] },
+    sums(universal),
+    sums(apple),
+    sums(win),
+  ]);
+  assert.equal(result.status, 0, result.stderr);
+  const data = JSON.parse(result.output);
+  const editions = byId(data);
+  assert.equal(editions['windows-x64'].version, '2.3.6');
+  assert.match(editions['windows-x64'].url, /\/v2\.3\.6-windows\//);
+  assert.match(editions['macos-universal'].url, /\/v2\.3\.6\//);
+  assert.equal(data.version, '2.3.7');
+  assert.equal(data.source.version, '2.3.7');
+});

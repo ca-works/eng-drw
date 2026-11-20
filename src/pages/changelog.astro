@@ -4,14 +4,15 @@ import Layout from '../layouts/Layout.astro';
 import { url } from '../data/site';
 import release from '../data/release.json';
 const r237 = release.releases.find((r) => r.version === '2.3.7');
-const r236 = release.releases.find((r) => r.version === '2.3.6');
+const r236 = release.releases.find((r) => r.url.endsWith('/v2.3.6'));
+const r236Windows = release.releases.find((r) => r.url.endsWith('/v2.3.6-windows'));
 const r235 = release.releases.find((r) => r.version === '2.3.5');
 const r234 = release.releases.find((r) => r.version === '2.3.4');
 const r233 = release.releases.find((r) => r.version === '2.3.3') ?? {
   published: '2026-11-12T19:23:09Z',
   url: 'https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.3',
 };
-const windows233 = Boolean(r234 || r235) || release.editions.some((e) => e.id === 'windows-x64' && e.version === '2.3.3');
+const windows233 = Boolean(r234 || r235 || r236Windows) || release.editions.some((e) => e.id === 'windows-x64' && e.version === '2.3.3');
 const r232 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.2');
 const r231 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.1');
 const r230 = (release.releases as { version: string; url: string; published: string }[]).find((r) => r.version === '2.3.0');
@@ -82,6 +83,17 @@ const date = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: '
           </>
         )}
       </div>
+      {r236Windows && (
+        <>
+          <h2>2.3.6 · {date(r236Windows.published)} · Windows</h2>
+          <ul>
+            <li>Image Editor number fields stay readable at higher display scaling and in narrow windows.</li>
+            <li>Type and edit text directly on the canvas, change its font size live, and resize it with layer handles.</li>
+            <li>Open .xlsx workbooks in Reference with worksheet tabs, cell copying, and saved formula results. The preview works offline.</li>
+          </ul>
+          <p><a href={url('download/')}>Download for Windows</a> or read the <a href={r236Windows.url}>release notes and source</a>.</p>
+        </>
+      )}
       {r237 && (
         <>
           <h2>2.3.7 · {date(r237.published)} · macOS Apple Silicon</h2>

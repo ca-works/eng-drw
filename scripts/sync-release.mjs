@@ -95,9 +95,9 @@ if (response.status !== 404) {
     return sumsCache.get(r.tag_name);
   }
   const versionOf = (r) => {
-    const v = r.tag_name.replace(/^v/, '');
-    if (!/^\d+\.\d+\.\d+$/.test(v)) throw Error(`Invalid version ${r.tag_name}`);
-    return v;
+    const match = /^v?(\d+\.\d+\.\d+)(?:-windows)?$/.exec(r.tag_name);
+    if (!match) throw Error(`Invalid version ${r.tag_name}`);
+    return match[1];
   };
   async function verified(r, name) {
     const a = r.assets.find((x) => x.name === name);
@@ -147,7 +147,7 @@ if (response.status !== 404) {
     editions.push(found);
   }
   let source = null;
-  for (const r of releases) {
+  for (const r of [...releases].sort((a, b) => compare(versionOf(b), versionOf(a)))) {
     source = await verified(r, `eng-drawing-viewer-${versionOf(r)}-source.zip`);
     if (source) {
       used.add(r);
