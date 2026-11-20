@@ -31,14 +31,14 @@
     {
       "id": "windows-x64",
       "available": true,
-      "name": "ENG-Drawing-Viewer-2.3.5-Windows-x64-Setup.exe",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.5/ENG-Drawing-Viewer-2.3.5-Windows-x64-Setup.exe",
-      "size": 89648718,
-      "sha256": "e6e4fc4c521c00650a8158ab76c8014c51a985111af7fc23d1d1b81e41b99d2d",
-      "version": "2.3.5",
+      "name": "ENG-Drawing-Viewer-2.3.6-Windows-x64-Setup.exe",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.6-windows/ENG-Drawing-Viewer-2.3.6-Windows-x64-Setup.exe",
+      "size": 90381299,
+      "sha256": "d1f3cb598c38f05e824d8590944a8e5485e2cb586fceef0fdd44955c4b41140f",
+      "version": "2.3.6",
       "preview": false,
-      "published": "2026-11-13T11:05:26Z",
-      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.5",
+      "published": "2026-11-20T13:16:20Z",
+      "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6-windows",
       "extras": []
     },
     {
@@ -65,9 +65,15 @@
     "published": "2026-11-14T15:33:06Z",
     "release_url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.7"
   },
-  "notes": "### macOS Apple Silicon 2.3.7\n\nFor Apple silicon Macs running macOS 14.4 or later.\n\n- Open the renamed **Reference** panel. Set pen width in a compact field and use the left and right toolbar arrows to switch between open documents.\n- Scroll continuously across PDF page boundaries with a trackpad, mouse wheel, or scrollbar. Pages render as they come into view.\n- Use Command-Z and Shift-Command-Z or the Edit menu to undo and redo completed annotation edits in the active document. Text has its own undo and redo while you type. Text and ink stay anchored to their pages when you zoom, resize, or reopen a reference.\n\nThe app is built and signed ad hoc on Apple Silicon. The DMG includes only arm64 app binaries. The corresponding source archive, third-party notices and source references, and SHA-256 checksums accompany the DMG.\n\nSource commit `f668eb9ed21592fcb0a5a2fe583946b3d93a66e8`.\n",
-  "published": "2026-11-14T15:33:06Z",
+  "notes": "[Download the Windows x64 installer](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.6-windows/ENG-Drawing-Viewer-2.3.6-Windows-x64-Setup.exe) for Windows 10 (1809 or later) or Windows 11.\n\n- **Image Editor controls** · Numeric fields fit at higher display scaling and in narrow windows. Edit values directly or use the sliders.\n- **On-canvas text** · Click the canvas and type, adjust the font size while editing, and resize committed text using the layer handles. Press Ctrl+Enter to commit or Esc to cancel.\n- **Excel workbooks in Reference** · Open .xlsx files offline with worksheet tabs, scrolling and cell copying. Saved formula results display when available.\n\nBuilt from source commit 02ca53c10d899658c458897ba35dc2dce5a0c3ad and tested through a per-user installation on Windows 11.\n\n[Windows source archive](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.6-windows/eng-drawing-viewer-2.3.6-source.zip) · [Third-party source references](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.6-windows/THIRD_PARTY_SOURCES-Windows-x64.txt) · [SHA-256 checksums](https://github.com/ca-works/eng-drawing-viewer/releases/download/v2.3.6-windows/SHA256SUMS.txt)\n",
+  "published": "2026-11-20T13:16:20Z",
   "releases": [
+    {
+      "version": "2.3.6",
+      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6-windows",
+      "published": "2026-11-20T13:16:20Z",
+      "preview": false
+    },
     {
       "version": "2.3.7",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.7",
@@ -78,12 +84,6 @@
       "version": "2.3.6",
       "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.6",
       "published": "2026-11-14T10:52:43Z",
-      "preview": false
-    },
-    {
-      "version": "2.3.5",
-      "url": "https://github.com/ca-works/eng-drawing-viewer/releases/tag/v2.3.5",
-      "published": "2026-11-13T11:05:26Z",
       "preview": false
     },
     {
